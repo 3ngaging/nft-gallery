@@ -78,7 +78,7 @@ export default function NFTDetailClient({ nft, wallets }: NFTDetailClientProps) 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <button
-                className="flex-1 bg-[#F2ECC8] hover:bg-[#aca686] text-white px-6 py-4 font-semibold transition shadow-[#a59f7e] hover:shadow-[#dfd7ac]"
+                className="flex-1 bg-[#F2ECC8] hover:bg-[#aca686] text-black px-6 py-4 font-semibold transition shadow-[#a59f7e] hover:shadow-[#dfd7ac]"
                 aria-label="View NFT on blockchain"
               >
                 {t.nft.viewOnBlockchain || 'View on Blockchain'}
