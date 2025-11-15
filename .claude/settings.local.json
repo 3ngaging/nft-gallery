@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(timeout:*)",
+      "Bash(dir:*)",
+      "Bash(curl:*)",
+      "Bash(/dev/null)",
+      "Bash(taskkill /F /PID 34040 2)",
+      "Bash(nul)",
+      "Bash(taskkill:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(npx kill-port:*)",
+      "Bash(del .nextdevlock)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
