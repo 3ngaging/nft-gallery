@@ -132,35 +132,41 @@ export default function ApplyPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name */}
             <div>
-              <label className="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
+              <label htmlFor="name" className="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
                 <User size={18} className="text-accent" />
                 {t.apply.fullName} *
               </label>
               <input
                 type="text"
+                id="name"
                 name="name"
                 required
+                autoComplete="name"
                 value={formData.name}
                 onChange={handleChange}
                 className="w-full bg-black/30 border border-white/10 px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-accent/50 focus:bg-black/50 transition"
                 placeholder={t.apply.namePlaceholder}
+                aria-required="true"
               />
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
+              <label htmlFor="email" className="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
                 <Mail size={18} className="text-accent" />
                 {t.apply.email} *
               </label>
               <input
                 type="email"
+                id="email"
                 name="email"
                 required
+                autoComplete="email"
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full bg-black/30 border border-white/10 px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-accent/50 focus:bg-black/50 transition"
                 placeholder={t.apply.emailPlaceholder}
+                aria-required="true"
               />
             </div>
 

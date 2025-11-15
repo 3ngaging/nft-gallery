@@ -76,11 +76,17 @@ export default function NFTDetailClient({ nft, wallets }: NFTDetailClientProps) 
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-4">
-              <button className="flex-1 bg-[#86C520] hover:bg-[#75ad1c] text-white px-6 py-4 font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)]">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button
+                className="flex-1 bg-[#86C520] hover:bg-[#75ad1c] text-white px-6 py-4 font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)]"
+                aria-label="View NFT on blockchain"
+              >
                 {t.nft.viewOnBlockchain || 'View on Blockchain'}
               </button>
-              <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-6 py-4 font-semibold transition border border-white/20 shadow-lg hover:shadow-xl">
+              <button
+                className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-6 py-4 font-semibold transition border border-white/20 shadow-lg hover:shadow-xl"
+                aria-label="Share NFT"
+              >
                 {t.nft.share || 'Share'}
               </button>
             </div>

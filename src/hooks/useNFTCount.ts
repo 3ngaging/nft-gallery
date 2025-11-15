@@ -6,24 +6,32 @@ export function useNFTCount() {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    let cancelled = false;
+
     async function fetchCount() {
       try {
         const { count: nftCount, error } = await supabase
           .from('nfts')
           .select('*', { count: 'exact', head: true });
 
-        if (!error && nftCount !== null) {
+        if (!cancelled && !error && nftCount !== null) {
           setCount(nftCount);
         }
       } catch (err) {
         console.error('Error fetching NFT count:', err);
         // Keep default fallback of 45
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     }
 
     fetchCount();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return { count, loading };

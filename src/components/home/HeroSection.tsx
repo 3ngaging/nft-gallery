@@ -82,7 +82,7 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-16 grid grid-cols-3 gap-6 max-w-2xl mx-auto"
+          className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-2xl mx-auto"
         >
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:bg-accent/10 hover:border-accent/30 transition shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]">
             <div className="text-3xl font-bold text-accent">{nftCount}</div>
