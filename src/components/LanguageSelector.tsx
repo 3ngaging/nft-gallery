@@ -28,7 +28,7 @@ export default function LanguageSelector() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-1.5 bg-white/5 backdrop-blur-sm hover:bg-accent/10 transition group border border-white/10 hover:border-accent/30"
+        className="flex items-center gap-2 px-3 py-1.5 bg-white/5 backdrop-blur-sm hover:bg-accent/10 transition group border border-white/10 hover:border-accent/30 hover:border-[#86C520]/30 cursor-pointer"
         aria-label="Change language"
       >
         <Languages size={16} className="text-accent transition text-[#86C520]" />

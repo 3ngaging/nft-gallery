@@ -62,7 +62,7 @@ export default function TeamSection() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-gradient-to-br from-accent/10 via-white/5 to-accent/5 backdrop-blur-sm border border-accent/20 p-8 md:p-12 mb-16 relative overflow-hidden group"
+          className="group mb-5 bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 p-8 transition-all duration-300"
         >
           {/* Animated border glow */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
@@ -86,11 +86,11 @@ export default function TeamSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 hover:border-accent/30 hover:bg-accent/5 hover:scale-105 transition-all duration-300 group"
+              className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#86C520]/50 p-8 transition-all duration-300 hover:bg-[#86C520]/5 hover:shadow-[0_0_40px_rgba(134,197,32,0.2)]"
             >
               <div className="flex items-start gap-4">
-                <div className="bg-accent/20 p-3 rounded-lg border border-accent/30 group-hover:bg-accent group-hover:scale-110 transition-all duration-300">
-                  <value.icon className="text-accent group-hover:text-black transition-colors duration-300" size={24} />
+                <div className="flex-shrink-0 w-12 h-12 bg-[#86C520]/20 border border-[#86C520]/40 flex items-center justify-center group-hover:bg-[#86C520]/30 transition-colors">
+                  <value.icon className="w-6 h-6 text-[#86C520]" size={24} />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-xl font-bold text-white mb-2 group-hover:text-accent transition-colors duration-300">
@@ -113,17 +113,17 @@ export default function TeamSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="grid grid-cols-3 gap-6 mt-16"
         >
-          <div className="text-center bg-white/5 backdrop-blur-sm border border-white/10 p-6 hover:border-accent/30 hover:shadow-[0_0_30px_rgba(134,197,32,0.2)] transition-all duration-300">
+          <div className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#86C520]/50 p-8 transition-all duration-300 hover:bg-[#86C520]/5 hover:shadow-[0_0_40px_rgba(134,197,32,0.2)]">
             <div className="text-3xl md:text-4xl font-bold text-accent mb-2">{t.team.stat1Value}</div>
-            <div className="text-sm text-gray-400 uppercase tracking-wider">{t.team.stat1Label}</div>
+            <div className="text-sm text-[#86C520] uppercase tracking-wider">{t.team.stat1Label}</div>
           </div>
-          <div className="text-center bg-white/5 backdrop-blur-sm border border-white/10 p-6 hover:border-accent/30 hover:shadow-[0_0_30px_rgba(134,197,32,0.2)] transition-all duration-300">
+          <div className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#86C520]/50 p-8 transition-all duration-300 hover:bg-[#86C520]/5 hover:shadow-[0_0_40px_rgba(134,197,32,0.2)]">
             <div className="text-3xl md:text-4xl font-bold text-accent mb-2">{t.team.stat2Value}</div>
-            <div className="text-sm text-gray-400 uppercase tracking-wider">{t.team.stat2Label}</div>
+            <div className="text-sm text-[#86C520] uppercase tracking-wider">{t.team.stat2Label}</div>
           </div>
-          <div className="text-center bg-white/5 backdrop-blur-sm border border-white/10 p-6 hover:border-accent/30 hover:shadow-[0_0_30px_rgba(134,197,32,0.2)] transition-all duration-300">
+          <div className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#86C520]/50 p-8 transition-all duration-300 hover:bg-[#86C520]/5 hover:shadow-[0_0_40px_rgba(134,197,32,0.2)]">
             <div className="text-3xl md:text-4xl font-bold text-accent mb-2">{t.team.stat3Value}</div>
-            <div className="text-sm text-gray-400 uppercase tracking-wider">{t.team.stat3Label}</div>
+            <div className="text-sm text-[#86C520] uppercase tracking-wider">{t.team.stat3Label}</div>
           </div>
         </motion.div>
       </div>

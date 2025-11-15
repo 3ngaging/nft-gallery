@@ -21,7 +21,7 @@ export default function RoadmapSection() {
       title: t.roadmap.phase2Title,
       description: t.roadmap.phase2Desc,
       icon: Users,
-      status: t.roadmap.phase2Status,
+      status: t.roadmap.phase1Status,
       color: 'bg-accent/70'
     },
     {
@@ -29,7 +29,7 @@ export default function RoadmapSection() {
       title: t.roadmap.phase3Title,
       description: t.roadmap.phase3Desc,
       icon: Trophy,
-      status: t.roadmap.phase3Status,
+      status: t.roadmap.phase2Status,
       color: 'bg-accent/50'
     },
     {
@@ -38,15 +38,12 @@ export default function RoadmapSection() {
       description: t.roadmap.phase4Desc,
       icon: Zap,
       status: t.roadmap.phase4Status,
-      color: 'bg-white/30'
+      color: 'bg-black'
     }
   ];
 
   return (
-    <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-black via-primary-dark/50 to-black">
-      {/* Background effects */}
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-accent/10 rounded-full blur-[120px] -z-10"></div>
-      <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-accent/5 rounded-full blur-[100px] -z-10"></div>
+    <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-black via-[#86C520]/5 to-black">
 
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -85,14 +82,14 @@ export default function RoadmapSection() {
               >
                 {/* Content Card */}
                 <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'} text-left`}>
-                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 hover:border-accent/30 hover:bg-accent/5 transition-all duration-300 group shadow-lg hover:shadow-[0_0_30px_rgba(134,197,32,0.2)]">
+                  <div className="bg-gradient-to-r from-[#86C520]/20 via-[#86C520]/10 to-[#86C520]/20 border border-[#86C520]/30 backdrop-blur-sm p-6 transition-all duration-300 hover:border-[#86C520]/50 hover:bg-[#86C520]/25 shadow-[0_0_50px_rgba(134,197,32,0.2)] hover:shadow-[0_0_70px_rgba(134,197,32,0.4)] group">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className={`${phase.color} px-3 py-1 text-xs font-bold text-black`}>
+                      <div className={`${phase.color} px-3 py-1 text-xs font-bold text-[#86C520]`}>
                         {phase.status}
                       </div>
                       <span className="text-sm text-accent font-semibold">{phase.phase}</span>
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-accent transition-colors duration-300">
+                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#86C520] transition-colors duration-300">
                       {phase.title}
                     </h3>
                     <p className="text-gray-400 leading-relaxed">
@@ -102,8 +99,8 @@ export default function RoadmapSection() {
                 </div>
 
                 {/* Center Icon - Enhanced with better visibility */}
-                <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-10 h-10 md:w-14 md:h-14 bg-accent rounded-full flex items-center justify-center border-4 md:border-[6px] border-black shadow-[0_0_30px_rgba(134,197,32,0.6)] z-10 hover:scale-110 transition-transform duration-300">
-                  <phase.icon className="text-black" size={24} />
+                <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-10 h-10 md:w-14 md:h-14 bg-accent rounded-full flex items-center justify-center border-4 md:border-[6px] border-[#86C520] shadow-[0_0_30px_rgba(134,197,32,0.6)] z-10 hover:scale-110 transition-transform duration-300">
+                  <phase.icon className="text-[#86C520]" size={24} />
                 </div>
 
                 {/* Connecting line from icon to card - More visible */}
@@ -116,6 +113,12 @@ export default function RoadmapSection() {
           </div>
         </div>
       </div>
+
+      {/* Background effects */}
+      {/* <div className="absolute inset-0 bg-gradient-to-b from-black via-[#86C520]/5 to-black"></div> */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#86C520]/20 rounded-full blur-[150px] animate-pulse"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#86C520]/10 rounded-full blur-[100px]"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#86C520]/10 rounded-full blur-[100px]"></div>
     </section>
   );
 }
