@@ -85,7 +85,7 @@ export default function Navbar() {
                 href="/apply"
                 className="border border-white/10 bg-[#86C520] hover:bg-[#75ad1c] text-white px-6 py-4 font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)]"
               >
-                Apply Now
+                {t.home.applyNow}
               </Link>
             )}
           </div>
@@ -147,7 +147,7 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className="block w-full text-center px-6 py-2.5 mt-2 bg-accent hover:bg-accent/90 text-primary-dark font-bold text-xs uppercase tracking-wider transition shadow-lg"
               >
-                Apply Now
+                {t.home.applyNow}
               </Link>
             )}
           </div>

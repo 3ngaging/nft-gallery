@@ -4,8 +4,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function HeroSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden -mt-14 pt-14">
       {/* Subtle Background with Overlay */}
@@ -54,7 +57,7 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-xl md:text-2xl text-primary-light/90 mb-12 font-light tracking-wide"
         >
-          Elite Community of Post-Apocalyptic Survivors
+          {t.home.tagline}
         </motion.p>
 
         {/* CTA Button */}
@@ -67,7 +70,7 @@ export default function HeroSection() {
             href="/apply"
             className="inline-flex border border-white/10 bg-[#86C520] hover:bg-[#75ad1c] text-white px-6 py-4 font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)]"
           >
-            Apply Now
+            {t.home.applyNow}
             <ArrowRight size={20} />
           </Link>
         </motion.div>
@@ -81,15 +84,15 @@ export default function HeroSection() {
         >
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:bg-accent/10 hover:border-accent/30 transition shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]">
             <div className="text-3xl font-bold text-accent">45</div>
-            <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">Total Supply</div>
+            <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">{t.home.totalSupply}</div>
           </div>
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:bg-accent/10 hover:border-accent/30 transition shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]">
             <div className="text-3xl font-bold text-accent">1/1</div>
-            <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">Unique</div>
+            <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">{t.home.unique}</div>
           </div>
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:bg-accent/10 hover:border-accent/30 transition shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]">
             <div className="text-3xl font-bold text-accent">OG</div>
-            <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">Exclusive</div>
+            <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">{t.home.ogExclusive}</div>
           </div>
         </motion.div>
       </div>

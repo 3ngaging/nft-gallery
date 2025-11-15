@@ -2,28 +2,31 @@
 
 import { motion } from 'framer-motion';
 import { Zap, Users, Shield } from 'lucide-react';
-
-const features = [
-  {
-    icon: Zap,
-    title: 'Exclusive Alpha',
-    desc: 'Early access to market insights and trading opportunities'
-  },
-  {
-    icon: Users,
-    title: 'Elite Network',
-    desc: 'Connect with successful traders in the Solana ecosystem'
-  },
-  {
-    icon: Shield,
-    title: 'Protected Access',
-    desc: 'Limited to 45 members - quality discussions guaranteed'
-  }
-];
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function FeaturesSection() {
+  const { t } = useLanguage();
+
+  const features = [
+    {
+      icon: Zap,
+      title: t.home.exclusiveAlpha,
+      desc: t.home.exclusiveAlphaDesc
+    },
+    {
+      icon: Users,
+      title: t.home.eliteNetwork,
+      desc: t.home.eliteNetworkDesc
+    },
+    {
+      icon: Shield,
+      title: t.home.protectedAccess,
+      desc: t.home.protectedAccessDesc
+    }
+  ];
+
   return (
-    <section className="relative py-20 px-4 bg-black">
+    <section className="relative py-20 px-4">
       {/* Background glow */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[120px] -z-10"></div>
 
@@ -36,13 +39,13 @@ export default function FeaturesSection() {
           className="mb-12"
         >
           <div className="inline-block bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 mb-4 border border-[#86C520]/30">
-            <span className="text-xs font-semibold text-accent uppercase tracking-wider">Benefits</span>
+            <span className="text-xs font-semibold text-accent uppercase tracking-wider">{t.home.benefits}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-3 text-white">
-            Why <span className="gradient-text-primary">Power Grinders</span>
+            {t.home.whyPowerGrinders.split(' ').slice(0, -2).join(' ')} <span className="gradient-text-primary">Power Grinders</span>
           </h2>
           <p className="text-lg text-gray-400">
-            More than NFTs - an elite community
+            {t.home.moreThanNFTs}
           </p>
         </motion.div>
 

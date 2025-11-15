@@ -13,7 +13,10 @@
       "Bash(netstat:*)",
       "Bash(findstr:*)",
       "Bash(npx kill-port:*)",
-      "Bash(del .nextdevlock)"
+      "Bash(del .nextdevlock)",
+      "Bash(del srclibi18n.ts)",
+      "Bash(ren:*)",
+      "Bash(npm run lint:*)"
     ],
     "deny": [],
     "ask": []

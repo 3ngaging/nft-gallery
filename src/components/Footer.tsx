@@ -3,8 +3,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Twitter, MessageCircle } from 'lucide-react';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="relative bg-black/90 backdrop-blur-md border-t border-white/10">
       {/* Subtle noise texture */}
@@ -29,23 +32,23 @@ export default function Footer() {
               <span className="text-base font-bold text-primary-light">Power Grinders</span>
             </div>
             <p className="text-primary-light/60 text-xs">
-              Exclusive community for Solana OGs
+              {t.home.tagline}
             </p>
           </div>
 
           {/* Links */}
           <div>
-            <h3 className="text-primary-light font-semibold mb-3 text-xs uppercase tracking-wider">Quick Links</h3>
+            <h3 className="text-primary-light font-semibold mb-3 text-xs uppercase tracking-wider">{t.home.quickLinks}</h3>
             <ul className="space-y-2">
-              <li><Link href="/" className="text-primary-light/70 hover:text-accent transition text-xs">Home</Link></li>
-              <li><Link href="/gallery" className="text-primary-light/70 hover:text-accent transition text-xs">Gallery</Link></li>
-              <li><Link href="/apply" className="text-primary-light/70 hover:text-accent transition text-xs">Apply</Link></li>
+              <li><Link href="/" className="text-primary-light/70 hover:text-accent transition text-xs">{t.nav.home}</Link></li>
+              <li><Link href="/gallery" className="text-primary-light/70 hover:text-accent transition text-xs">{t.nav.gallery}</Link></li>
+              <li><Link href="/apply" className="text-primary-light/70 hover:text-accent transition text-xs">{t.nav.apply}</Link></li>
             </ul>
           </div>
 
           {/* Social */}
           <div>
-            <h3 className="text-primary-light font-semibold mb-3 text-xs uppercase tracking-wider">Community</h3>
+            <h3 className="text-primary-light font-semibold mb-3 text-xs uppercase tracking-wider">{t.home.community}</h3>
             <div className="flex gap-3">
               <a href="#" className="text-primary-light/70 hover:text-accent transition p-2.5 bg-primary-medium/20 hover:bg-accent/20 text-[#86C520]">
                 <Twitter size={16} />
@@ -60,7 +63,7 @@ export default function Footer() {
         <div className="pt-6 text-center">
           <hr className="border-t border-primary-medium/5 w-full border-[0.5px] opacity-5" />
           <p className="text-primary-light/50 text-xs pt-6">
-            © 2025 Power Grinders. All rights reserved.
+            © 2025 Power Grinders. {t.home.allRightsReserved}
           </p>
         </div>
       </div>

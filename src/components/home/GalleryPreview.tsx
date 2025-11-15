@@ -4,8 +4,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function GalleryPreview() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative py-20 px-4">
       {/* Background glow effects */}
@@ -22,13 +25,13 @@ export default function GalleryPreview() {
           className="mb-12"
         >
           <div className="inline-block bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 mb-4 border border-[#86C520]/30">
-            <span className="text-xs font-semibold text-accent uppercase tracking-wider">NFT Collection</span>
+            <span className="text-xs font-semibold text-accent uppercase tracking-wider">{t.home.nftCollection}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-3 text-white">
-            The <span className="gradient-text-primary">Collection</span>
+            {t.home.theCollection.split(' ')[0]} <span className="gradient-text-primary">{t.home.theCollection.split(' ').slice(1).join(' ')}</span>
           </h2>
           <p className="text-lg text-gray-400">
-            45 unique characters surviving the wasteland
+            {t.home.collectionDesc}
           </p>
         </motion.div>
 
@@ -68,7 +71,7 @@ export default function GalleryPreview() {
             href="/gallery"
             className="inline-flex items-center gap-2 px-8 py-3 bg-primary-medium hover:bg-primary-medium/80 text-accent font-semibold uppercase tracking-wider shadow-[0_3px_0_0_#86C520] hover:shadow-[0_1px_0_0_#86C520] hover:translate-y-[2px] transition-all duration-200"
           >
-            View Full Gallery
+            {t.home.viewFullGallery}
             <ArrowRight size={18} />
           </Link>
         </motion.div>

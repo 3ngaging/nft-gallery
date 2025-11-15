@@ -2,15 +2,18 @@
 
 import { motion } from 'framer-motion';
 import { Shield, Users, Crown, MessageCircle } from 'lucide-react';
-
-const stats = [
-  { value: '45', label: 'Total Supply', icon: Shield },
-  { value: '1/1', label: 'Unique Pieces', icon: Crown },
-  { value: 'OG', label: 'Exclusive', icon: Users },
-  { value: '24/7', label: 'Community', icon: MessageCircle }
-];
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function StatsSection() {
+  const { t } = useLanguage();
+
+  const stats = [
+    { value: '45', label: t.home.totalSupply, icon: Shield },
+    { value: '1/1', label: t.home.unique, icon: Crown },
+    { value: 'OG', label: t.home.ogExclusive, icon: Users },
+    { value: '24/7', label: t.home.community247, icon: MessageCircle }
+  ];
+
   return (
     <section className="relative py-20 px-4 bg-gradient-to-b from-black via-primary-dark/5 to-black">
       <div className="max-w-6xl mx-auto">

@@ -75,14 +75,14 @@ export default function GalleryPage() {
           className="mb-10"
         >
           <div className="bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#86C520]/30">
-            <span className="text-xs font-semibold text-accent uppercase tracking-wider">NFT Gallery</span>
+            <span className="text-xs font-semibold text-accent uppercase tracking-wider">{t.gallery.title}</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-3 text-white">
-            Full <span className="gradient-text-primary">Collection</span>
+            {t.gallery.fullCollection.split(' ')[0]} <span className="gradient-text-primary">{t.gallery.fullCollection.split(' ').slice(1).join(' ')}</span>
           </h1>
           <p className="text-lg text-gray-400">
-            {filteredNfts.length} {filteredNfts.length === 1 ? 'NFT' : 'NFTs'}
-            {nfts.length !== filteredNfts.length && ` of ${nfts.length} total`}
+            {filteredNfts.length} {filteredNfts.length === 1 ? t.gallery.nftSingular : t.gallery.nftPlural}
+            {nfts.length !== filteredNfts.length && ` ${t.gallery.of} ${nfts.length} ${t.gallery.total}`}
           </p>
         </motion.div>
 

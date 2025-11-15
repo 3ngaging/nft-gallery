@@ -47,7 +47,7 @@ export default function ApplyPage() {
 
   if (submitted) {
     return (
-      <div className="relative min-h-screen flex items-center justify-center px-4 bg-black">
+      <div className="relative min-h-screen flex items-center justify-center px-4">
         {/* Background glow effects */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-accent/20 rounded-full blur-[150px] -z-10"></div>
 
@@ -63,18 +63,18 @@ export default function ApplyPage() {
           >
             <Send size={40} className="text-accent" />
           </motion.div>
-          <h2 className="text-4xl font-bold mb-4 gradient-text-primary">Application Submitted!</h2>
+          <h2 className="text-4xl font-bold mb-4 gradient-text-primary">{t.apply.submitted}</h2>
           <p className="text-gray-400 mb-4">
-            Thank you for your application. We'll review it and get back to you soon.
+            {t.apply.submittedDesc}
           </p>
-          <p className="text-sm text-gray-500">Redirecting to home...</p>
+          <p className="text-sm text-gray-500">{t.apply.redirecting}</p>
         </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen py-20 px-4 bg-black">
+    <div className="relative min-h-screen py-20 px-4">
       {/* Background glow effects */}
       <div className="absolute top-20 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[120px] -z-10"></div>
       <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-accent/5 rounded-full blur-[100px] -z-10"></div>
@@ -102,10 +102,10 @@ export default function ApplyPage() {
             />
           </motion.div>
           <h1 className="text-5xl md:text-6xl font-bold mb-4 gradient-text-primary drop-shadow-[0_0_30px_rgba(134,197,32,0.3)]">
-            Apply Now
+            {t.apply.title}
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Join an exclusive community of 45 elite members. Only the best grinders are accepted.
+            {t.apply.subtitle}
           </p>
         </motion.div>
 
@@ -121,7 +121,7 @@ export default function ApplyPage() {
             <div>
               <label className="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
                 <User size={18} className="text-accent" />
-                Full Name *
+                {t.apply.fullName} *
               </label>
               <input
                 type="text"
@@ -129,8 +129,8 @@ export default function ApplyPage() {
                 required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full bg-black/40 border border-accent/30 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-accent transition"
-                placeholder="Enter your full name"
+                className="w-full bg-black/30 border border-white/10 px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-accent/50 focus:bg-black/50 transition"
+                placeholder={t.apply.namePlaceholder}
               />
             </div>
 
@@ -138,7 +138,7 @@ export default function ApplyPage() {
             <div>
               <label className="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
                 <Mail size={18} className="text-accent" />
-                Email Address *
+                {t.apply.email} *
               </label>
               <input
                 type="email"
@@ -146,8 +146,8 @@ export default function ApplyPage() {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full bg-black/40 border border-accent/30 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-accent transition"
-                placeholder="your.email@example.com"
+                className="w-full bg-black/30 border border-white/10 px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-accent/50 focus:bg-black/50 transition"
+                placeholder={t.apply.emailPlaceholder}
               />
             </div>
 
@@ -156,7 +156,7 @@ export default function ApplyPage() {
               <div>
                 <label className="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
                   <Twitter size={18} className="text-accent" />
-                  Twitter Handle *
+                  {t.apply.twitterHandle} *
                 </label>
                 <input
                   type="text"
@@ -164,14 +164,14 @@ export default function ApplyPage() {
                   required
                   value={formData.twitter}
                   onChange={handleChange}
-                  className="w-full bg-black/40 border border-accent/30 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-accent transition"
-                  placeholder="@yourhandle"
+                  className="w-full bg-black/30 border border-white/10 px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-accent/50 focus:bg-black/50 transition"
+                  placeholder={t.apply.twitterPlaceholder}
                 />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-300 mb-2 flex items-center gap-2">
                   <MessageSquare size={18} className="text-accent" />
-                  Discord Username *
+                  {t.apply.discordUsername} *
                 </label>
                 <input
                   type="text"
@@ -179,8 +179,8 @@ export default function ApplyPage() {
                   required
                   value={formData.discord}
                   onChange={handleChange}
-                  className="w-full bg-black/40 border border-accent/30 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-accent transition"
-                  placeholder="username#0000"
+                  className="w-full bg-black/30 border border-white/10 px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-accent/50 focus:bg-black/50 transition"
+                  placeholder={t.apply.discordPlaceholder}
                 />
               </div>
             </div>
@@ -188,7 +188,7 @@ export default function ApplyPage() {
             {/* Experience */}
             <div>
               <label className="block text-sm font-semibold text-gray-300 mb-2">
-                Crypto/NFT Experience *
+                {t.apply.experience} *
               </label>
               <textarea
                 name="experience"
@@ -196,15 +196,15 @@ export default function ApplyPage() {
                 value={formData.experience}
                 onChange={handleChange}
                 rows={4}
-                className="w-full bg-black/40 border border-accent/30 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-accent transition resize-none"
-                placeholder="Tell us about your experience in crypto and NFTs..."
+                className="w-full bg-black/30 border border-white/10 px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-accent/50 focus:bg-black/50 transition resize-none"
+                placeholder={t.apply.experiencePlaceholder}
               />
             </div>
 
             {/* Why Join */}
             <div>
               <label className="block text-sm font-semibold text-gray-300 mb-2">
-                Why do you want to join Power Grinders? *
+                {t.apply.whyJoin} *
               </label>
               <textarea
                 name="why"
@@ -212,15 +212,15 @@ export default function ApplyPage() {
                 value={formData.why}
                 onChange={handleChange}
                 rows={4}
-                className="w-full bg-black/40 border border-accent/30 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-accent transition resize-none"
-                placeholder="What makes you a good fit for this community?"
+                className="w-full bg-black/30 border border-white/10 px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-accent/50 focus:bg-black/50 transition resize-none"
+                placeholder={t.apply.whyPlaceholder}
               />
             </div>
 
             {/* Contribution */}
             <div>
               <label className="block text-sm font-semibold text-gray-300 mb-2">
-                What can you contribute to the community? *
+                {t.apply.contribution} *
               </label>
               <textarea
                 name="contribution"
@@ -228,8 +228,8 @@ export default function ApplyPage() {
                 value={formData.contribution}
                 onChange={handleChange}
                 rows={4}
-                className="w-full bg-black/40 border border-accent/30 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-accent transition resize-none"
-                placeholder="How will you add value to Power Grinders?"
+                className="w-full bg-black/30 border border-white/10 px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-accent/50 focus:bg-black/50 transition resize-none"
+                placeholder={t.apply.contributionPlaceholder}
               />
             </div>
 
@@ -243,20 +243,20 @@ export default function ApplyPage() {
             >
               {isSubmitting ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                  Submitting...
+                  <div className="w-5 h-5 border-2 border-black/30 border-t-black animate-spin" />
+                  {t.apply.submitting}
                 </>
               ) : (
                 <>
                   <Send size={20} />
-                  Submit Application
+                  {t.apply.submit}
                 </>
               )}
             </motion.button>
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-6">
-            * All fields are required. We review all applications carefully.
+            {t.apply.required}
           </p>
         </motion.div>
 
@@ -269,15 +269,15 @@ export default function ApplyPage() {
         >
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-center hover:bg-accent/10 hover:border-accent/30 transition-all duration-200 shadow-lg">
             <div className="text-4xl font-bold text-accent mb-2">45</div>
-            <p className="text-gray-400 text-sm uppercase tracking-wider">Total Spots</p>
+            <p className="text-gray-400 text-sm uppercase tracking-wider">{t.apply.totalSpots}</p>
           </div>
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-center hover:bg-accent/10 hover:border-accent/30 transition-all duration-200 shadow-lg">
             <div className="text-4xl font-bold text-accent mb-2">24-48h</div>
-            <p className="text-gray-400 text-sm uppercase tracking-wider">Review Time</p>
+            <p className="text-gray-400 text-sm uppercase tracking-wider">{t.apply.reviewTime}</p>
           </div>
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-center hover:bg-accent/10 hover:border-accent/30 transition-all duration-200 shadow-lg">
             <div className="text-4xl font-bold text-accent mb-2">Elite</div>
-            <p className="text-gray-400 text-sm uppercase tracking-wider">Community</p>
+            <p className="text-gray-400 text-sm uppercase tracking-wider">{t.apply.eliteCommunity}</p>
           </div>
         </motion.div>
       </div>
