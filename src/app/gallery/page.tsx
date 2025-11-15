@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Grid3x3, LayoutGrid, List } from 'lucide-react';
 import NFTCard from '@/components/NFTCard';
@@ -9,57 +9,58 @@ import LoadingScreen from '@/components/LoadingScreen';
 import { supabase, type NFT } from '@/lib/supabase';
 import { useLanguage } from '@/lib/LanguageContext';
 
+// Grid classes constant - moved outside component for better performance
+const GRID_CLASSES = {
+  3: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3',
+  4: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
+  5: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
+} as const;
+
 export default function GalleryPage() {
   const { t } = useLanguage();
   const [nfts, setNfts] = useState<NFT[]>([]);
-  const [filteredNfts, setFilteredNfts] = useState<NFT[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [gridSize, setGridSize] = useState<3 | 4 | 5>(4);
 
-  // Load NFTs function
-  const loadNFTs = useCallback(async () => {
-    setLoading(true);
-    const { data, error } = await supabase
-      .from('nfts')
-      .select('*')
-      .order('token_id', { ascending: true });
+  // Load NFTs on mount - using useEffect with cleanup
+  useEffect(() => {
+    let cancelled = false;
 
-    if (!error && data) {
-      setNfts(data);
-      setFilteredNfts(data);
+    async function fetchNFTs() {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('nfts')
+        .select('*')
+        .order('token_id', { ascending: true });
+
+      if (!cancelled && !error && data) {
+        setNfts(data);
+      }
+      if (!cancelled) {
+        setLoading(false);
+      }
     }
-    setLoading(false);
+
+    fetchNFTs();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  // Load NFTs on mount
-  useEffect(() => {
-    loadNFTs();
-  }, [loadNFTs]);
-
-  // Filter by search
-  useEffect(() => {
+  // Use useMemo for derived state instead of useEffect + setState
+  const filteredNfts = useMemo(() => {
     if (!searchTerm.trim()) {
-      setFilteredNfts(nfts);
-      return;
+      return nfts;
     }
 
     const search = searchTerm.toLowerCase();
-    const result = nfts.filter(nft =>
+    return nfts.filter(nft =>
       nft.name.toLowerCase().includes(search) ||
       nft.description?.toLowerCase().includes(search) ||
       nft.token_id.toString().includes(search)
     );
-
-    setFilteredNfts(result);
   }, [searchTerm, nfts]);
-
-  // Memoize gridClasses to prevent recreation on every render
-  const gridClasses = useMemo(() => ({
-    3: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3',
-    4: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
-    5: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
-  }), []);
 
   // Show full-screen loading only on initial load
   if (loading && nfts.length === 0) {
@@ -174,7 +175,7 @@ export default function GalleryPage() {
 
         {/* Grid de NFTs */}
         {!loading && filteredNfts.length > 0 && (
-          <div className={`grid ${gridClasses[gridSize]} gap-6`}>
+          <div className={`grid ${GRID_CLASSES[gridSize]} gap-6`}>
             {filteredNfts.map((nft) => (
               <NFTCard key={nft.id} nft={nft} />
             ))}

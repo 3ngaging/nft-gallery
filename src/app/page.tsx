@@ -6,7 +6,9 @@ import GalleryPreview from '@/components/home/GalleryPreview';
 import StatsSection from '@/components/home/StatsSection';
 import CommunitySection from '@/components/home/CommunitySection';
 import FeaturesSection from '@/components/home/FeaturesSection';
-import CTASection from '@/components/home/CTASection';
+import RoadmapSection from '@/components/home/RoadmapSection';
+import TeamSection from '@/components/home/TeamSection';
+import FAQSection from '@/components/home/FAQSection';
 import Footer from '@/components/Footer';
 import LoadingScreen from '@/components/LoadingScreen';
 
@@ -33,7 +35,9 @@ export default function Home() {
       <StatsSection />
       <CommunitySection />
       <FeaturesSection />
-      <CTASection />
+      <RoadmapSection />
+      <TeamSection />
+      <FAQSection />
       <Footer />
     </div>
   );

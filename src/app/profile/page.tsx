@@ -24,55 +24,66 @@ type VerifiedCredential = {
 };
 
 export default function ProfilePage() {
-  const { user, isAuthenticated } = useDynamicContext();
+  const { user } = useDynamicContext();
   const { t } = useLanguage();
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const loadUserData = useCallback(async () => {
-    if (!user) return;
+  // Authentication check using user existence
+  const isAuthenticated = !!user;
 
-    // Find or create user in Supabase
-    const { data, error } = await supabase
-      .from('users')
-      .select('*')
-      .eq('matrix_id', user.userId)
-      .single();
-
-    if (error && error.code === 'PGRST116') {
-      // User doesn't exist, create it
-      const verifiedCreds = user.verifiedCredentials as VerifiedCredential[] | undefined;
-      const { data: newUser } = await supabase
-        .from('users')
-        .insert({
-          matrix_id: user.userId,
-          username: user.username || user.email,
-          discord_id: verifiedCreds?.find((c) => c.oauthProvider === 'discord')?.oauthAccountId,
-          twitter_id: verifiedCreds?.find((c) => c.oauthProvider === 'twitter')?.oauthAccountId,
-          telegram_id: verifiedCreds?.find((c) => c.oauthProvider === 'telegram')?.oauthAccountId,
-        })
-        .select()
-        .single();
-
-      setUserData(newUser);
-    } else {
-      setUserData(data);
-    }
-
-    setLoading(false);
-  }, [user]);
-
+  // Load user data with cleanup
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!user) {
       router.push('/');
       return;
     }
 
-    if (user) {
-      loadUserData();
+    let cancelled = false;
+
+    async function fetchUserData() {
+      // Find or create user in Supabase
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('matrix_id', user.userId)
+        .single();
+
+      if (cancelled) return;
+
+      if (error && error.code === 'PGRST116') {
+        // User doesn't exist, create it
+        const verifiedCreds = user.verifiedCredentials as VerifiedCredential[] | undefined;
+        const { data: newUser } = await supabase
+          .from('users')
+          .insert({
+            matrix_id: user.userId,
+            username: user.username || user.email,
+            discord_id: verifiedCreds?.find((c) => c.oauthProvider === 'discord')?.oauthAccountId,
+            twitter_id: verifiedCreds?.find((c) => c.oauthProvider === 'twitter')?.oauthAccountId,
+            telegram_id: verifiedCreds?.find((c) => c.oauthProvider === 'telegram')?.oauthAccountId,
+          })
+          .select()
+          .single();
+
+        if (!cancelled) {
+          setUserData(newUser);
+        }
+      } else if (!cancelled) {
+        setUserData(data);
+      }
+
+      if (!cancelled) {
+        setLoading(false);
+      }
     }
-  }, [isAuthenticated, user, router, loadUserData]);
+
+    fetchUserData();
+    return () => {
+      cancelled = true;
+    };
+  }, [user, router]);
 
   if (loading) {
     return (

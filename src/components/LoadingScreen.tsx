@@ -1,9 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Cog } from 'lucide-react';
 
 export default function LoadingScreen() {
+  const circleRadius = 28;
+  const circumference = 2 * Math.PI * circleRadius;
+
   return (
     <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
       {/* Background glow effects */}
@@ -11,20 +13,66 @@ export default function LoadingScreen() {
 
       {/* Loading content */}
       <div className="relative z-10 flex flex-col items-center gap-6">
-        {/* Rotating Gear Icon */}
+        {/* Circular Loading Spinner */}
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="relative"
+          className="relative w-16 h-16"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
         >
-          <Cog
-            size={64}
-            className="text-accent drop-shadow-[0_0_20px_rgba(134,197,32,0.6)]"
+          {/* SVG Circle Loader */}
+          <svg className="w-full h-full -rotate-90" viewBox="0 0 64 64">
+            {/* Background circle */}
+            <circle
+              cx="32"
+              cy="32"
+              r={circleRadius}
+              fill="none"
+              stroke="rgba(134, 197, 32, 0.1)"
+              strokeWidth="4"
+            />
+
+            {/* Animated progress circle */}
+            <motion.circle
+              cx="32"
+              cy="32"
+              r={circleRadius}
+              fill="none"
+              stroke="#86C520"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeDasharray={circumference}
+              initial={{ strokeDashoffset: circumference }}
+              animate={{
+                strokeDashoffset: [circumference, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              style={{
+                filter: 'drop-shadow(0 0 8px rgba(134, 197, 32, 0.6))'
+              }}
+            />
+          </svg>
+
+          {/* Inner pulsing circle */}
+          <motion.div
+            className="absolute inset-3 bg-accent/30 rounded-full"
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
           />
+
+          {/* Center glow */}
+          <div className="absolute inset-5 bg-accent/40 rounded-full blur-sm"></div>
         </motion.div>
 
         {/* Loading text */}
