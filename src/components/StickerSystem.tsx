@@ -9,6 +9,7 @@ type Sticker = {
   image: string;
   x: number;
   y: number;
+  rotation: number;
 };
 
 export default function StickerSystem() {
@@ -47,6 +48,7 @@ export default function StickerSystem() {
       image: randomSticker,
       x: e.clientX,
       y: e.clientY,
+      rotation: Math.random() * 60 - 30, // Random rotation between -30 and 30 degrees
     };
 
     setStickers(prev => [...prev, newSticker]);
@@ -85,7 +87,7 @@ export default function StickerSystem() {
               scale: 1,
               x: sticker.x - 50,
               y: sticker.y - 50,
-              rotate: Math.random() * 60 - 30, // Random rotation between -30 and 30 degrees
+              rotate: sticker.rotation,
             }}
             exit={{
               opacity: 0,

@@ -1,6 +1,5 @@
 'use client';
 
-import StickerSystem from '@/components/StickerSystem';
 import HeroSection from '@/components/home/HeroSection';
 import GalleryPreview from '@/components/home/GalleryPreview';
 import StatsSection from '@/components/home/StatsSection';

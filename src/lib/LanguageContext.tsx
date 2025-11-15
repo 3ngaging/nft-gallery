@@ -15,28 +15,32 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>('en');
   const [mounted, setMounted] = useState(false);
 
-  // Cargar idioma guardado al iniciar (solo en cliente)
+  // Load saved language on mount (client-side only)
   useEffect(() => {
-    setMounted(true);
     const savedLang = localStorage.getItem('language') as Language;
     if (savedLang && ['en', 'es', 'zh', 'hi', 'ko'].includes(savedLang)) {
       setLanguageState(savedLang);
     }
+    setMounted(true);
   }, []);
 
-  // Guardar idioma cuando cambie
+  // Save language when it changes
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    if (typeof window !== 'undefined') {
+    if (mounted && typeof window !== 'undefined') {
       localStorage.setItem('language', lang);
     }
   };
 
   const t = getTranslation(language);
 
-  // Evitar hydration mismatch mostrando contenido solo después de montar
+  // Prevent hydration mismatch by rendering after mount
   if (!mounted) {
-    return null;
+    return (
+      <LanguageContext.Provider value={{ language, setLanguage, t }}>
+        {children}
+      </LanguageContext.Provider>
+    );
   }
 
   return (

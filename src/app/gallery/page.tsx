@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Grid3x3, LayoutGrid, List } from 'lucide-react';
 import NFTCard from '@/components/NFTCard';
@@ -16,12 +16,27 @@ export default function GalleryPage() {
   const [loading, setLoading] = useState(true);
   const [gridSize, setGridSize] = useState<3 | 4 | 5>(4);
 
-  // Cargar NFTs
-  useEffect(() => {
-    loadNFTs();
+  // Load NFTs function
+  const loadNFTs = useCallback(async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('nfts')
+      .select('*')
+      .order('token_id', { ascending: true });
+
+    if (!error && data) {
+      setNfts(data);
+      setFilteredNfts(data);
+    }
+    setLoading(false);
   }, []);
 
-  // Filtrar por búsqueda
+  // Load NFTs on mount
+  useEffect(() => {
+    loadNFTs();
+  }, [loadNFTs]);
+
+  // Filter by search
   useEffect(() => {
     if (!searchTerm.trim()) {
       setFilteredNfts(nfts);
@@ -37,20 +52,6 @@ export default function GalleryPage() {
 
     setFilteredNfts(result);
   }, [searchTerm, nfts]);
-
-  async function loadNFTs() {
-    setLoading(true);
-    const { data, error } = await supabase
-      .from('nfts')
-      .select('*')
-      .order('token_id', { ascending: true });
-
-    if (!error && data) {
-      setNfts(data);
-      setFilteredNfts(data);
-    }
-    setLoading(false);
-  }
 
   const gridClasses = {
     3: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3',
@@ -153,7 +154,7 @@ export default function GalleryPage() {
             <div className="text-5xl mb-4">🔍</div>
             <h3 className="text-2xl font-bold mb-2 text-white">{t.gallery.noResults}</h3>
             <p className="text-gray-400 mb-6">
-              {t.gallery.noResultsDesc} "{searchTerm}"
+              {t.gallery.noResultsDesc} &quot;{searchTerm}&quot;
             </p>
             <button
               onClick={() => setSearchTerm('')}

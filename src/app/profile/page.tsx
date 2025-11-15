@@ -2,33 +2,38 @@
 
 import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { User, Mail, Award, Calendar } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useLanguage } from '@/lib/LanguageContext';
+
+type UserData = {
+  id: number;
+  matrix_id: string;
+  username?: string;
+  discord_id?: string;
+  twitter_id?: string;
+  telegram_id?: string;
+  total_points?: number;
+  created_at?: string;
+};
+
+type VerifiedCredential = {
+  oauthProvider: string;
+  oauthAccountId: string;
+};
 
 export default function ProfilePage() {
   const { user, isAuthenticated } = useDynamicContext();
   const { t } = useLanguage();
   const router = useRouter();
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/');
-      return;
-    }
-
-    if (user) {
-      loadUserData();
-    }
-  }, [isAuthenticated, user, router]);
-
-  async function loadUserData() {
+  const loadUserData = useCallback(async () => {
     if (!user) return;
 
-    // Buscar o crear usuario en Supabase
+    // Find or create user in Supabase
     const { data, error } = await supabase
       .from('users')
       .select('*')
@@ -36,15 +41,16 @@ export default function ProfilePage() {
       .single();
 
     if (error && error.code === 'PGRST116') {
-      // Usuario no existe, crearlo
+      // User doesn't exist, create it
+      const verifiedCreds = user.verifiedCredentials as VerifiedCredential[] | undefined;
       const { data: newUser } = await supabase
         .from('users')
         .insert({
           matrix_id: user.userId,
           username: user.username || user.email,
-          discord_id: user.verifiedCredentials?.find((c: any) => c.oauthProvider === 'discord')?.oauthAccountId,
-          twitter_id: user.verifiedCredentials?.find((c: any) => c.oauthProvider === 'twitter')?.oauthAccountId,
-          telegram_id: user.verifiedCredentials?.find((c: any) => c.oauthProvider === 'telegram')?.oauthAccountId,
+          discord_id: verifiedCreds?.find((c) => c.oauthProvider === 'discord')?.oauthAccountId,
+          twitter_id: verifiedCreds?.find((c) => c.oauthProvider === 'twitter')?.oauthAccountId,
+          telegram_id: verifiedCreds?.find((c) => c.oauthProvider === 'telegram')?.oauthAccountId,
         })
         .select()
         .single();
@@ -55,7 +61,18 @@ export default function ProfilePage() {
     }
 
     setLoading(false);
-  }
+  }, [user]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/');
+      return;
+    }
+
+    if (user) {
+      loadUserData();
+    }
+  }, [isAuthenticated, user, router, loadUserData]);
 
   if (loading) {
     return (
