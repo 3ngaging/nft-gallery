@@ -70,8 +70,8 @@ export default function RoadmapSection() {
 
         {/* Roadmap Timeline */}
         <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent via-accent/50 to-transparent -z-10"></div>
+          {/* Enhanced Vertical line - More visible */}
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 md:w-1.5 bg-gradient-to-b from-accent via-accent/60 to-accent/30 shadow-[0_0_20px_rgba(134,197,32,0.5)]"></div>
 
           <div className="space-y-12">
             {phases.map((phase, index) => (
@@ -85,7 +85,7 @@ export default function RoadmapSection() {
               >
                 {/* Content Card */}
                 <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'} text-left`}>
-                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 hover:border-accent/30 hover:bg-accent/5 transition-all duration-300 group">
+                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 hover:border-accent/30 hover:bg-accent/5 transition-all duration-300 group shadow-lg hover:shadow-[0_0_30px_rgba(134,197,32,0.2)]">
                     <div className="flex items-center gap-3 mb-3">
                       <div className={`${phase.color} px-3 py-1 text-xs font-bold text-black`}>
                         {phase.status}
@@ -101,10 +101,13 @@ export default function RoadmapSection() {
                   </div>
                 </div>
 
-                {/* Center Icon */}
-                <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-8 h-8 md:w-12 md:h-12 bg-accent rounded-full flex items-center justify-center border-4 border-black shadow-[0_0_20px_rgba(134,197,32,0.4)] z-10">
-                  <phase.icon className="text-black" size={20} />
+                {/* Center Icon - Enhanced with better visibility */}
+                <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-10 h-10 md:w-14 md:h-14 bg-accent rounded-full flex items-center justify-center border-4 md:border-[6px] border-black shadow-[0_0_30px_rgba(134,197,32,0.6)] z-10 hover:scale-110 transition-transform duration-300">
+                  <phase.icon className="text-black" size={24} />
                 </div>
+
+                {/* Connecting line from icon to card - More visible */}
+                <div className={`absolute ${index % 2 === 0 ? 'md:right-1/2 md:mr-7' : 'md:left-1/2 md:ml-7'} left-14 w-6 md:w-[calc(50%-3.5rem)] h-0.5 md:h-1 bg-accent/40 top-1/2 -translate-y-1/2 hidden md:block shadow-[0_0_10px_rgba(134,197,32,0.3)]`}></div>
 
                 {/* Spacer for alternating layout */}
                 <div className="hidden md:block w-5/12"></div>

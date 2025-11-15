@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
 import { Language, getTranslation, type TranslationKeys } from './i18n';
 
 type LanguageContextType = {
@@ -11,28 +11,35 @@ type LanguageContextType = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('en');
-  const [mounted, setMounted] = useState(false);
+const VALID_LANGUAGES: readonly Language[] = ['en', 'es', 'zh', 'hi', 'ko', 'it', 'tr', 'pt'];
 
-  // Load saved language on mount (client-side only)
-  useEffect(() => {
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  // Initialize language from localStorage (lazy initialization)
+  const [language, setLanguageState] = useState<Language>(() => {
+    if (typeof window === 'undefined') return 'en';
     const savedLang = localStorage.getItem('language') as Language;
-    if (savedLang && ['en', 'es', 'zh', 'hi', 'ko', 'it', 'tr', 'pt'].includes(savedLang)) {
-      setLanguageState(savedLang);
+    return savedLang && VALID_LANGUAGES.includes(savedLang) ? savedLang : 'en';
+  });
+  const [mounted, setMounted] = useState(() => typeof window === 'undefined');
+
+  // Set mounted flag on client-side only using layoutEffect to avoid cascading
+  useEffect(() => {
+    if (!mounted) {
+      // Use setTimeout to avoid cascading effect
+      const timeoutId = setTimeout(() => setMounted(true), 0);
+      return () => clearTimeout(timeoutId);
     }
-    setMounted(true);
-  }, []);
+  }, [mounted]);
 
   // Save language when it changes
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    if (mounted && typeof window !== 'undefined') {
+    if (typeof window !== 'undefined') {
       localStorage.setItem('language', lang);
     }
   };
 
-  const t = getTranslation(language);
+  const t = useMemo(() => getTranslation(language), [language]);
 
   // Prevent hydration mismatch by rendering after mount
   if (!mounted) {

@@ -2,7 +2,7 @@
 
 import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { User, Mail, Award, Calendar } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useLanguage } from '@/lib/LanguageContext';
@@ -30,9 +30,6 @@ export default function ProfilePage() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Authentication check using user existence
-  const isAuthenticated = !!user;
-
   // Load user data with cleanup
   useEffect(() => {
     if (!user) {
@@ -43,6 +40,8 @@ export default function ProfilePage() {
     let cancelled = false;
 
     async function fetchUserData() {
+      if (!user) return;
+
       // Find or create user in Supabase
       const { data, error } = await supabase
         .from('users')

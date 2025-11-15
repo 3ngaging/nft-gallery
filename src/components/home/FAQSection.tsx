@@ -14,10 +14,10 @@ export default function FAQSection() {
   };
 
   return (
-    <section className="relative py-24 px-4 overflow-hidden bg-black">
+    <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-black via-primary-dark/30 to-black">
       {/* Background effects */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[120px] -z-10"></div>
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-accent/5 rounded-full blur-[100px] -z-10"></div>
+      <div className="absolute top-1/4 left-0 w-96 h-96 bg-accent/15 rounded-full blur-[120px] -z-10 animate-pulse" style={{ animationDuration: '5s' }}></div>
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent/10 rounded-full blur-[120px] -z-10 animate-pulse" style={{ animationDuration: '7s' }}></div>
 
       <div className="max-w-4xl mx-auto">
         {/* Header */}
@@ -55,7 +55,7 @@ export default function FAQSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white/5 backdrop-blur-sm border border-white/10 overflow-hidden hover:border-accent/30 transition-colors duration-300"
+              className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#86C520]/50 overflow-hidden transition-all duration-300 hover:bg-[#86C520]/5 shadow-[0_0_20px_rgba(134,197,32,0.1)] hover:shadow-[0_0_40px_rgba(134,197,32,0.2)]"
             >
               <button
                 onClick={() => toggleFAQ(index)}

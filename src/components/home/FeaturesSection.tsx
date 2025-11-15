@@ -19,10 +19,10 @@ const FeatureCard = memo(({ icon: Icon, title, desc, index }: FeatureCardProps) 
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay: index * 0.15 }}
-    className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-accent/10 hover:border-accent/30 hover:scale-105 p-8 transition-all duration-300 shadow-lg hover:shadow-[0_0_30px_rgba(134,197,32,0.3)] group"
+    className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#86C520]/50 p-8 transition-all duration-300 hover:bg-[#86C520]/5 shadow-[0_0_40px_rgba(134,197,32,0.1)] hover:shadow-[0_0_40px_rgba(134,197,32,0.3)] group"
   >
-    <div className="w-14 h-14 mb-5 bg-accent/20 border border-accent/30 flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300">
-      <Icon className="w-7 h-7 text-accent group-hover:text-black transition-colors duration-300" />
+    <div className="flex-shrink-0 w-12 h-12 bg-[#86C520]/20 border border-[#86C520]/40 flex items-center justify-center group-hover:bg-[#86C520]/30 transition-colors mb-5">
+      <Icon className="w-6 h-6 text-[#86C520]" />
     </div>
     <h3 className="text-xl font-bold mb-3 text-white group-hover:text-accent transition-colors duration-300">{title}</h3>
     <p className="text-gray-400 leading-relaxed">{desc}</p>
@@ -54,10 +54,10 @@ export default function FeaturesSection() {
   ], [t.home.exclusiveAlpha, t.home.exclusiveAlphaDesc, t.home.eliteNetwork, t.home.eliteNetworkDesc, t.home.protectedAccess, t.home.protectedAccessDesc]);
 
   return (
-    <section className="relative py-24 px-4 overflow-hidden bg-black">
+    <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-black via-primary-dark/30 to-black">
       {/* Enhanced Background glows */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-accent/15 rounded-full blur-[120px] -z-10 animate-pulse" style={{ animationDuration: '5s' }}></div>
-      <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-accent/10 rounded-full blur-[120px] -z-10 animate-pulse" style={{ animationDuration: '7s' }}></div>
+      <div className="absolute top-1/4 left-0 w-96 h-96 bg-accent/15 rounded-full blur-[120px] -z-10 animate-pulse" style={{ animationDuration: '5s' }}></div>
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent/10 rounded-full blur-[120px] -z-10 animate-pulse" style={{ animationDuration: '7s' }}></div>
 
       <div className="max-w-6xl mx-auto">
         <motion.div

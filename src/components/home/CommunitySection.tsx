@@ -18,8 +18,8 @@ export default function CommunitySection() {
   ], [t.home.communityBenefit1, t.home.communityBenefit2, t.home.communityBenefit3, t.home.communityBenefit4]);
 
   return (
-    <section className="relative py-24 px-4 overflow-hidden">
-      {/* Animated background with green glow */}
+    <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-black via-primary-dark/30 to-black">
+      {/* Enhanced Background glows - matching other sections */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-[#86C520]/5 to-black"></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#86C520]/20 rounded-full blur-[150px] animate-pulse"></div>
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#86C520]/10 rounded-full blur-[100px]"></div>
@@ -27,29 +27,29 @@ export default function CommunitySection() {
 
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
           {/* Badge */}
-          <div className="inline-block bg-[#86C520]/20 backdrop-blur-sm px-6 py-2 mb-6 border border-[#86C520]/40 shadow-[0_0_30px_rgba(134,197,32,0.3)]">
-            <span className="text-sm font-bold text-[#86C520] uppercase tracking-wider">
+          <div className="bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#86C520]/30">
+            <span className="text-xs font-semibold text-accent uppercase tracking-wider">
               {t.home.communityBadge}
             </span>
           </div>
 
           {/* Title */}
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 text-white leading-tight">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
             {t.home.communityTitle.split(' ').slice(0, -1).join(' ')}{' '}
-            <span className="text-[#86C520] drop-shadow-[0_0_30px_rgba(134,197,32,0.5)]">
+            <span className="gradient-text-primary">
               {t.home.communityTitle.split(' ').slice(-1)}
             </span>
           </h2>
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
             {t.home.communitySubtitle}
           </p>
         </motion.div>
