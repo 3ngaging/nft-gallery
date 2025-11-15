@@ -20,11 +20,11 @@ const StatCard = memo(({ value, label, icon: Icon, index }: StatCardProps) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.4, delay: index * 0.05 }}
-    className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-center hover:bg-accent/10 hover:border-accent/30 transition-all duration-300 shadow-lg hover:shadow-[0_0_30px_rgba(134,197,32,0.4)] hover:scale-105"
+    className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 sm:p-6 text-center hover:bg-accent/10 hover:border-accent/30 transition-all duration-300 shadow-lg hover:shadow-[0_0_30px_rgba(134,197,32,0.4)] hover:scale-105"
   >
-    <Icon className="w-8 h-8 mx-auto mb-3 text-[#86C520]" />
-    <div className="text-3xl font-bold text-white mb-1">{value}</div>
-    <p className="text-sm text-gray-400 uppercase tracking-wide">{label}</p>
+    <Icon className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2 sm:mb-3 text-[#86C520]" />
+    <div className="text-2xl sm:text-3xl font-bold text-white mb-1">{value}</div>
+    <p className="text-xs sm:text-sm text-gray-400 uppercase tracking-wide break-words">{label}</p>
   </motion.div>
 ));
 
@@ -45,7 +45,7 @@ export default function StatsSection() {
   return (
     <section className="relative py-20 px-4 bg-gradient-to-b from-black via-primary-dark/5 to-black">
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {stats.map((stat, i) => (
             <StatCard
               key={stat.label}

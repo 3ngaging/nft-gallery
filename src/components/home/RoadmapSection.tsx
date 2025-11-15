@@ -82,17 +82,17 @@ export default function RoadmapSection() {
               >
                 {/* Content Card */}
                 <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'} text-left`}>
-                  <div className="bg-gradient-to-r from-[#86C520]/20 via-[#86C520]/10 to-[#86C520]/20 border border-[#86C520]/30 backdrop-blur-sm p-6 transition-all duration-300 hover:border-[#86C520]/50 hover:bg-[#86C520]/25 shadow-[0_0_50px_rgba(134,197,32,0.2)] hover:shadow-[0_0_70px_rgba(134,197,32,0.4)] group">
+                  <div className="bg-gradient-to-r from-[#86C520]/20 via-[#86C520]/10 to-[#86C520]/20 border border-[#86C520]/30 backdrop-blur-sm p-4 sm:p-6 transition-all duration-300 hover:border-[#86C520]/50 hover:bg-[#86C520]/25 shadow-[0_0_50px_rgba(134,197,32,0.2)] hover:shadow-[0_0_70px_rgba(134,197,32,0.4)] group">
                     <div className="flex items-center gap-3 mb-3">
                       <div className={`${phase.color} px-3 py-1 text-xs font-bold text-[#86C520]`}>
                         {phase.status}
                       </div>
                       <span className="text-sm text-accent font-semibold">{phase.phase}</span>
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#86C520] transition-colors duration-300">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 group-hover:text-[#86C520] transition-colors duration-300">
                       {phase.title}
                     </h3>
-                    <p className="text-gray-400 leading-relaxed">
+                    <p className="text-sm sm:text-base text-gray-400 leading-relaxed">
                       {phase.description}
                     </p>
                   </div>
