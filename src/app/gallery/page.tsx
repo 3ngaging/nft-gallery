@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Grid3x3, LayoutGrid, List } from 'lucide-react';
 import NFTCard from '@/components/NFTCard';
 import StickerSystem from '@/components/StickerSystem';
+import LoadingScreen from '@/components/LoadingScreen';
 import { supabase, type NFT } from '@/lib/supabase';
 import { useLanguage } from '@/lib/LanguageContext';
 
@@ -53,11 +54,17 @@ export default function GalleryPage() {
     setFilteredNfts(result);
   }, [searchTerm, nfts]);
 
-  const gridClasses = {
+  // Memoize gridClasses to prevent recreation on every render
+  const gridClasses = useMemo(() => ({
     3: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3',
     4: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4',
     5: 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
-  };
+  }), []);
+
+  // Show full-screen loading only on initial load
+  if (loading && nfts.length === 0) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="min-h-screen py-20 px-4 bg-black relative">
@@ -143,7 +150,7 @@ export default function GalleryPage() {
         {/* Loading State */}
         {loading && (
           <div className="text-center py-20">
-            <div className="inline-block animate-spin h-10 w-10 border-t-2 border-b-2 border-accent"></div>
+            <div className="inline-block animate-spin h-10 w-10 border-t-2 border-b-2 border-[#86C520]"></div>
             <p className="text-gray-400 mt-4">{t.gallery.loading}</p>
           </div>
         )}

@@ -1,13 +1,41 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Zap, Users, Shield } from 'lucide-react';
+import { Zap, Users, Shield, LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
+import { memo, useMemo } from 'react';
+
+type FeatureCardProps = {
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+  index: number;
+};
+
+// Memoized feature card component to prevent unnecessary re-renders
+const FeatureCard = memo(({ icon: Icon, title, desc, index }: FeatureCardProps) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.4, delay: index * 0.1 }}
+    className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-accent/10 hover:border-accent/30 p-8 transition-all duration-200 shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]"
+  >
+    <div className="w-14 h-14 mb-5 bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 border border-[#86C520]/30 flex items-center justify-center">
+      <Icon className="w-7 h-7 text-accent" />
+    </div>
+    <h3 className="text-xl font-bold mb-3 text-white">{title}</h3>
+    <p className="text-gray-400 leading-relaxed">{desc}</p>
+  </motion.div>
+));
+
+FeatureCard.displayName = 'FeatureCard';
 
 export default function FeaturesSection() {
   const { t } = useLanguage();
 
-  const features = [
+  // Memoize features array to prevent recreation on every render
+  const features = useMemo(() => [
     {
       icon: Zap,
       title: t.home.exclusiveAlpha,
@@ -23,7 +51,7 @@ export default function FeaturesSection() {
       title: t.home.protectedAccess,
       desc: t.home.protectedAccessDesc
     }
-  ];
+  ], [t.home.exclusiveAlpha, t.home.exclusiveAlphaDesc, t.home.eliteNetwork, t.home.eliteNetworkDesc, t.home.protectedAccess, t.home.protectedAccessDesc]);
 
   return (
     <section className="relative py-20 px-4">
@@ -51,20 +79,13 @@ export default function FeaturesSection() {
 
         <div className="grid md:grid-cols-3 gap-6">
           {features.map((feature, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-accent/10 hover:border-accent/30 p-8 transition-all duration-200 shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]"
-            >
-              <div className="w-14 h-14 mb-5 bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 border border-[#86C520]/30 flex items-center justify-center">
-                <feature.icon className="w-7 h-7 text-accent" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-white">{feature.title}</h3>
-              <p className="text-gray-400 leading-relaxed">{feature.desc}</p>
-            </motion.div>
+            <FeatureCard
+              key={feature.title}
+              icon={feature.icon}
+              title={feature.title}
+              desc={feature.desc}
+              index={i}
+            />
           ))}
         </div>
       </div>

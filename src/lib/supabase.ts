@@ -13,7 +13,7 @@ export type NFT = {
   description: string;
   image_url: string;
   thumbnail_url: string | null;
-  traits: any;
+  traits: Record<string, unknown> | null;
   created_at: string;
 };
 

@@ -1,15 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useLanguage } from '@/lib/LanguageContext';
 import { User, Mail, MessageSquare, Twitter, Send } from 'lucide-react';
 import Image from 'next/image';
+import LoadingScreen from '@/components/LoadingScreen';
 
 export default function ApplyPage() {
   const { t } = useLanguage();
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,6 +23,13 @@ export default function ApplyPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,6 +53,10 @@ export default function ApplyPage() {
       [e.target.name]: e.target.value
     });
   };
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   if (submitted) {
     return (

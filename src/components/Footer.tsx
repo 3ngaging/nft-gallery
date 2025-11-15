@@ -43,6 +43,8 @@ export default function Footer() {
               <li><Link href="/" className="text-primary-light/70 hover:text-accent transition text-xs">{t.nav.home}</Link></li>
               <li><Link href="/gallery" className="text-primary-light/70 hover:text-accent transition text-xs">{t.nav.gallery}</Link></li>
               <li><Link href="/apply" className="text-primary-light/70 hover:text-accent transition text-xs">{t.nav.apply}</Link></li>
+              <li><Link href="/privacy" className="text-primary-light/70 hover:text-accent transition text-xs">{t.home.privacyPolicy}</Link></li>
+              <li><Link href="/terms" className="text-primary-light/70 hover:text-accent transition text-xs">{t.home.termsOfService}</Link></li>
             </ul>
           </div>
 
@@ -63,7 +65,7 @@ export default function Footer() {
         <div className="pt-6 text-center">
           <hr className="border-t border-primary-medium/5 w-full border-[0.5px] opacity-5" />
           <p className="text-primary-light/50 text-xs pt-6">
-            © 2025 Power Grinders. {t.home.allRightsReserved}
+            © 2022-{new Date().getFullYear()} Power Grinders. {t.home.allRightsReserved}
           </p>
         </div>
       </div>

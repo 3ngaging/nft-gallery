@@ -16,7 +16,8 @@
       "Bash(del .nextdevlock)",
       "Bash(del srclibi18n.ts)",
       "Bash(ren:*)",
-      "Bash(npm run lint:*)"
+      "Bash(npm run lint:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []

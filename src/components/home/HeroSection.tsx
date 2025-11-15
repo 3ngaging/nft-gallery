@@ -5,9 +5,11 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
+import { useNFTCount } from '@/hooks/useNFTCount';
 
 export default function HeroSection() {
   const { t } = useLanguage();
+  const { count: nftCount } = useNFTCount();
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden -mt-14 pt-14">
@@ -83,7 +85,7 @@ export default function HeroSection() {
           className="mt-16 grid grid-cols-3 gap-6 max-w-2xl mx-auto"
         >
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:bg-accent/10 hover:border-accent/30 transition shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]">
-            <div className="text-3xl font-bold text-accent">45</div>
+            <div className="text-3xl font-bold text-accent">{nftCount}</div>
             <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">{t.home.totalSupply}</div>
           </div>
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:bg-accent/10 hover:border-accent/30 transition shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]">

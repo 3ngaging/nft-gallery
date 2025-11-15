@@ -12,35 +12,35 @@ type Sticker = {
   rotation: number;
 };
 
+// Array of available stickers (moved outside component to avoid recreating on every render)
+const STICKER_IMAGES = [
+  '/images/stickers/1_11.png',
+  '/images/stickers/1_3.png',
+  '/images/stickers/197.png',
+  '/images/stickers/2.png',
+  '/images/stickers/2_7.png',
+  '/images/stickers/3.png',
+  '/images/stickers/3_3.png',
+  '/images/stickers/4.png',
+  '/images/stickers/4_3.png',
+  '/images/stickers/49.png',
+  '/images/stickers/5.png',
+  '/images/stickers/5_2.png',
+  '/images/stickers/6.png',
+  '/images/stickers/6_1.png',
+  '/images/stickers/7.png',
+  '/images/stickers/73.png',
+  '/images/stickers/8.png',
+  '/images/stickers/9.png',
+];
+
 export default function StickerSystem() {
   const [stickers, setStickers] = useState<Sticker[]>([]);
   const [nextId, setNextId] = useState(0);
 
-  // Array of available stickers (actual files in /images/stickers/)
-  const stickerImages = [
-    '/images/stickers/1_11.png',
-    '/images/stickers/1_3.png',
-    '/images/stickers/197.png',
-    '/images/stickers/2.png',
-    '/images/stickers/2_7.png',
-    '/images/stickers/3.png',
-    '/images/stickers/3_3.png',
-    '/images/stickers/4.png',
-    '/images/stickers/4_3.png',
-    '/images/stickers/49.png',
-    '/images/stickers/5.png',
-    '/images/stickers/5_2.png',
-    '/images/stickers/6.png',
-    '/images/stickers/6_1.png',
-    '/images/stickers/7.png',
-    '/images/stickers/73.png',
-    '/images/stickers/8.png',
-    '/images/stickers/9.png',
-  ];
-
   const handleClick = useCallback((e: MouseEvent) => {
     // Get random sticker
-    const randomSticker = stickerImages[Math.floor(Math.random() * stickerImages.length)];
+    const randomSticker = STICKER_IMAGES[Math.floor(Math.random() * STICKER_IMAGES.length)];
 
     // Create new sticker at click position
     const newSticker: Sticker = {
@@ -58,7 +58,7 @@ export default function StickerSystem() {
     setTimeout(() => {
       setStickers(prev => prev.filter(s => s.id !== newSticker.id));
     }, 3000);
-  }, [nextId, stickerImages]);
+  }, [nextId]);
 
   useEffect(() => {
     // Add click event listener

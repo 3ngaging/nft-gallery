@@ -4,14 +4,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import type { NFT } from '@/lib/supabase';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
 
 type NFTCardProps = {
   nft: NFT;
 };
 
-export default function NFTCard({ nft }: NFTCardProps) {
+function NFTCard({ nft }: NFTCardProps) {
   const { t } = useLanguage();
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -72,3 +72,6 @@ export default function NFTCard({ nft }: NFTCardProps) {
     </Link>
   );
 }
+
+// Memoize the component to prevent unnecessary re-renders
+export default memo(NFTCard);

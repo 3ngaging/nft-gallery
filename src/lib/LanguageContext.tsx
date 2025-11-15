@@ -18,7 +18,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   // Load saved language on mount (client-side only)
   useEffect(() => {
     const savedLang = localStorage.getItem('language') as Language;
-    if (savedLang && ['en', 'es', 'zh', 'hi', 'ko'].includes(savedLang)) {
+    if (savedLang && ['en', 'es', 'zh', 'hi', 'ko', 'it', 'tr', 'pt'].includes(savedLang)) {
       setLanguageState(savedLang);
     }
     setMounted(true);
