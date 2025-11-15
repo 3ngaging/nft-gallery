@@ -6,11 +6,17 @@ import GridBackground from '@/components/GridBackground';
 import { DynamicProvider } from '@/lib/dynamic';
 import { LanguageProvider } from '@/lib/LanguageContext';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
   title: 'Power Grinders - Exclusive Community',
   description: 'Apply to join our exclusive community of 45 members',
+  keywords: ['NFT', 'Community', 'Power Grinders', 'Exclusive', 'Web3'],
 };
 
 export default function RootLayout({
@@ -19,7 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fkpqwnsdqduuqxvajale.supabase.co" />
+      </head>
       <body className={`${inter.className} bg-black text-white`}>
         <GridBackground />
         <LanguageProvider>

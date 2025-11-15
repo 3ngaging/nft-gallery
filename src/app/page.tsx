@@ -1,43 +1,48 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import HeroSection from '@/components/home/HeroSection';
-import GalleryPreview from '@/components/home/GalleryPreview';
 import StatsSection from '@/components/home/StatsSection';
-import CommunitySection from '@/components/home/CommunitySection';
-import FeaturesSection from '@/components/home/FeaturesSection';
-import RoadmapSection from '@/components/home/RoadmapSection';
-import TeamSection from '@/components/home/TeamSection';
-import FAQSection from '@/components/home/FAQSection';
 import Footer from '@/components/Footer';
-import LoadingScreen from '@/components/LoadingScreen';
+
+// Lazy load componentes no críticos para mejorar tiempo de carga inicial
+const GalleryPreview = lazy(() => import('@/components/home/GalleryPreview'));
+const CommunitySection = lazy(() => import('@/components/home/CommunitySection'));
+const FeaturesSection = lazy(() => import('@/components/home/FeaturesSection'));
+const RoadmapSection = lazy(() => import('@/components/home/RoadmapSection'));
+const TeamSection = lazy(() => import('@/components/home/TeamSection'));
+const FAQSection = lazy(() => import('@/components/home/FAQSection'));
+
+// Componente de fallback ligero
+const SectionFallback = () => (
+  <div className="h-96 flex items-center justify-center">
+    <div className="w-8 h-8 border-2 border-[#86C520] border-t-transparent rounded-full animate-spin" />
+  </div>
+);
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate initial loading
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) {
-    return <LoadingScreen />;
-  }
-
   return (
     <div className="relative min-h-screen">
       <HeroSection />
-      <GalleryPreview />
       <StatsSection />
-      <CommunitySection />
-      <FeaturesSection />
-      <RoadmapSection />
-      <TeamSection />
-      <FAQSection />
+      <Suspense fallback={<SectionFallback />}>
+        <GalleryPreview />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <CommunitySection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <FeaturesSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <RoadmapSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <TeamSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <FAQSection />
+      </Suspense>
       <Footer />
     </div>
   );
