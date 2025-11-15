@@ -31,7 +31,7 @@ export default function LanguageSelector() {
         className="flex items-center gap-2 px-3 py-1.5 bg-white/5 backdrop-blur-sm hover:bg-accent/10 transition group border border-white/10 hover:border-accent/30"
         aria-label="Change language"
       >
-        <Languages size={16} className="text-accent transition" />
+        <Languages size={16} className="text-accent transition text-[#86C520]" />
         <span className="hidden sm:inline text-xs font-semibold text-primary-light/80 group-hover:text-accent transition uppercase">
           {currentLanguage.code}
         </span>
@@ -66,7 +66,7 @@ export default function LanguageSelector() {
                         : 'hover:bg-white/5 text-gray-300 hover:text-white border border-transparent'
                     }`}
                   >
-                    <Languages size={16} className={isSelected ? 'text-accent' : 'text-gray-500 group-hover:text-accent'} />
+                    <Languages size={16} className={isSelected ? 'text-accent text-[#86C520]' : 'text-gray-500 group-hover:text-accent'} />
 
                     <div className="flex-1">
                       <span className="font-semibold block text-sm">

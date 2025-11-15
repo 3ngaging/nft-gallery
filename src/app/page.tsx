@@ -43,11 +43,6 @@ export default function Home() {
           <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
 
-        {/* Time Display - Top Right */}
-        <div className="absolute top-24 right-8 z-20">
-          <TimeDisplay />
-        </div>
-
         {/* Main Content */}
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           {/* Logo */}
@@ -88,7 +83,7 @@ export default function Home() {
           >
             <Link
               href="/apply"
-              className="inline-flex items-center gap-3 px-10 py-4 bg-accent hover:bg-[#75ad1b] text-primary-dark font-bold text-base uppercase tracking-wider shadow-[0_4px_0_0_#75ad1b] hover:shadow-[0_2px_0_0_#75ad1b] hover:translate-y-[2px] transition-all"
+              className="inline-flex border border-white/10 bg-[#86C520] hover:bg-[#75ad1c] text-white px-6 py-4 font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)]"
             >
               Apply Now
               <ArrowRight size={20} />
@@ -133,7 +128,7 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="mb-12"
           >
-            <div className="inline-block bg-accent/20 backdrop-blur-sm border border-accent/30 px-4 py-2 mb-4">
+            <div className="inline-block bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#86C520]/30">
               <span className="text-xs font-semibold text-accent uppercase tracking-wider">NFT Collection</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-3 text-white">
@@ -165,11 +160,6 @@ export default function Home() {
                   className="object-cover"
                   quality={90}
                 />
-
-                {/* ID Badge */}
-                <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm border border-accent/40 px-2.5 py-1 text-xs font-bold text-accent shadow-lg">
-                  #{num.toString().padStart(2, '0')}
-                </div>
               </motion.div>
             ))}
           </div>
@@ -183,7 +173,7 @@ export default function Home() {
           >
             <Link
               href="/gallery"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-primary-medium hover:bg-primary-medium/80 text-accent font-semibold uppercase tracking-wider shadow-[0_3px_0_0_#454731] hover:shadow-[0_1px_0_0_#454731] hover:translate-y-[2px] transition-all duration-200"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-primary-medium hover:bg-primary-medium/80 text-accent font-semibold uppercase tracking-wider shadow-[0_3px_0_0_#86C520] hover:shadow-[0_1px_0_0_#86C520] hover:translate-y-[2px] transition-all duration-200"
             >
               View Full Gallery
               <ArrowRight size={18} />
@@ -210,7 +200,7 @@ export default function Home() {
                 transition={{ duration: 0.4, delay: i * 0.05 }}
                 className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-center hover:bg-accent/10 hover:border-accent/30 transition-all duration-200 shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]"
               >
-                <stat.icon className="w-8 h-8 mx-auto mb-3 text-accent" />
+                <stat.icon className="w-8 h-8 mx-auto mb-3 text-accent text-[#86C520]" />
                 <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
                 <p className="text-sm text-gray-400 uppercase tracking-wide">{stat.label}</p>
               </motion.div>
@@ -232,7 +222,7 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="mb-12"
           >
-            <div className="inline-block bg-accent/20 backdrop-blur-sm border border-accent/30 px-4 py-2 mb-4">
+            <div className="inline-block bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#86C520]/30">
               <span className="text-xs font-semibold text-accent uppercase tracking-wider">Benefits</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-3 text-white">
@@ -269,7 +259,7 @@ export default function Home() {
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-accent/10 hover:border-accent/30 p-8 transition-all duration-200 shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]"
               >
-                <div className="w-14 h-14 mb-5 bg-accent/20 backdrop-blur-sm border border-accent/30 flex items-center justify-center">
+                <div className="w-14 h-14 mb-5 bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 border border-[#86C520]/30 flex items-center justify-center">
                   <feature.icon className="w-7 h-7 text-accent" />
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-white">{feature.title}</h3>
@@ -292,7 +282,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="inline-block mb-5 px-5 py-2 bg-accent/20 backdrop-blur-sm border border-accent/30">
+            <div className="inline-block mb-5 px-5 py-2 bg-[#86C520]/20 backdrop-blur-sm border border-[#86C520]/30">
               <p className="text-sm font-semibold text-accent uppercase tracking-wider">Limited to 45 Members</p>
             </div>
 
@@ -306,7 +296,7 @@ export default function Home() {
 
             <Link
               href="/apply"
-              className="inline-flex items-center gap-3 px-10 py-4 bg-accent hover:bg-[#75ad1b] text-primary-dark font-bold text-base uppercase tracking-wider shadow-[0_0_25px_rgba(134,197,32,0.4)] hover:shadow-[0_0_40px_rgba(134,197,32,0.6)] transition-all"
+              className="inline-flex items-center gap-3 px-10 py-4 border border-white/10 bg-[#86C520] hover:bg-[#75ad1c] text-white px-6 py-4 font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)]"
             >
               Apply Now
               <ArrowRight size={20} />
@@ -357,18 +347,19 @@ export default function Home() {
             <div>
               <h3 className="text-primary-light font-semibold mb-3 text-xs uppercase tracking-wider">Community</h3>
               <div className="flex gap-3">
-                <a href="#" className="text-primary-light/70 hover:text-accent transition p-2.5 bg-primary-medium/20 hover:bg-accent/20">
+                <a href="#" className="text-primary-light/70 hover:text-accent transition p-2.5 bg-primary-medium/20 hover:bg-accent/20 text-[#86C520]">
                   <Twitter size={16} />
                 </a>
-                <a href="#" className="text-primary-light/70 hover:text-accent transition p-2.5 bg-primary-medium/20 hover:bg-accent/20">
+                <a href="#" className="text-primary-light/70 hover:text-accent transition p-2.5 bg-primary-medium/20 hover:bg-accent/20 text-[#86C520]">
                   <MessageCircle size={16} />
                 </a>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-primary-medium/30 pt-6 text-center">
-            <p className="text-primary-light/50 text-xs">
+          <div className="pt-6 text-center">
+            <hr className="border-t border-primary-medium/5 w-full border-[0.5px] opacity-5" />
+            <p className="text-primary-light/50 text-xs pt-6">
               © 2025 Power Grinders. All rights reserved.
             </p>
           </div>

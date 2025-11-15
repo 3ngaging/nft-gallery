@@ -74,7 +74,7 @@ export default function GalleryPage() {
           transition={{ duration: 0.5 }}
           className="mb-10"
         >
-          <div className="inline-block bg-accent/20 backdrop-blur-sm border border-accent/30 px-4 py-2 mb-4">
+          <div className="bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#86C520]/30">
             <span className="text-xs font-semibold text-accent uppercase tracking-wider">NFT Gallery</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-3 text-white">

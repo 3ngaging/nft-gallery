@@ -57,7 +57,7 @@ export default function NFTCard({ nft }: NFTCardProps) {
             />
           )}
 
-          <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm border border-accent/40 px-2.5 py-1 text-xs font-bold text-accent shadow-lg">
+          <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm px-2.5 py-1 text-xs font-bold text-accent shadow-lg">
             #{nft.token_id.toString().padStart(2, '0')}
           </div>
         </div>
