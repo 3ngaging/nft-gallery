@@ -2,14 +2,14 @@
 
 ## 📋 Visión del Proyecto
 
-**NFT Gallery** es una aplicación web para mostrar una colección de 45 NFTs con sistema de puntos basado en actividad comunitaria en Discord, Telegram y Twitter.
+**NFT Gallery** es una aplicación web para mostrar una colección de +100 NFTs con sistema de puntos basado en actividad comunitaria en Discord, Telegram y Twitter.
 
 ---
 
 ## 🎯 Objetivos Principales
 
 1. **Landing Page atractiva** con imagen hero 1920x1080
-2. **Galería visual** de los 45 NFTs de la colección
+2. **Galería visual** de los NFTs de la colección
 3. **Páginas de detalle** de cada NFT (1000x1000px) con info completa
 4. **Sistema de autenticación social** vía Matrix.io (Discord, Telegram, Twitter)
 5. **Sistema de puntos** trackeable mediante bots de comunidad
