@@ -2,15 +2,13 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, User } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
-import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
 import { useLanguage } from '@/lib/LanguageContext';
 import LanguageSelector from './LanguageSelector';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, handleLogOut } = useDynamicContext();
   const { t } = useLanguage();
 
   return (
@@ -62,32 +60,12 @@ export default function Navbar() {
             <LanguageSelector />
 
             {/* Auth/Apply Button */}
-            {user ? (
-              <div className="flex items-center gap-3">
-                <Link
-                  href="/profile"
-                  className="text-primary-light/80 hover:text-accent transition flex items-center gap-1.5"
-                >
-                  <User size={16} />
-                  <span className="font-medium text-xs">
-                    {user.username || user.email || t.profile.noUsername}
-                  </span>
-                </Link>
-                <button
-                  onClick={handleLogOut}
-                  className="text-primary-light/60 hover:text-accent transition text-xs uppercase tracking-wider"
-                >
-                  {t.nav.logout}
-                </button>
-              </div>
-            ) : (
-              <Link
-                href="/apply"
-                className="border border-white/10 bg-[#86C520] hover:bg-[#75ad1c] text-white px-4 py-2 font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)] text-sm"
-              >
-                {t.home.applyNow}
-              </Link>
-            )}
+            <Link
+              href="/apply"
+              className="border border-white/10 bg-[#86C520] hover:bg-[#75ad1c] text-white px-4 py-2 font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)] text-sm"
+            >
+              {t.home.applyNow}
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -122,34 +100,13 @@ export default function Navbar() {
               {t.nav.gallery}
             </Link>
 
-            {user ? (
-              <>
-                <Link
-                  href="/profile"
-                  className="block text-primary-light/80 hover:text-accent transition py-2 text-xs uppercase tracking-wider"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {t.nav.profile}
-                </Link>
-                <button
-                  onClick={() => {
-                    handleLogOut();
-                    setIsOpen(false);
-                  }}
-                  className="w-full text-left text-primary-light/60 hover:text-accent transition py-2 text-xs uppercase tracking-wider"
-                >
-                  {t.nav.logout}
-                </button>
-              </>
-            ) : (
-              <Link
-                href="/apply"
-                onClick={() => setIsOpen(false)}
-                className="block w-full text-center px-6 py-2.5 mt-2 bg-accent hover:bg-accent/90 text-primary-dark font-bold text-xs uppercase tracking-wider transition shadow-lg"
-              >
-                {t.home.applyNow}
-              </Link>
-            )}
+            <Link
+              href="/apply"
+              onClick={() => setIsOpen(false)}
+              className="block w-full text-center px-6 py-2.5 mt-2 bg-accent hover:bg-accent/90 text-primary-dark font-bold text-xs uppercase tracking-wider transition shadow-lg"
+            >
+              {t.home.applyNow}
+            </Link>
           </div>
         </div>
       )}

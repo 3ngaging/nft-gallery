@@ -52,6 +52,7 @@ function NFTCard({ nft }: NFTCardProps) {
               loading="lazy"
               placeholder="blur"
               blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iIzAwMDAwMCIvPjwvc3ZnPg=="
+              unoptimized={(nft.thumbnail_url || nft.image_url).includes('ipfs') || (nft.thumbnail_url || nft.image_url).includes('arweave')}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageError(true)}
             />

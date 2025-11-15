@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@dynamic-labs/sdk-react-core": "^4.44.2",
     "@supabase/supabase-js": "^2.80.0",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.553.0",

@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import GridBackground from '@/components/GridBackground';
-import { DynamicProvider } from '@/lib/dynamic';
 import { LanguageProvider } from '@/lib/LanguageContext';
 
 const inter = Inter({
@@ -34,12 +33,10 @@ export default function RootLayout({
       <body className={`${inter.className} bg-black text-white`}>
         <GridBackground />
         <LanguageProvider>
-          <DynamicProvider>
-            <Navbar />
-            <main className="min-h-screen pt-16">
-              {children}
-            </main>
-          </DynamicProvider>
+          <Navbar />
+          <main className="min-h-screen pt-16">
+            {children}
+          </main>
         </LanguageProvider>
       </body>
     </html>
