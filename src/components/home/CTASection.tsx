@@ -1,0 +1,43 @@
+'use client';
+
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
+
+export default function CTASection() {
+  return (
+    <section className="relative py-24 px-4 bg-gradient-to-b from-black via-primary-dark/5 to-black">
+      {/* Green glow effects */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-accent/20 rounded-full blur-[150px] -z-10"></div>
+
+      <div className="max-w-4xl mx-auto text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="inline-block mb-5 px-5 py-2 bg-[#86C520]/20 backdrop-blur-sm border border-[#86C520]/30">
+            <p className="text-sm font-semibold text-accent uppercase tracking-wider">Limited to 45 Members</p>
+          </div>
+
+          <h2 className="text-4xl md:text-6xl font-bold mb-5 text-white">
+            Ready to <span className="gradient-text-primary">Grind</span>?
+          </h2>
+
+          <p className="text-lg text-gray-400 mb-10 max-w-2xl mx-auto">
+            Join the most exclusive community of Solana OGs.<br />Applications are reviewed carefully.
+          </p>
+
+          <Link
+            href="/apply"
+            className="inline-flex items-center gap-3 px-10 py-4 border border-white/10 bg-[#86C520] hover:bg-[#75ad1c] text-white font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)]"
+          >
+            Apply Now
+            <ArrowRight size={20} />
+          </Link>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

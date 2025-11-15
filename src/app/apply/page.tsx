@@ -47,7 +47,10 @@ export default function ApplyPage() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="relative min-h-screen flex items-center justify-center px-4 bg-black">
+        {/* Background glow effects */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-accent/20 rounded-full blur-[150px] -z-10"></div>
+
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -56,7 +59,7 @@ export default function ApplyPage() {
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 1 }}
-            className="w-20 h-20 mx-auto mb-6 rounded-full bg-accent/20 border-2 border-accent flex items-center justify-center"
+            className="w-20 h-20 mx-auto mb-6 bg-[#86C520]/20 backdrop-blur-sm border-2 border-[#86C520] flex items-center justify-center"
           >
             <Send size={40} className="text-accent" />
           </motion.div>
@@ -71,7 +74,11 @@ export default function ApplyPage() {
   }
 
   return (
-    <div className="min-h-screen py-20 px-4">
+    <div className="relative min-h-screen py-20 px-4 bg-black">
+      {/* Background glow effects */}
+      <div className="absolute top-20 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[120px] -z-10"></div>
+      <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-accent/5 rounded-full blur-[100px] -z-10"></div>
+
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
@@ -107,7 +114,7 @@ export default function ApplyPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-gradient-to-br from-accent/5 to-primary-dark/5 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-accent/30 shadow-2xl"
+          className="bg-white/5 backdrop-blur-sm p-8 md:p-12 border border-white/10 shadow-lg hover:border-accent/30 transition-all duration-200"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name */}
@@ -232,7 +239,7 @@ export default function ApplyPage() {
               disabled={isSubmitting}
               whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
               whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-              className="w-full bg-gradient-to-r from-accent to-primary-light hover:from-primary-light hover:to-accent text-black px-8 py-4 rounded-lg text-lg font-bold transition-all duration-300 shadow-[0_0_40px_rgba(134,197,32,0.5)] hover:shadow-[0_0_60px_rgba(134,197,32,0.7)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+              className="w-full border border-white/10 bg-[#86C520] hover:bg-[#75ad1c] text-white px-8 py-4 text-lg font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
             >
               {isSubmitting ? (
                 <>
@@ -260,17 +267,17 @@ export default function ApplyPage() {
           transition={{ delay: 0.4 }}
           className="mt-12 grid md:grid-cols-3 gap-6"
         >
-          <div className="bg-gradient-to-br from-accent/10 to-black/40 backdrop-blur-sm p-6 rounded-xl border border-accent/20 text-center">
-            <div className="text-4xl font-bold gradient-text-primary mb-2">45</div>
-            <p className="text-gray-400 text-sm">Total Spots</p>
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-center hover:bg-accent/10 hover:border-accent/30 transition-all duration-200 shadow-lg">
+            <div className="text-4xl font-bold text-accent mb-2">45</div>
+            <p className="text-gray-400 text-sm uppercase tracking-wider">Total Spots</p>
           </div>
-          <div className="bg-gradient-to-br from-accent/10 to-black/40 backdrop-blur-sm p-6 rounded-xl border border-accent/20 text-center">
-            <div className="text-4xl font-bold gradient-text-primary mb-2">24-48h</div>
-            <p className="text-gray-400 text-sm">Review Time</p>
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-center hover:bg-accent/10 hover:border-accent/30 transition-all duration-200 shadow-lg">
+            <div className="text-4xl font-bold text-accent mb-2">24-48h</div>
+            <p className="text-gray-400 text-sm uppercase tracking-wider">Review Time</p>
           </div>
-          <div className="bg-gradient-to-br from-accent/10 to-black/40 backdrop-blur-sm p-6 rounded-xl border border-accent/20 text-center">
-            <div className="text-4xl font-bold gradient-text-primary mb-2">Elite</div>
-            <p className="text-gray-400 text-sm">Community</p>
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 text-center hover:bg-accent/10 hover:border-accent/30 transition-all duration-200 shadow-lg">
+            <div className="text-4xl font-bold text-accent mb-2">Elite</div>
+            <p className="text-gray-400 text-sm uppercase tracking-wider">Community</p>
           </div>
         </motion.div>
       </div>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
+import GridBackground from '@/components/GridBackground';
 import { DynamicProvider } from '@/lib/dynamic';
 import { LanguageProvider } from '@/lib/LanguageContext';
 
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-black text-white`}>
+        <GridBackground />
         <LanguageProvider>
           <DynamicProvider>
             <Navbar />

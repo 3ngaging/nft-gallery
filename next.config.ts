@@ -1,5 +1,6 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
@@ -9,6 +10,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'ipfs.io',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.arweave.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'arweave.net',
       },
       {
         protocol: 'https',
@@ -22,9 +31,9 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'via.placeholder.com',
       },
-      // Añade aquí otros dominios si usas CDNs diferentes
     ],
   },
+  reactStrictMode: true,
 };
 
-module.exports = nextConfig;
+export default nextConfig;
