@@ -21,7 +21,9 @@ export default function HeroSection() {
           fill
           className="object-cover opacity-20"
           priority
-          quality={90}
+          fetchPriority="high"
+          quality={85}
+          sizes="100vw"
         />
         {/* <div className="absolute inset-0 bg-gradient-to-b from-black/95 via-black/90 to-black"></div> */}
 

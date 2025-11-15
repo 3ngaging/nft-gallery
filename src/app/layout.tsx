@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Rajdhani } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import GridBackground from '@/components/GridBackground';
@@ -10,6 +10,15 @@ const inter = Inter({
   display: 'swap',
   preload: true,
   variable: '--font-inter',
+  weight: ['300', '400', '500', '600', '700', '800'],
+});
+
+const rajdhani = Rajdhani({
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  variable: '--font-rajdhani',
+  weight: ['500', '600', '700'],
 });
 
 export const metadata: Metadata = {
@@ -24,11 +33,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${rajdhani.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fkpqwnsdqduuqxvajale.supabase.co" />
+        {/* Preload LCP image para mejorar descubrimiento */}
+        <link
+          rel="preload"
+          as="image"
+          href="/_next/image?url=%2Fimages%2Fwallpaper.png&w=750&q=85"
+          fetchPriority="high"
+          type="image/webp"
+        />
       </head>
       <body className={`${inter.className} bg-black text-white`}>
         <GridBackground />

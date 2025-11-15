@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import type { NFT } from '@/lib/supabase';
 import { useState, memo } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
@@ -18,10 +17,8 @@ function NFTCard({ nft }: NFTCardProps) {
 
   return (
     <Link href={`/nft/${nft.token_id}`}>
-      <motion.div
-        whileHover={{ y: -4 }}
-        whileTap={{ scale: 0.98 }}
-        className="bg-white/5 backdrop-blur-sm border border-white/10 overflow-hidden hover:bg-accent/10 hover:border-accent/30 cursor-pointer group shadow-lg hover:border-[#86C520]/50 transition-all duration-300 hover:bg-[#86C520]/5 hover:shadow-[0_0_40px_rgba(134,197,32,0.2)]"
+      <div
+        className="bg-white/5 backdrop-blur-sm border border-white/10 overflow-hidden hover:bg-accent/10 hover:border-accent/30 cursor-pointer group shadow-lg hover:border-[#86C520]/50 transition-all duration-300 hover:bg-[#86C520]/5 hover:shadow-[0_0_40px_rgba(134,197,32,0.2)] hover:-translate-y-1 active:scale-[0.98]"
       >
         <div className="relative aspect-square bg-black border-b border-white/10">
           {/* Loading skeleton */}
@@ -48,7 +45,8 @@ function NFTCard({ nft }: NFTCardProps) {
               className={`object-cover transition-all duration-300 group-hover:scale-[1.02] ${
                 imageLoaded ? 'opacity-100' : 'opacity-0'
               }`}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+              quality={80}
               loading="lazy"
               placeholder="blur"
               blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iIzAwMDAwMCIvPjwvc3ZnPg=="
@@ -69,7 +67,7 @@ function NFTCard({ nft }: NFTCardProps) {
             {nft.description || t.nft.noDescription}
           </p>
         </div>
-      </motion.div>
+      </div>
     </Link>
   );
 }
