@@ -28,7 +28,7 @@ export default function FAQSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#86C520]/30">
+          <div className="bg-[#F2ECC8]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#F2ECC8]/30">
             <span className="text-xs font-semibold text-accent uppercase tracking-wider">{t.faq.badge}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -55,7 +55,7 @@ export default function FAQSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#86C520]/50 overflow-hidden transition-all duration-300 hover:bg-[#86C520]/5 shadow-[0_0_20px_rgba(134,197,32,0.1)] hover:shadow-[0_0_40px_rgba(134,197,32,0.2)]"
+              className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#F2ECC8]/50 overflow-hidden transition-all duration-300 hover:bg-[#F2ECC8]/5 shadow-[#858068] hover:shadow-[#a5a082]"
             >
               <button
                 onClick={() => toggleFAQ(index)}
@@ -105,14 +105,14 @@ export default function FAQSection() {
             href="https://discord.gg/powergrinders"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-accent hover:bg-accent/90 text-primary-dark px-8 py-3 font-semibold transition shadow-[0_3px_0_0_#75ad1b] hover:shadow-[0_1px_0_0_#75ad1b] hover:translate-y-[2px] active:translate-y-[3px] active:shadow-none"
+            className="inline-block bg-accent hover:bg-accent/90 text-primary-dark px-8 py-3 font-semibold transition shadow-[0_3px_0_0_#aca686] hover:shadow-[0_1px_0_0_#aca686] hover:translate-y-[2px] active:translate-y-[3px] active:shadow-none"
           >
             {t.faq.joinDiscord}
           </a>
         </motion.div>
       </div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#86C520]/10 rounded-full blur-[100px]"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#86C520]/10 rounded-full blur-[100px]"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#F2ECC8]/10 rounded-full blur-[100px]"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#F2ECC8]/10 rounded-full blur-[100px]"></div>
     </section>
   );
 }

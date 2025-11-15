@@ -72,7 +72,7 @@ export default function ApplyPage() {
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 1 }}
-            className="w-20 h-20 mx-auto mb-6 bg-[#86C520]/20 backdrop-blur-sm border-2 border-[#86C520] flex items-center justify-center"
+            className="w-20 h-20 mx-auto mb-6 bg-[#F2ECC8]/20 backdrop-blur-sm border-2 border-[#F2ECC8] flex items-center justify-center"
           >
             <Send size={40} className="text-accent" />
           </motion.div>
@@ -258,7 +258,7 @@ export default function ApplyPage() {
               disabled={isSubmitting}
               whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
               whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-              className="w-full border border-white/10 bg-[#86C520] hover:bg-[#75ad1c] text-white px-8 py-4 text-lg font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+              className="w-full border border-white/10 bg-[#F2ECC8] hover:bg-[#aca686] text-white px-8 py-4 text-lg font-semibold transition shadow-[#a59f7e] hover:shadow-[#dfd7ac] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
             >
               {isSubmitting ? (
                 <>

@@ -42,7 +42,7 @@ export default function NFTDetailClient({ nft, wallets }: NFTDetailClientProps) 
 
           {/* Details */}
           <div>
-            <div className="bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#86C520]/30">
+            <div className="bg-[#F2ECC8]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#F2ECC8]/30">
               <span className="text-sm font-semibold">#{nft.token_id}</span>
             </div>
 
@@ -55,7 +55,7 @@ export default function NFTDetailClient({ nft, wallets }: NFTDetailClientProps) 
             {/* Wallets Section */}
             <div className="bg-white/5 backdrop-blur-sm p-6 border border-white/10 mb-6">
               <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                <Wallet size={24} className="text-[#86C520]" />
+                <Wallet size={24} className="text-[#F2ECC8]" />
                 {t.nft.connectedWallets} ({wallets.length})
               </h3>
 
@@ -78,7 +78,7 @@ export default function NFTDetailClient({ nft, wallets }: NFTDetailClientProps) 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <button
-                className="flex-1 bg-[#86C520] hover:bg-[#75ad1c] text-white px-6 py-4 font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)]"
+                className="flex-1 bg-[#F2ECC8] hover:bg-[#aca686] text-white px-6 py-4 font-semibold transition shadow-[#a59f7e] hover:shadow-[#dfd7ac]"
                 aria-label="View NFT on blockchain"
               >
                 {t.nft.viewOnBlockchain || 'View on Blockchain'}

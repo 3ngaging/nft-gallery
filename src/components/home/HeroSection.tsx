@@ -47,7 +47,7 @@ export default function HeroSection() {
               alt="Power Grinders"
               width={700}
               height={120}
-              className="mx-auto drop-shadow-[0_0_50px_rgba(134,197,32,0.6)] relative z-10"
+              className="mx-auto drop-shadow-[#F2ECC8] relative z-10"
             />
             {/* Extra glow behind logo */}
             <div className="absolute inset-0 blur-[60px] opacity-40 bg-accent/30 -z-10"></div>
@@ -72,7 +72,7 @@ export default function HeroSection() {
         >
           <Link
             href="/apply"
-            className="inline-flex border border-white/10 bg-[#86C520] hover:bg-[#75ad1c] text-white px-6 py-4 font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)]"
+            className="inline-flex border border-white/10 bg-[#F2ECC8] hover:bg-[#aca686] text-black px-6 py-4 font-semibold transition shadow-[#a59f7e] hover:shadow-[#8d886c]"
           >
             {t.home.applyNow}
             <ArrowRight size={20} />
@@ -86,15 +86,15 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-2xl mx-auto"
         >
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:bg-accent/10 hover:border-accent/30 transition shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]">
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:bg-accent/10 hover:border-accent/30 transition shadow-lg">
             <div className="text-3xl font-bold text-accent">{nftCount}</div>
             <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">{t.home.totalSupply}</div>
           </div>
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:bg-accent/10 hover:border-accent/30 transition shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]">
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:bg-accent/10 hover:border-accent/30 transition shadow-lg">
             <div className="text-3xl font-bold text-accent">1/1</div>
             <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">{t.home.unique}</div>
           </div>
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:bg-accent/10 hover:border-accent/30 transition shadow-lg hover:shadow-[0_0_20px_rgba(134,197,32,0.2)]">
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 hover:bg-accent/10 hover:border-accent/30 transition shadow-lg">
             <div className="text-3xl font-bold text-accent">OG</div>
             <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">{t.home.ogExclusive}</div>
           </div>

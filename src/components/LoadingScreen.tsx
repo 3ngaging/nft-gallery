@@ -28,7 +28,7 @@ export default function LoadingScreen() {
               cy="32"
               r={circleRadius}
               fill="none"
-              stroke="rgba(134, 197, 32, 0.1)"
+              stroke="#858068"
               strokeWidth="4"
             />
 
@@ -38,7 +38,7 @@ export default function LoadingScreen() {
               cy="32"
               r={circleRadius}
               fill="none"
-              stroke="#86C520"
+              stroke="#F2ECC8"
               strokeWidth="4"
               strokeLinecap="round"
               strokeDasharray={circumference}
@@ -52,7 +52,7 @@ export default function LoadingScreen() {
                 ease: "easeInOut"
               }}
               style={{
-                filter: 'drop-shadow(0 0 8px rgba(134, 197, 32, 0.6))'
+                filter: 'drop-shadow(0 0 8px #F2ECC8)'
               }}
             />
           </svg>

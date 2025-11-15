@@ -17,7 +17,7 @@ export default {
           medium: '#6B7160',    // Secondary gray-green
           light: '#F2ECC8',     // Cream/beige
         },
-        accent: '#86C520',      // CTA green
+        accent: '#F2ECC8',      // CTA green
         // Backgrounds
         dark: {
           bg: '#0a0a0a',

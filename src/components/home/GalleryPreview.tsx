@@ -24,7 +24,7 @@ export default function GalleryPreview() {
           transition={{ duration: 0.5 }}
           className="mb-16 text-center"
         >
-          <div className="bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#86C520]/30">
+          <div className="bg-[#F2ECC8]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#F2ECC8]/30">
             <span className="text-xs font-semibold text-accent uppercase tracking-wider">{t.home.nftCollection}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
@@ -47,7 +47,7 @@ export default function GalleryPreview() {
                 duration: 0.4,
                 delay: index * 0.1
               }}
-              className="relative aspect-square overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-accent/30 hover:bg-accent/5 hover:scale-105 hover:shadow-[0_0_30px_rgba(134,197,32,0.3)] transition-all duration-300 cursor-pointer group"
+              className="relative aspect-square overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 hover:border-accent/30 hover:bg-accent/5 hover:scale-105 hover:shadow-[#858068] transition-all duration-300 cursor-pointer group"
             >
               <Image
                 src={`/images/nft_${num}.png`}
@@ -73,14 +73,14 @@ export default function GalleryPreview() {
         >
           <Link
             href="/gallery"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-accent hover:bg-accent/90 text-primary-dark font-semibold uppercase tracking-wider shadow-[0_3px_0_0_#75ad1b] hover:shadow-[0_1px_0_0_#75ad1b] hover:translate-y-[2px] active:translate-y-[3px] active:shadow-none transition-all duration-200"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-accent hover:bg-accent/90 text-primary-dark font-semibold uppercase tracking-wider shadow-[0_3px_0_0_#aca686] hover:shadow-[0_1px_0_0_#aca686] hover:translate-y-[2px] active:translate-y-[3px] active:shadow-none transition-all duration-200"
           >
             {t.home.viewFullGallery}
             <ArrowRight size={18} />
           </Link>
         </motion.div>
       </div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#86C520]/10 rounded-full blur-[100px]"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#F2ECC8]/10 rounded-full blur-[100px]"></div>
     </section>
   );
 }

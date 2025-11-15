@@ -20,7 +20,7 @@ export default function CTASection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className="inline-block mb-5 px-5 py-2 bg-[#86C520]/20 backdrop-blur-sm border border-[#86C520]/30">
+          <div className="inline-block mb-5 px-5 py-2 bg-[#F2ECC8]/20 backdrop-blur-sm border border-[#F2ECC8]/30">
             <p className="text-sm font-semibold text-accent uppercase tracking-wider">{t.home.limitedMembers}</p>
           </div>
 
@@ -34,7 +34,7 @@ export default function CTASection() {
 
           <Link
             href="/apply"
-            className="inline-flex items-center gap-3 px-10 py-4 border border-white/10 bg-[#86C520] hover:bg-[#75ad1c] text-white font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)]"
+            className="inline-flex items-center gap-3 px-10 py-4 border border-white/10 bg-[#F2ECC8] hover:bg-[#aca686] text-white font-semibold transition shadow-[#a59f7e] hover:shadow-[#dfd7ac]"
           >
             {t.home.applyNow}
             <ArrowRight size={20} />

@@ -19,10 +19,10 @@ const FeatureCard = memo(({ icon: Icon, title, desc, index }: FeatureCardProps) 
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay: index * 0.15 }}
-    className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#86C520]/50 p-8 transition-all duration-300 hover:bg-[#86C520]/5 shadow-[0_0_40px_rgba(134,197,32,0.1)] hover:shadow-[0_0_40px_rgba(134,197,32,0.3)] group"
+    className="bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#F2ECC8]/50 p-8 transition-all duration-300 hover:bg-[#F2ECC8]/5 shadow-[#858068] hover:shadow-[#6e6b56] group"
   >
-    <div className="flex-shrink-0 w-12 h-12 bg-[#86C520]/20 border border-[#86C520]/40 flex items-center justify-center group-hover:bg-[#86C520]/30 transition-colors mb-5">
-      <Icon className="w-6 h-6 text-[#86C520]" />
+    <div className="flex-shrink-0 w-12 h-12 bg-[#F2ECC8]/20 border border-[#F2ECC8]/40 flex items-center justify-center group-hover:bg-[#F2ECC8]/30 transition-colors mb-5">
+      <Icon className="w-6 h-6 text-[#F2ECC8]" />
     </div>
     <h3 className="text-xl font-bold mb-3 text-white group-hover:text-accent transition-colors duration-300">{title}</h3>
     <p className="text-gray-400 leading-relaxed">{desc}</p>
@@ -67,7 +67,7 @@ export default function FeaturesSection() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <div className="bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#86C520]/30">
+          <div className="bg-[#F2ECC8]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#F2ECC8]/30">
             <span className="text-xs font-semibold text-accent uppercase tracking-wider">{t.home.benefits}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">

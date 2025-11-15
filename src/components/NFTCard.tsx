@@ -18,7 +18,7 @@ function NFTCard({ nft }: NFTCardProps) {
   return (
     <Link href={`/nft/${nft.token_id}`}>
       <div
-        className="bg-white/5 backdrop-blur-sm border border-white/10 overflow-hidden hover:bg-accent/10 hover:border-accent/30 cursor-pointer group shadow-lg hover:border-[#86C520]/50 transition-all duration-300 hover:bg-[#86C520]/5 hover:shadow-[0_0_40px_rgba(134,197,32,0.2)] hover:-translate-y-1 active:scale-[0.98]"
+        className="bg-white/5 backdrop-blur-sm border border-white/10 overflow-hidden hover:bg-accent/10 hover:border-accent/30 cursor-pointer group shadow-lg hover:border-[#F2ECC8]/50 transition-all duration-300 hover:bg-[#F2ECC8]/5 hover:shadow-[#a5a082] hover:-translate-y-1 active:scale-[0.98]"
       >
         <div className="relative aspect-square bg-black border-b border-white/10">
           {/* Loading skeleton */}

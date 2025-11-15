@@ -52,10 +52,10 @@ export default function Footer() {
           <div>
             <h3 className="text-primary-light font-semibold mb-3 text-xs uppercase tracking-wider">{t.home.community}</h3>
             <div className="flex gap-3">
-              <a href="#" rel="noopener noreferrer" aria-label="Twitter" className="text-primary-light/70 hover:text-accent transition p-2.5 bg-primary-medium/20 hover:bg-accent/20 text-[#86C520]">
+              <a href="#" rel="noopener noreferrer" aria-label="Twitter" className="text-primary-light/70 hover:text-accent transition p-2.5 bg-primary-medium/20 hover:bg-accent/20 text-[#F2ECC8]">
                 <Twitter size={16} />
               </a>
-              <a href="#" rel="noopener noreferrer" aria-label="Discord" className="text-primary-light/70 hover:text-accent transition p-2.5 bg-primary-medium/20 hover:bg-accent/20 text-[#86C520]">
+              <a href="#" rel="noopener noreferrer" aria-label="Discord" className="text-primary-light/70 hover:text-accent transition p-2.5 bg-primary-medium/20 hover:bg-accent/20 text-[#F2ECC8]">
                 <MessageCircle size={16} />
               </a>
             </div>

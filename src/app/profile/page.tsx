@@ -15,7 +15,7 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-spin h-12 w-12 border-t-2 border-b-2 border-[#86C520]"></div>
+      <div className="animate-spin h-12 w-12 border-t-2 border-b-2 border-[#F2ECC8]"></div>
     </div>
   );
 }

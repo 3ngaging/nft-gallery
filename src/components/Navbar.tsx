@@ -62,7 +62,7 @@ export default function Navbar() {
             {/* Auth/Apply Button */}
             <Link
               href="/apply"
-              className="border border-white/10 bg-[#86C520] hover:bg-[#75ad1c] text-white px-4 py-2 font-semibold transition shadow-[0_0_20px_rgba(134,197,32,0.3)] hover:shadow-[0_0_30px_rgba(134,197,32,0.5)] text-sm"
+              className="border border-white/10 bg-[#F2ECC8] hover:bg-[#aca686] text-black px-4 py-2 font-semibold transition shadow-[#a59f7e] hover:shadow-[#dfd7ac] text-sm"
             >
               {t.home.applyNow}
             </Link>

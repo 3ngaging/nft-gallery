@@ -28,10 +28,10 @@ export default function LanguageSelector() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-1.5 bg-white/5 backdrop-blur-sm hover:bg-accent/10 transition group border border-white/10 hover:border-accent/30 hover:border-[#86C520]/30 cursor-pointer"
+        className="flex items-center gap-2 px-3 py-1.5 bg-white/5 backdrop-blur-sm hover:bg-accent/10 transition group border border-white/10 hover:border-accent/30 hover:border-[#F2ECC8]/30 cursor-pointer"
         aria-label="Change language"
       >
-        <Languages size={16} className="text-accent transition text-[#86C520]" />
+        <Languages size={16} className="text-accent transition text-[#F2ECC8]" />
         <span className="hidden sm:inline text-xs font-semibold text-primary-light/80 group-hover:text-accent transition uppercase">
           {currentLanguage.code}
         </span>
@@ -43,7 +43,7 @@ export default function LanguageSelector() {
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
 
           {/* Dropdown */}
-          <div className="absolute right-0 mt-2 w-52 bg-black/95 backdrop-blur-xl overflow-hidden z-50 border border-white/10 shadow-[0_0_30px_rgba(134,197,32,0.2)]">
+          <div className="absolute right-0 mt-2 w-52 bg-black/95 backdrop-blur-xl overflow-hidden z-50 border border-white/10 shadow-[#a5a082]">
             <div className="p-2 bg-accent/20 border-b border-white/10">
               <p className="text-xs font-semibold text-accent uppercase tracking-wider px-2">
                 Select Language
@@ -66,7 +66,7 @@ export default function LanguageSelector() {
                         : 'hover:bg-white/5 text-gray-300 hover:text-white border border-transparent'
                     }`}
                   >
-                    <Languages size={16} className={isSelected ? 'text-accent text-[#86C520]' : 'text-gray-500 group-hover:text-accent'} />
+                    <Languages size={16} className={isSelected ? 'text-accent text-[#F2ECC8]' : 'text-gray-500 group-hover:text-accent'} />
 
                     <div className="flex-1">
                       <span className="font-semibold block text-sm">

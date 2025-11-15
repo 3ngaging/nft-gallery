@@ -20,10 +20,10 @@ export default function CommunitySection() {
   return (
     <section className="relative py-24 px-4 overflow-hidden bg-gradient-to-b from-black via-primary-dark/30 to-black">
       {/* Enhanced Background glows - matching other sections */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-[#86C520]/5 to-black"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#86C520]/20 rounded-full blur-[150px] animate-pulse"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#86C520]/10 rounded-full blur-[100px]"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#86C520]/10 rounded-full blur-[100px]"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-[#F2ECC8]/5 to-black"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#F2ECC8]/20 rounded-full blur-[150px] animate-pulse"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#F2ECC8]/10 rounded-full blur-[100px]"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#F2ECC8]/10 rounded-full blur-[100px]"></div>
 
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
@@ -34,7 +34,7 @@ export default function CommunitySection() {
           className="text-center mb-16"
         >
           {/* Badge */}
-          <div className="bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#86C520]/30">
+          <div className="bg-[#F2ECC8]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#F2ECC8]/30">
             <span className="text-xs font-semibold text-accent uppercase tracking-wider">
               {t.home.communityBadge}
             </span>
@@ -63,15 +63,15 @@ export default function CommunitySection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#86C520]/50 p-8 transition-all duration-300 hover:bg-[#86C520]/5 hover:shadow-[0_0_40px_rgba(134,197,32,0.2)]"
+              className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm border border-white/10 hover:border-[#F2ECC8]/50 p-8 transition-all duration-300 hover:bg-[#F2ECC8]/5 hover:shadow-[#a5a082]"
             >
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-[#86C520]/20 border border-[#86C520]/40 flex items-center justify-center group-hover:bg-[#86C520]/30 transition-colors">
-                  <benefit.icon className="w-6 h-6 text-[#86C520]" />
+                <div className="flex-shrink-0 w-12 h-12 bg-[#F2ECC8]/20 border border-[#F2ECC8]/40 flex items-center justify-center group-hover:bg-[#F2ECC8]/30 transition-colors">
+                  <benefit.icon className="w-6 h-6 text-[#F2ECC8]" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <CheckCircle className="w-5 h-5 text-[#86C520] flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-[#F2ECC8] flex-shrink-0" />
                     <h3 className="text-lg font-semibold text-white">{benefit.text}</h3>
                   </div>
                 </div>
@@ -88,7 +88,7 @@ export default function CommunitySection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center"
         >
-          <div className="bg-gradient-to-r from-[#86C520]/20 via-[#86C520]/10 to-[#86C520]/20 border border-[#86C520]/30 backdrop-blur-sm p-10 shadow-[0_0_50px_rgba(134,197,32,0.2)]">
+          <div className="bg-gradient-to-r from-[#F2ECC8]/20 via-[#F2ECC8]/10 to-[#F2ECC8]/20 border border-[#F2ECC8]/30 backdrop-blur-sm p-10 shadow-[#a5a082]">
             <h3 className="text-3xl font-bold mb-4 text-white">
               {t.home.communityCtaTitle}
             </h3>
@@ -97,7 +97,7 @@ export default function CommunitySection() {
             </p>
             <Link
               href="/apply"
-              className="inline-flex items-center gap-2 bg-[#86C520] hover:bg-[#75ad1c] text-white px-8 py-4 text-lg font-bold transition-all shadow-[0_0_30px_rgba(134,197,32,0.4)] hover:shadow-[0_0_50px_rgba(134,197,32,0.6)] hover:scale-105"
+              className="inline-flex items-center gap-2 bg-[#F2ECC8] hover:bg-[#aca686] text-black px-8 py-4 text-lg font-bold transition-all shadow-[#F2ECC8] hover:shadow-[#a5a082] hover:scale-105"
             >
               {t.home.applyNow}
               <Sparkles className="w-5 h-5" />

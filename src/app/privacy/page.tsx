@@ -13,7 +13,7 @@ export default function PrivacyPage() {
         {/* Back Button */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-[#86C520] hover:text-[#75ad1c] mb-8 transition"
+          className="inline-flex items-center gap-2 text-[#F2ECC8] hover:text-[#aca686] mb-8 transition"
         >
           <ArrowLeft size={20} />
           Back to Home
@@ -30,7 +30,7 @@ export default function PrivacyPage() {
         {/* Content */}
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 space-y-8">
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">1. Information We Collect</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">1. Information We Collect</h2>
             <p className="text-gray-300 leading-relaxed mb-4">
               Power Grinders collects information to provide better services to our users. We collect information in the following ways:
             </p>
@@ -43,7 +43,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">2. How We Use Information</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">2. How We Use Information</h2>
             <p className="text-gray-300 leading-relaxed mb-4">
               We use the information we collect for the following purposes:
             </p>
@@ -56,7 +56,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">3. Information Sharing</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">3. Information Sharing</h2>
             <p className="text-gray-300 leading-relaxed">
               We do not share your personal information with companies, organizations, or individuals outside of Power Grinders except in the following cases:
             </p>
@@ -68,14 +68,14 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">4. Data Security</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">4. Data Security</h2>
             <p className="text-gray-300 leading-relaxed">
               We implement appropriate security measures to protect your personal information. However, no method of transmission over the Internet is 100% secure, and we cannot guarantee absolute security.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">5. Your Rights</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">5. Your Rights</h2>
             <p className="text-gray-300 leading-relaxed mb-4">
               You have the right to:
             </p>
@@ -88,7 +88,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">6. Contact Us</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">6. Contact Us</h2>
             <p className="text-gray-300 leading-relaxed">
               If you have any questions about this Privacy Policy, please contact us through our community channels.
             </p>

@@ -83,7 +83,7 @@ export default function GalleryPage() {
           transition={{ duration: 0.5 }}
           className="mb-10"
         >
-          <div className="bg-[#86C520]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#86C520]/30">
+          <div className="bg-[#F2ECC8]/20 backdrop-blur-sm px-4 py-2 inline-block mb-4 border border-[#F2ECC8]/30">
             <span className="text-xs font-semibold text-accent uppercase tracking-wider">{t.gallery.title}</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-3 text-white">
@@ -151,7 +151,7 @@ export default function GalleryPage() {
         {/* Loading State */}
         {loading && (
           <div className="text-center py-20">
-            <div className="inline-block animate-spin h-10 w-10 border-t-2 border-b-2 border-[#86C520]"></div>
+            <div className="inline-block animate-spin h-10 w-10 border-t-2 border-b-2 border-[#F2ECC8]"></div>
             <p className="text-gray-400 mt-4">{t.gallery.loading}</p>
           </div>
         )}
@@ -166,7 +166,7 @@ export default function GalleryPage() {
             </p>
             <button
               onClick={() => setSearchTerm('')}
-              className="bg-accent hover:bg-accent/90 text-primary-dark px-6 py-3 font-semibold transition shadow-[0_3px_0_0_#75ad1b] hover:shadow-[0_1px_0_0_#75ad1b] hover:translate-y-[2px]"
+              className="bg-accent hover:bg-accent/90 text-primary-dark px-6 py-3 font-semibold transition shadow-[0_3px_0_0_#aca686] hover:shadow-[0_1px_0_0_#aca686] hover:translate-y-[2px]"
             >
               {t.gallery.clearSearch}
             </button>

@@ -7,7 +7,7 @@ export default function GridBackground() {
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: 'linear-gradient(#86C520 1px, transparent 1px), linear-gradient(90deg, #86C520 1px, transparent 1px)',
+          backgroundImage: 'linear-gradient(#F2ECC8 1px, transparent 1px), linear-gradient(90deg, #F2ECC8 1px, transparent 1px)',
           backgroundSize: '50px 50px'
         }}
       />
@@ -16,7 +16,7 @@ export default function GridBackground() {
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
-          backgroundImage: 'radial-gradient(circle, #86C520 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(circle, #F2ECC8 1px, transparent 1px)',
           backgroundSize: '50px 50px'
         }}
       />

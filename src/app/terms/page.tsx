@@ -13,7 +13,7 @@ export default function TermsPage() {
         {/* Back Button */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-[#86C520] hover:text-[#75ad1c] mb-8 transition"
+          className="inline-flex items-center gap-2 text-[#F2ECC8] hover:text-[#aca686] mb-8 transition"
         >
           <ArrowLeft size={20} />
           Back to Home
@@ -30,14 +30,14 @@ export default function TermsPage() {
         {/* Content */}
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 space-y-8">
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">1. Acceptance of Terms</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">1. Acceptance of Terms</h2>
             <p className="text-gray-300 leading-relaxed">
               By accessing and using Power Grinders services, you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to these terms, please do not use our services.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">2. Membership</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">2. Membership</h2>
             <p className="text-gray-300 leading-relaxed mb-4">
               Power Grinders membership is limited and exclusive:
             </p>
@@ -50,7 +50,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">3. Community Guidelines</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">3. Community Guidelines</h2>
             <p className="text-gray-300 leading-relaxed mb-4">
               As a member, you agree to:
             </p>
@@ -63,14 +63,14 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">4. Intellectual Property</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">4. Intellectual Property</h2>
             <p className="text-gray-300 leading-relaxed">
               All content, including NFT artwork, logos, and branding materials, are the property of Power Grinders or its licensors. You may not use, reproduce, or distribute any content without explicit permission.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">5. NFT Ownership</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">5. NFT Ownership</h2>
             <p className="text-gray-300 leading-relaxed mb-4">
               When you purchase a Power Grinders NFT:
             </p>
@@ -83,14 +83,14 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">6. Points System</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">6. Points System</h2>
             <p className="text-gray-300 leading-relaxed">
               The points system is for gamification and community engagement. Points have no monetary value and cannot be exchanged for cash or other benefits unless explicitly stated.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">7. Disclaimer</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">7. Disclaimer</h2>
             <p className="text-gray-300 leading-relaxed mb-4">
               Power Grinders provides information and community access but:
             </p>
@@ -103,21 +103,21 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">8. Limitation of Liability</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">8. Limitation of Liability</h2>
             <p className="text-gray-300 leading-relaxed">
               Power Grinders shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use the service.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">9. Changes to Terms</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">9. Changes to Terms</h2>
             <p className="text-gray-300 leading-relaxed">
               We reserve the right to modify these terms at any time. Continued use of our services after changes constitutes acceptance of the new terms.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-[#86C520] mb-4">10. Contact</h2>
+            <h2 className="text-2xl font-bold text-[#F2ECC8] mb-4">10. Contact</h2>
             <p className="text-gray-300 leading-relaxed">
               For questions about these Terms of Service, please contact us through our official community channels.
             </p>

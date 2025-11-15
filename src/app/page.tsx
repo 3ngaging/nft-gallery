@@ -16,7 +16,7 @@ const FAQSection = lazy(() => import('@/components/home/FAQSection'));
 // Componente de fallback ligero
 const SectionFallback = () => (
   <div className="h-96 flex items-center justify-center">
-    <div className="w-8 h-8 border-2 border-[#86C520] border-t-transparent rounded-full animate-spin" />
+    <div className="w-8 h-8 border-2 border-[#F2ECC8] border-t-transparent rounded-full animate-spin" />
   </div>
 );
 
