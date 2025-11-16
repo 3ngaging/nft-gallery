@@ -60,11 +60,9 @@ const WalletActions = () => {
       const message = 'Hello from Power Grinders!';
       const signatureUint8Array = await signMessageSolana({
         message: new TextEncoder().encode(message),
-        options: {
-          address: selectedWallet.address,
-          uiOptions: {
-            title: 'Sign this message',
-          },
+        address: selectedWallet.address,
+        uiOptions: {
+          title: 'Sign this message',
         },
       });
 
