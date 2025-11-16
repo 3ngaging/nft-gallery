@@ -2,12 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, Wallet, ExternalLink, User } from 'lucide-react';
+import { ArrowLeft, Wallet, ExternalLink, User, Twitter } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
 import StickerSystem from './StickerSystem';
 import { getTotalSupply } from '@/lib/nftHashList';
-import { usePrivy } from '@privy-io/react-auth';
-import { useMemo } from 'react';
+import { usePrivy, type WalletWithMetadata } from '@privy-io/react-auth';
+import { useMemo, useEffect, useState } from 'react';
+import type { UserProfile } from '@/lib/supabase';
 
 type NFTDetailClientProps = {
   nft: {
@@ -32,17 +33,45 @@ export default function NFTDetailClient({ nft }: NFTDetailClientProps) {
   const { t } = useLanguage();
   const totalSupply = getTotalSupply();
   const { user } = usePrivy();
+  const [ownerProfile, setOwnerProfile] = useState<UserProfile | null>(null);
+  const [loadingProfile, setLoadingProfile] = useState(true);
 
   // Check if user owns this NFT
   const isOwned = useMemo(() => {
     if (!user?.linkedAccounts) return false;
 
     const userWallets = user.linkedAccounts
-      .filter((account) => account.type === 'wallet' && account.chainType === 'solana')
-      .map((account) => (account as any).address?.toLowerCase());
+      .filter((account): account is WalletWithMetadata => account.type === 'wallet' && account.chainType === 'solana')
+      .map((account) => account.address?.toLowerCase());
 
     return userWallets.some((wallet) => wallet === nft.owner.toLowerCase());
   }, [user, nft.owner]);
+
+  // Fetch owner profile by wallet address
+  useEffect(() => {
+    async function fetchOwnerProfile() {
+      try {
+        setLoadingProfile(true);
+        const response = await fetch(
+          `/api/profile/by-wallet?address=${encodeURIComponent(nft.owner)}`
+        );
+        const data = await response.json();
+
+        if (data.success && data.profile) {
+          setOwnerProfile(data.profile);
+        } else {
+          setOwnerProfile(null);
+        }
+      } catch (error) {
+        console.error('Error fetching owner profile:', error);
+        setOwnerProfile(null);
+      } finally {
+        setLoadingProfile(false);
+      }
+    }
+
+    fetchOwnerProfile();
+  }, [nft.owner]);
 
   return (
     <div className="min-h-screen py-20 px-4">
@@ -124,6 +153,55 @@ export default function NFTDetailClient({ nft }: NFTDetailClientProps) {
               </h3>
 
               <div className="space-y-3">
+                {/* Owner Profile Link (if registered) */}
+                {!loadingProfile && ownerProfile && (
+                  <div className="bg-gradient-to-r from-[#F2ECC8]/10 to-[#F2ECC8]/5 border border-[#F2ECC8]/20 p-4">
+                    <div className="flex items-center justify-between flex-wrap gap-3">
+                      <div className="flex items-center gap-3">
+                        {ownerProfile.profile_picture ? (
+                          <Image
+                            src={ownerProfile.profile_picture}
+                            alt={ownerProfile.display_name || 'Owner'}
+                            width={40}
+                            height={40}
+                            className="rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#F2ECC8]/30 to-[#F2ECC8]/10 flex items-center justify-center">
+                            <User size={20} className="text-[#F2ECC8]" />
+                          </div>
+                        )}
+                        <div>
+                          <Link
+                            href={`/user/${ownerProfile.privy_user_id}`}
+                            className="text-lg font-bold text-[#F2ECC8] hover:text-[#aca686] transition"
+                          >
+                            {ownerProfile.display_name || `User ${ownerProfile.privy_user_id.slice(0, 8)}`}
+                          </Link>
+                          <p className="text-xs text-gray-400">Registered Member</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Link
+                          href={`/user/${ownerProfile.privy_user_id}`}
+                          className="inline-flex items-center gap-1 bg-[#F2ECC8]/20 hover:bg-[#F2ECC8]/30 text-[#F2ECC8] px-3 py-2 text-sm font-semibold transition border border-[#F2ECC8]/30"
+                        >
+                          View Profile
+                          <User size={14} />
+                        </Link>
+                        <Link
+                          href="/leaderboard"
+                          className="inline-flex items-center gap-1 bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 px-3 py-2 text-sm font-semibold transition border border-purple-500/30"
+                        >
+                          Leaderboard
+                          <ExternalLink size={14} />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Wallet Address */}
                 <div className="bg-black/30 p-4">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <code className="text-sm break-all">
@@ -167,20 +245,17 @@ export default function NFTDetailClient({ nft }: NFTDetailClientProps) {
                 {t.nft.viewOnSolscan}
                 <ExternalLink size={16} />
               </a>
-              <button
-                onClick={() => {
-                  if (navigator.share) {
-                    navigator.share({
-                      title: `${nft.name} #${nft.number}`,
-                      text: `Check out ${nft.name} from Power Grinders NFT Collection!`,
-                      url: window.location.href,
-                    });
-                  }
-                }}
-                className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-6 py-4 font-semibold transition border border-white/20 shadow-lg hover:shadow-xl"
+              <a
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                  `Check out ${nft.name} #${nft.number} from the @Power_Grinders NFT Collection! 🔥`
+                )}&url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}&hashtags=PowerGrinders,SolanaNFT,NFT`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#1DA1F2] hover:bg-[#1a8cd8] text-white px-6 py-4 font-semibold transition shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
               >
-                {t.nft.share}
-              </button>
+                <Twitter size={20} />
+                <span>Share on Twitter</span>
+              </a>
             </div>
           </div>
         </div>

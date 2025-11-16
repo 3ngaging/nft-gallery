@@ -65,36 +65,39 @@ export default async function NFTDetailPage({ params }: Props) {
     notFound();
   }
 
+  // Fetch NFT data from Matrica API
+  let nftData;
+  let nftNumber;
+
   try {
-    // Fetch NFT data from Matrica API
-    const nftData = await matricaNFTClient.getNFT(mintAddress);
-    const nftNumber = getNFTNumber(mintAddress);
-
-    if (!nftData || !nftNumber) {
-      notFound();
-    }
-
-    // Parse to our format with number
-    const nft = {
-      mintAddress: nftData.id,
-      number: nftNumber,
-      name: nftData.name,
-      image: nftData.image,
-      cdnImage: nftData.url,
-      owner: nftData.owner.id,
-      status: nftData.status,
-      collection: {
-        id: nftData.collection.id,
-        name: nftData.collection.name,
-        communityId: nftData.collection.community.id,
-        communityName: nftData.collection.community.name,
-      },
-      isMutable: nftData.isMutable,
-    };
-
-    return <NFTDetailClient nft={nft} />;
+    nftData = await matricaNFTClient.getNFT(mintAddress);
+    nftNumber = getNFTNumber(mintAddress);
   } catch (error) {
     console.error('Error fetching NFT:', error);
     notFound();
   }
+
+  if (!nftData || !nftNumber) {
+    notFound();
+  }
+
+  // Parse to our format with number
+  const nft = {
+    mintAddress: nftData.id,
+    number: nftNumber,
+    name: nftData.name,
+    image: nftData.image,
+    cdnImage: nftData.url,
+    owner: nftData.owner.id,
+    status: nftData.status,
+    collection: {
+      id: nftData.collection.id,
+      name: nftData.collection.name,
+      communityId: nftData.collection.community.id,
+      communityName: nftData.collection.community.name,
+    },
+    isMutable: nftData.isMutable,
+  };
+
+  return <NFTDetailClient nft={nft} />;
 }

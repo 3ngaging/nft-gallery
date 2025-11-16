@@ -5,19 +5,20 @@
  * Soporta Twitter, Discord, Gmail y Solana Wallets
  */
 
-import { usePrivy, useWallets } from '@privy-io/react-auth';
+import { usePrivy, type WalletWithMetadata } from '@privy-io/react-auth';
 import { LogIn, LogOut, User, Wallet } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
+import { useUserProfile } from '@/hooks/useUserProfile';
 
 export default function PrivyLoginButton() {
-  const { ready, authenticated, user, login, logout } = usePrivy();
-  const { wallets } = useWallets();
+  const { ready, login, logout } = usePrivy();
   const { t } = useLanguage();
+  const { authenticated, user, displayName } = useUserProfile();
 
   // Get Solana wallets (embedded wallets created by Privy)
-  const solanaWallets = user?.linkedAccounts?.filter(
-    (account) => account.type === 'wallet' && (account as any).chainType === 'solana'
-  ) || [];
+  const solanaWallets = (user?.linkedAccounts?.filter(
+    (account): account is WalletWithMetadata => account.type === 'wallet' && account.chainType === 'solana'
+  ) || []) as WalletWithMetadata[];
 
   // Mostrar loading mientras Privy se inicializa
   if (!ready) {
@@ -33,17 +34,9 @@ export default function PrivyLoginButton() {
 
   // Usuario autenticado - mostrar info y botón de logout
   if (authenticated && user) {
-    // Obtener el nombre del usuario (email, twitter, discord, etc.)
-    const displayName =
-      user.twitter?.username ||
-      user.discord?.username ||
-      user.google?.email ||
-      user.email?.address ||
-      `User ${user.id.slice(0, 6)}`;
-
     // Obtener la wallet principal de Solana si existe
     const primaryWallet = solanaWallets[0];
-    const walletAddress = primaryWallet ? (primaryWallet as any).address : null;
+    const walletAddress = primaryWallet?.address || null;
 
     return (
       <div className="flex items-center gap-3">
@@ -94,9 +87,9 @@ export function usePrivyAuth() {
   const { ready, authenticated, user } = usePrivy();
 
   // Get Solana wallets from linked accounts
-  const solanaWallets = user?.linkedAccounts?.filter(
-    (account) => account.type === 'wallet' && (account as any).chainType === 'solana'
-  ) || [];
+  const solanaWallets = (user?.linkedAccounts?.filter(
+    (account): account is WalletWithMetadata => account.type === 'wallet' && account.chainType === 'solana'
+  ) || []) as WalletWithMetadata[];
 
   return {
     ready,

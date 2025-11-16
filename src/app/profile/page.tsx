@@ -7,18 +7,20 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { Wallet, Trophy, Activity, Plus, ExternalLink } from 'lucide-react';
+import Image from 'next/image';
+import { Wallet, Trophy, Activity, Plus, User as UserIcon, Twitter as TwitterIcon, MessageCircle, Globe } from 'lucide-react';
 import { usePrivy } from '@privy-io/react-auth';
 import type { NFTWithOwner } from '@/lib/matrica-nft-client';
+import type { UserProfile } from '@/lib/supabase';
 import NFTCard from '@/components/NFTCard';
-import DisplayNameEditor from '@/components/DisplayNameEditor';
+import ProfileEditor from '@/components/ProfileEditor';
 
 export default function ProfilePage() {
   const { ready, authenticated, user, linkWallet } = usePrivy();
   const [userNFTs, setUserNFTs] = useState<NFTWithOwner[]>([]);
   const [loading, setLoading] = useState(false);
-  const [customDisplayName, setCustomDisplayName] = useState<string | null>(null);
-  const [loadingDisplayName, setLoadingDisplayName] = useState(false);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [loadingProfile, setLoadingProfile] = useState(false);
   const router = useRouter();
 
   // Get Solana wallets from Privy user - memoized to prevent unnecessary re-renders
@@ -35,30 +37,52 @@ export default function ProfilePage() {
     }
   }, [ready, authenticated, router]);
 
-  // Fetch custom display name from Supabase
+  // Fetch user profile from Supabase and sync wallets
   useEffect(() => {
     if (!authenticated || !user) return;
 
-    async function fetchDisplayName() {
+    async function fetchProfile() {
       try {
-        setLoadingDisplayName(true);
+        setLoadingProfile(true);
         const response = await fetch(
-          `/api/profile/display-name?privyUserId=${encodeURIComponent(user.id)}`
+          `/api/profile?privyUserId=${encodeURIComponent(user.id)}`
         );
         const data = await response.json();
 
-        if (data.success && data.displayName) {
-          setCustomDisplayName(data.displayName);
+        if (data.success && data.profile) {
+          setUserProfile(data.profile);
         }
       } catch (error) {
-        console.error('Error fetching display name:', error);
+        console.error('Error fetching profile:', error);
       } finally {
-        setLoadingDisplayName(false);
+        setLoadingProfile(false);
       }
     }
 
-    fetchDisplayName();
-  }, [authenticated, user]);
+    // Sync wallets to database
+    async function syncWallets() {
+      if (solanaWallets.length === 0) return;
+
+      try {
+        await fetch('/api/wallet/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            privyUserId: user.id,
+            wallets: solanaWallets.map(w => ({
+              address: w.address,
+              chainType: 'solana',
+            })),
+          }),
+        });
+      } catch (error) {
+        console.error('Error syncing wallets:', error);
+      }
+    }
+
+    fetchProfile();
+    syncWallets();
+  }, [authenticated, user, solanaWallets]);
 
   // Fetch user's NFTs from the collection using all their Solana wallets
   useEffect(() => {
@@ -113,7 +137,7 @@ export default function ProfilePage() {
 
   // Get user display name - prioritize custom name, then social accounts, then fallback
   const displayName =
-    customDisplayName ||
+    userProfile?.display_name ||
     user.twitter?.username ||
     user.discord?.username ||
     user.google?.email ||
@@ -121,61 +145,114 @@ export default function ProfilePage() {
     `User ${user.id.slice(0, 6)}`;
 
   return (
-    <div className="min-h-screen bg-black pt-24 pb-12 px-4">
+    <div className="min-h-screen bg-black pt-16 pb-12 px-4">
       <div className="max-w-6xl mx-auto">
-        {/* Profile Header */}
-        <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 mb-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-            {/* Avatar */}
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-accent/30 to-accent/10 flex items-center justify-center border-4 border-accent/30">
-              <Wallet size={40} className="text-accent" />
-            </div>
-
-            {/* User Info */}
-            <div className="flex-grow">
-              <div className="flex items-center gap-4 mb-2">
-                <h1 className="text-3xl font-bold text-white">{displayName}</h1>
-                {!loadingDisplayName && (
-                  <DisplayNameEditor
-                    privyUserId={user.id}
-                    initialDisplayName={customDisplayName || ''}
-                    onNameUpdated={(newName) => setCustomDisplayName(newName)}
-                  />
-                )}
+        {/* Profile Header with Banner */}
+        <div className="bg-white/5 backdrop-blur-sm border border-white/10 overflow-hidden mb-8">
+          {/* Banner Image */}
+          <div className="relative w-full h-48 md:h-64 bg-gradient-to-r from-accent/20 to-purple-500/20">
+            {userProfile?.banner_image ? (
+              <Image
+                src={userProfile.banner_image}
+                alt="Profile banner"
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-gray-600 text-sm">No banner set</div>
               </div>
-              <p className="text-gray-400 text-sm mb-4">
-                Connected via {user.twitter ? 'Twitter' : user.discord ? 'Discord' : user.google ? 'Google' : user.email ? 'Email' : 'Wallet'}
-              </p>
+            )}
+          </div>
 
-              <div className="flex flex-wrap gap-4">
-                {user.twitter && (
-                  <div className="bg-black/30 border border-white/10 px-4 py-2 flex items-center gap-2">
-                    <ExternalLink size={16} className="text-accent" />
-                    <span className="text-xs text-gray-300">
-                      Twitter: <span className="text-accent">@{user.twitter.username}</span>
-                    </span>
-                  </div>
+          {/* Profile Info */}
+          <div className="p-6 md:p-8 relative">
+            <div className="flex flex-col md:flex-row items-start gap-6">
+              {/* Profile Picture */}
+              <div className="relative -mt-16 md:-mt-20">
+                <div className="w-32 h-32 rounded-full border-4 border-black bg-gradient-to-br from-accent/30 to-accent/10 overflow-hidden">
+                  {userProfile?.profile_picture ? (
+                    <Image
+                      src={userProfile.profile_picture}
+                      alt={displayName}
+                      width={128}
+                      height={128}
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-accent/30 to-accent/10">
+                      <UserIcon size={48} className="text-accent" />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* User Info */}
+              <div className="flex-grow">
+                <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{displayName}</h1>
+
+                {/* Bio */}
+                {userProfile?.bio && (
+                  <p className="text-gray-300 text-sm mb-4 max-w-2xl">
+                    {userProfile.bio}
+                  </p>
                 )}
-                {user.discord && (
-                  <div className="bg-black/30 border border-white/10 px-4 py-2 flex items-center gap-2">
-                    <ExternalLink size={16} className="text-accent" />
-                    <span className="text-xs text-gray-300">
-                      Discord: <span className="text-accent">{user.discord.username}</span>
-                    </span>
-                  </div>
-                )}
-                {user.google && (
-                  <div className="bg-black/30 border border-white/10 px-4 py-2 flex items-center gap-2">
-                    <ExternalLink size={16} className="text-accent" />
-                    <span className="text-xs text-gray-300">
-                      Gmail: <span className="text-accent">{user.google.email}</span>
-                    </span>
-                  </div>
-                )}
+
+                {/* Social Links */}
+                <div className="flex flex-wrap gap-3 mb-4">
+                  {userProfile?.twitter_handle && (
+                    <a
+                      href={`https://twitter.com/${userProfile.twitter_handle}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-[#1DA1F2]/20 hover:bg-[#1DA1F2]/30 text-[#1DA1F2] px-3 py-1.5 text-xs font-semibold transition border border-[#1DA1F2]/30"
+                    >
+                      <TwitterIcon size={14} />
+                      @{userProfile.twitter_handle}
+                    </a>
+                  )}
+                  {userProfile?.discord_username && (
+                    <div className="inline-flex items-center gap-2 bg-[#5865F2]/20 text-[#5865F2] px-3 py-1.5 text-xs font-semibold border border-[#5865F2]/30">
+                      <MessageCircle size={14} />
+                      {userProfile.discord_username}
+                    </div>
+                  )}
+                  {userProfile?.website_url && (
+                    <a
+                      href={userProfile.website_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-accent/20 hover:bg-accent/30 text-accent px-3 py-1.5 text-xs font-semibold transition border border-accent/30"
+                    >
+                      <Globe size={14} />
+                      Website
+                    </a>
+                  )}
+                </div>
+
+                {/* Privy Connected Accounts */}
+                <div className="flex flex-wrap gap-2 text-xs text-gray-500">
+                  <span>Connected via:</span>
+                  {user.twitter && <span className="text-accent">Twitter</span>}
+                  {user.discord && <span className="text-accent">Discord</span>}
+                  {user.google && <span className="text-accent">Google</span>}
+                  {user.email && <span className="text-accent">Email</span>}
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Profile Editor */}
+        {!loadingProfile && (
+          <div className="mb-8">
+            <ProfileEditor
+              privyUserId={user.id}
+              profile={userProfile}
+              onProfileUpdated={(updatedProfile) => setUserProfile(updatedProfile)}
+            />
+          </div>
+        )}
 
         {/* Solana Wallets Section */}
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 mb-8">

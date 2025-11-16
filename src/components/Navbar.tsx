@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, User } from 'lucide-react';
+import { Menu, X, User, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
 import LanguageSelector from './LanguageSelector';
@@ -57,6 +57,13 @@ export default function Navbar() {
             >
               {t.nav.gallery}
             </Link>
+            <Link
+              href="/leaderboard"
+              className="text-primary-light/80 hover:text-accent transition font-medium text-xs uppercase tracking-wider flex items-center gap-1.5"
+            >
+              <Trophy size={14} />
+              <span>Leaderboard</span>
+            </Link>
 
             {/* Profile Link - Only show when authenticated */}
             {authenticated && (
@@ -107,12 +114,20 @@ export default function Navbar() {
             >
               {t.nav.gallery}
             </Link>
+            <Link
+              href="/leaderboard"
+              className="flex items-center gap-2 text-primary-light/80 hover:text-accent transition py-2 text-xs uppercase tracking-wider"
+              onClick={() => setIsOpen(false)}
+            >
+              <Trophy size={14} />
+              <span>Leaderboard</span>
+            </Link>
 
             {/* Mobile Profile Link - Only show when authenticated */}
             {authenticated && (
               <Link
                 href="/profile"
-                className="block text-primary-light/80 hover:text-accent transition py-2 text-xs uppercase tracking-wider flex items-center gap-2"
+                className="flex items-center gap-2 text-primary-light/80 hover:text-accent transition py-2 text-xs uppercase tracking-wider"
                 onClick={() => setIsOpen(false)}
               >
                 <User size={14} />

@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
-import { usePrivy } from '@privy-io/react-auth';
+import { useState, useMemo } from 'react';
+import { usePrivy, type WalletWithMetadata } from '@privy-io/react-auth';
 import {
   useSendTransaction as useSendTransactionSolana,
   useSignMessage as useSignMessageSolana,
@@ -28,26 +28,30 @@ const WalletActions = () => {
   const { signTransaction: signTransactionSolana } = useSignTransactionSolana();
   const { sendTransaction: sendTransactionSolana } = useSendTransactionSolana();
 
-  // Get Solana wallets from linked accounts
-  const solanaWallets = user?.linkedAccounts?.filter(
-    (account) => account.type === 'wallet' && (account as any).chainType === 'solana'
-  ) || [];
-
   const allWallets = useMemo((): WalletInfo[] => {
-    return solanaWallets.map((wallet: any) => ({
+    // Get Solana wallets from linked accounts
+    const solanaWallets = (user?.linkedAccounts?.filter(
+      (account): account is WalletWithMetadata => account.type === 'wallet' && account.chainType === 'solana'
+    ) || []) as WalletWithMetadata[];
+
+    return solanaWallets.map((wallet) => ({
       address: wallet.address,
       name: wallet.address,
-      walletClientType: wallet.walletClient || 'privy',
+      walletClientType: wallet.walletClientType || 'privy',
     }));
-  }, [solanaWallets]);
+  }, [user?.linkedAccounts]);
 
-  const [selectedWallet, setSelectedWallet] = useState<WalletInfo | null>(null);
+  const [selectedWalletAddress, setSelectedWalletAddress] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (allWallets.length > 0 && !selectedWallet) {
-      setSelectedWallet(allWallets[0]);
+  // Derive selected wallet from address
+  const selectedWallet = useMemo(() => {
+    if (selectedWalletAddress) {
+      const wallet = allWallets.find(w => w.address === selectedWalletAddress);
+      if (wallet) return wallet;
     }
-  }, [allWallets, selectedWallet]);
+    // Default to first wallet if no selection or selection not found
+    return allWallets.length > 0 ? allWallets[0] : null;
+  }, [allWallets, selectedWalletAddress]);
 
   const handleSignMessage = async () => {
     if (!selectedWallet) {
@@ -170,10 +174,7 @@ const WalletActions = () => {
             id="wallet-select"
             value={selectedWallet?.address || ''}
             onChange={(e) => {
-              const wallet = allWallets.find(
-                (w) => w.address === e.target.value
-              );
-              setSelectedWallet(wallet || null);
+              setSelectedWalletAddress(e.target.value || null);
             }}
             className="w-full pl-3 pr-8 py-2 border border-white/20 rounded-md bg-white/10 text-white focus:outline-none focus:ring-1 focus:ring-[#F2ECC8] appearance-none"
           >

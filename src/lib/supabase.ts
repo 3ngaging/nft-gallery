@@ -35,6 +35,13 @@ export type UserProfile = {
   id: number;
   privy_user_id: string; // Privy's user.id (e.g., "did:privy:...")
   display_name: string | null;
+  profile_picture: string | null; // URL to profile picture
+  banner_image: string | null; // URL to banner image
+  bio: string | null; // User bio/description
+  twitter_handle: string | null; // Twitter handle (without @)
+  discord_username: string | null; // Discord username
+  website_url: string | null; // Personal website URL
+  total_points?: number; // Total community points earned (optional for backwards compatibility)
   created_at: string;
   updated_at: string;
 };

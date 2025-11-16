@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, Rajdhani } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import GridBackground from '@/components/GridBackground';
 import { LanguageProvider } from '@/lib/LanguageContext';
 import PrivyProviderWrapper from '@/components/providers/PrivyProviderWrapper';
@@ -54,6 +55,7 @@ export default function RootLayout({
             <main className="min-h-screen pt-16">
               {children}
             </main>
+            <Footer />
           </LanguageProvider>
         </PrivyProviderWrapper>
       </body>
