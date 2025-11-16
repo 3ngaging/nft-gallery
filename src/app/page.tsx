@@ -3,7 +3,6 @@
 import { lazy, Suspense } from 'react';
 import HeroSection from '@/components/home/HeroSection';
 import StatsSection from '@/components/home/StatsSection';
-import Footer from '@/components/Footer';
 
 // Lazy load componentes no críticos para mejorar tiempo de carga inicial
 const GalleryPreview = lazy(() => import('@/components/home/GalleryPreview'));
@@ -43,7 +42,6 @@ export default function Home() {
       <Suspense fallback={<SectionFallback />}>
         <FAQSection />
       </Suspense>
-      <Footer />
     </div>
   );
 }
