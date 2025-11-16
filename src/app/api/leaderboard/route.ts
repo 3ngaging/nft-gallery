@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { addSecurityHeaders } from '@/lib/security';
 
 /**
  * GET /api/leaderboard
@@ -27,9 +28,11 @@ export async function GET() {
 
     if (error) {
       console.error('Error fetching leaderboard:', error);
-      return NextResponse.json(
-        { success: false, error: 'Failed to fetch leaderboard' },
-        { status: 500 }
+      return addSecurityHeaders(
+        NextResponse.json(
+          { success: false, error: 'Failed to fetch leaderboard' },
+          { status: 500 }
+        )
       );
     }
 
@@ -43,9 +46,16 @@ export async function GET() {
             `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/nfts/by-user?privyUserId=${encodeURIComponent(profile.privy_user_id)}`,
             { cache: 'no-store' }
           );
-          const nftData = await nftResponse.json();
-          if (nftData.success) {
-            nfts_count = nftData.count || 0;
+
+          // Check if response is ok before parsing
+          if (nftResponse.ok) {
+            const contentType = nftResponse.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+              const nftData = await nftResponse.json();
+              if (nftData.success) {
+                nfts_count = nftData.count || 0;
+              }
+            }
           }
         } catch (error) {
           console.error(`Error fetching NFT count for user ${profile.privy_user_id}:`, error);
@@ -65,16 +75,20 @@ export async function GET() {
       })
     );
 
-    return NextResponse.json({
-      success: true,
-      leaderboard,
-      total: leaderboard.length,
-    });
+    return addSecurityHeaders(
+      NextResponse.json({
+        success: true,
+        leaderboard,
+        total: leaderboard.length,
+      })
+    );
   } catch (error) {
     console.error('Error in leaderboard endpoint:', error);
-    return NextResponse.json(
-      { success: false, error: 'Internal server error' },
-      { status: 500 }
+    return addSecurityHeaders(
+      NextResponse.json(
+        { success: false, error: 'Internal server error' },
+        { status: 500 }
+      )
     );
   }
 }

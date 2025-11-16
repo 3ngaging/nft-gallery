@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { sanitizeString, addSecurityHeaders } from '@/lib/security';
 
 /**
  * GET /api/nfts/by-user?privyUserId=...
@@ -9,12 +10,14 @@ import { supabase } from '@/lib/supabase';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const privyUserId = searchParams.get('privyUserId');
+    const privyUserId = sanitizeString(searchParams.get('privyUserId'));
 
     if (!privyUserId) {
-      return NextResponse.json(
-        { success: false, error: 'Missing privyUserId parameter' },
-        { status: 400 }
+      return addSecurityHeaders(
+        NextResponse.json(
+          { success: false, error: 'Missing privyUserId parameter' },
+          { status: 400 }
+        )
       );
     }
 
@@ -26,19 +29,23 @@ export async function GET(request: NextRequest) {
 
     if (walletError) {
       console.error('Error fetching user wallets:', walletError);
-      return NextResponse.json(
-        { success: false, error: 'Failed to fetch user wallets' },
-        { status: 500 }
+      return addSecurityHeaders(
+        NextResponse.json(
+          { success: false, error: 'Failed to fetch user wallets' },
+          { status: 500 }
+        )
       );
     }
 
     // If no wallets found, return empty array
     if (!walletData || walletData.length === 0) {
-      return NextResponse.json({
-        success: true,
-        nfts: [],
-        count: 0,
-      });
+      return addSecurityHeaders(
+        NextResponse.json({
+          success: true,
+          nfts: [],
+          count: 0,
+        })
+      );
     }
 
     // Extract wallet addresses
@@ -72,16 +79,20 @@ export async function GET(request: NextRequest) {
       new Map(allNFTs.map((nft) => [nft.mintAddress, nft])).values()
     );
 
-    return NextResponse.json({
-      success: true,
-      nfts: uniqueNFTs,
-      count: uniqueNFTs.length,
-    });
+    return addSecurityHeaders(
+      NextResponse.json({
+        success: true,
+        nfts: uniqueNFTs,
+        count: uniqueNFTs.length,
+      })
+    );
   } catch (error) {
     console.error('Error in by-user NFT lookup:', error);
-    return NextResponse.json(
-      { success: false, error: 'Internal server error' },
-      { status: 500 }
+    return addSecurityHeaders(
+      NextResponse.json(
+        { success: false, error: 'Internal server error' },
+        { status: 500 }
+      )
     );
   }
 }

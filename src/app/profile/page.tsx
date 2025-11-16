@@ -41,11 +41,13 @@ export default function ProfilePage() {
   useEffect(() => {
     if (!authenticated || !user) return;
 
+    const currentUser = user; // Capture user in a const for TypeScript flow analysis
+
     async function fetchProfile() {
       try {
         setLoadingProfile(true);
         const response = await fetch(
-          `/api/profile?privyUserId=${encodeURIComponent(user.id)}`
+          `/api/profile?privyUserId=${encodeURIComponent(currentUser.id)}`
         );
         const data = await response.json();
 
@@ -68,7 +70,7 @@ export default function ProfilePage() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            privyUserId: user.id,
+            privyUserId: currentUser.id,
             wallets: solanaWallets.map(w => ({
               address: w.address,
               chainType: 'solana',

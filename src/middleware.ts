@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 /**
  * Global middleware for security headers and request validation
  */
-export function middleware(request: NextRequest) {
+export function middleware(_request: NextRequest) {
   // Create response
   const response = NextResponse.next();
 
@@ -26,18 +26,18 @@ export function middleware(request: NextRequest) {
     'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
 
     // Content Security Policy
+    // Note: Privy requires 'unsafe-eval' and 'unsafe-inline' for authentication
     'Content-Security-Policy': [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://auth.privy.io https://api.matrica.io",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://auth.privy.io https://api.privy.io https://api.matrica.io https://*.walletconnect.com https://*.walletconnect.org",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https: blob:",
       "font-src 'self' data:",
-      "connect-src 'self' https://auth.privy.io https://api.matrica.io https://*.supabase.co wss://*.supabase.co",
-      "frame-src 'self' https://auth.privy.io",
+      "connect-src 'self' https://auth.privy.io https://api.privy.io https://api.matrica.io https://*.supabase.co wss://*.supabase.co https://*.walletconnect.com https://*.walletconnect.org wss://*.walletconnect.com wss://*.walletconnect.org https://rpc.ankr.com https://*.helius-rpc.com",
+      "frame-src 'self' https://auth.privy.io https://verify.walletconnect.com https://verify.walletconnect.org",
       "object-src 'none'",
       "base-uri 'self'",
-      "form-action 'self'",
-      "upgrade-insecure-requests"
+      "form-action 'self'"
     ].join('; '),
 
     // Strict Transport Security (HSTS)
