@@ -3,7 +3,6 @@
 import { useState, useMemo } from 'react';
 import { usePrivy, type WalletWithMetadata } from '@privy-io/react-auth';
 import {
-  useSendTransaction as useSendTransactionSolana,
   useSignMessage as useSignMessageSolana,
   useSignTransaction as useSignTransactionSolana,
 } from '@privy-io/react-auth/solana';
@@ -26,7 +25,6 @@ const WalletActions = () => {
   const { user } = usePrivy();
   const { signMessage: signMessageSolana } = useSignMessageSolana();
   const { signTransaction: signTransactionSolana } = useSignTransactionSolana();
-  const { sendTransaction: sendTransactionSolana } = useSendTransactionSolana();
 
   const allWallets = useMemo((): WalletInfo[] => {
     // Get Solana wallets from linked accounts
@@ -124,13 +122,18 @@ const WalletActions = () => {
       transaction.recentBlockhash = latestBlockhash.blockhash;
       transaction.feePayer = new PublicKey(selectedWallet.address);
 
-      const receipt = await sendTransactionSolana({
+      // Sign the transaction first
+      const signedTx = await signTransactionSolana({
         transaction: transaction,
         connection: connection,
         address: selectedWallet.address,
       });
 
-      showSuccessToast(`Transaction sent! Signature: ${receipt.slice(0, 16)}...`);
+      // Send the signed transaction
+      const signature = await connection.sendRawTransaction(signedTx.serialize());
+      await connection.confirmTransaction(signature);
+
+      showSuccessToast(`Transaction sent! Signature: ${signature.slice(0, 16)}...`);
     } catch (error) {
       console.error(error);
       showErrorToast('Failed to send transaction');
