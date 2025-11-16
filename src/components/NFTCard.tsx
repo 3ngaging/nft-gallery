@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import type { NFT } from '@/lib/supabase';
 import { useState, memo } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
+import type { NFTWithOwner } from '@/lib/matrica-nft-client';
 
 type NFTCardProps = {
-  nft: NFT;
+  nft: NFTWithOwner;
 };
 
 function NFTCard({ nft }: NFTCardProps) {
@@ -15,8 +15,11 @@ function NFTCard({ nft }: NFTCardProps) {
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
+  // Usar imagen CDN de Matrica para mejor performance
+  const imageUrl = nft.cdnImage || nft.image;
+
   return (
-    <Link href={`/nft/${nft.token_id}`}>
+    <Link href={`/nft/${nft.mintAddress}`}>
       <div
         className="bg-white/5 backdrop-blur-sm border border-white/10 overflow-hidden hover:bg-accent/10 hover:border-accent/30 cursor-pointer group shadow-lg hover:border-[#F2ECC8]/50 transition-all duration-300 hover:bg-[#F2ECC8]/5 hover:shadow-[#2e2c23]"
       >
@@ -39,7 +42,7 @@ function NFTCard({ nft }: NFTCardProps) {
             </div>
           ) : (
             <Image
-              src={nft.thumbnail_url || nft.image_url}
+              src={imageUrl}
               alt={nft.name}
               fill
               className={`object-cover transition-all duration-300 group-hover:scale-[1.02] ${
@@ -50,21 +53,21 @@ function NFTCard({ nft }: NFTCardProps) {
               loading="lazy"
               placeholder="blur"
               blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iIzAwMDAwMCIvPjwvc3ZnPg=="
-              unoptimized={(nft.thumbnail_url || nft.image_url).includes('ipfs') || (nft.thumbnail_url || nft.image_url).includes('arweave')}
+              unoptimized={imageUrl.includes('ipfs') || imageUrl.includes('arweave')}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageError(true)}
             />
           )}
 
           <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm px-2.5 py-1 text-xs font-bold text-accent shadow-lg">
-            #{nft.token_id.toString().padStart(2, '0')}
+            {nft.collection.name}
           </div>
         </div>
 
         <div className="p-4 bg-black/30 backdrop-blur-sm">
           <h3 className="text-sm font-bold text-white mb-1 group-hover:text-accent transition">{nft.name}</h3>
           <p className="text-gray-500 text-xs line-clamp-2 uppercase tracking-wider">
-            {nft.description || t.nft.noDescription}
+            {nft.status === 'HODLED' ? 'Held' : nft.status}
           </p>
         </div>
       </div>

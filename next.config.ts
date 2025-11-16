@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'nft.matrica.io',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.matrica.io',
+      },
+      {
+        protocol: 'https',
         hostname: '**.ipfs.dweb.link',
       },
       {
@@ -49,18 +57,11 @@ const nextConfig: NextConfig = {
     } : false,
   },
   experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    optimizePackageImports: ['framer-motion'],
   },
   // Evitar transpilación innecesaria de JavaScript moderno
   // Soportar navegadores modernos que ya incluyen ES2020+
   transpilePackages: [],
-  swcMinify: true,
-  // Optimizaciones adicionales
-  modularizeImports: {
-    'lucide-react': {
-      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
-    },
-  },
 };
 
 export default nextConfig;

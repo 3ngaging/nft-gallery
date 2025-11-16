@@ -176,6 +176,17 @@ export type TranslationKeys = {
     share: string;
     imageNotAvailable: string;
     noDescription: string;
+    owner: string;
+    mintAddress: string;
+    viewOnSolscan: string;
+    nftNumber: string; // "#{number} of {total}"
+    statusDiamondHanded: string;
+    statusListed: string;
+    statusStaked: string;
+    statusHodled: string;
+    badgeUnique: string;
+    badgeVerified: string;
+    badgeOwned: string;
   };
   profile: {
     title: string;
@@ -367,6 +378,17 @@ export const translations: Record<Language, TranslationKeys> = {
       share: 'Share',
       imageNotAvailable: 'Image not available',
       noDescription: 'No description available',
+      owner: 'Owner',
+      mintAddress: 'Mint Address',
+      viewOnSolscan: 'View on Solscan',
+      nftNumber: '#{number} of {total}',
+      statusDiamondHanded: 'DIAMOND HANDED',
+      statusListed: 'LISTED',
+      statusStaked: 'STAKED',
+      statusHodled: 'HODLED',
+      badgeUnique: '1/1 UNIQUE',
+      badgeVerified: '✓ VERIFIED',
+      badgeOwned: '👑 OWNED BY YOU',
     },
     profile: {
       title: 'My Profile',
@@ -556,6 +578,17 @@ export const translations: Record<Language, TranslationKeys> = {
       share: 'Compartir',
       imageNotAvailable: 'Imagen no disponible',
       noDescription: 'Sin descripción disponible',
+      owner: 'Propietario',
+      mintAddress: 'Dirección de Mint',
+      viewOnSolscan: 'Ver en Solscan',
+      nftNumber: '#{number} de {total}',
+      statusDiamondHanded: 'MANOS DE DIAMANTE',
+      statusListed: 'EN VENTA',
+      statusStaked: 'STAKEADO',
+      statusHodled: 'HODLEADO',
+      badgeUnique: '1/1 ÚNICO',
+      badgeVerified: '✓ VERIFICADO',
+      badgeOwned: '👑 ES TUYO',
     },
     profile: {
       title: 'Mi Perfil',
@@ -591,7 +624,7 @@ export const translations: Record<Language, TranslationKeys> = {
     team: { badge: '我们的价值观', title1: '与众', title2: '不同', subtitle: '我们不仅仅是另一个NFT项目。我们正在建立一场由精英人士组成的运动，他们相信质量、独家性和在Solana生态系统中创造真正的价值。', missionTitle: '我们的使命', missionDesc: '在Solana生态系统中创建最有价值和最独家的社区，每位成员都能贡献、学习并共同成长。', value1Title: '信任与安全', value1Desc: '每位成员都经过仔细审查。我们优先考虑质量和真实性，而非增长指标。', value2Title: '精准与专注', value2Desc: '我们排除噪音，提供可操作的见解和真正的机会。', value3Title: '创新', value3Desc: '始终领先于趋势，在主流之前识别趋势。', value4Title: '社区至上', value4Desc: '我们的成员是我们的优先事项。每项决策都是为了集体利益而做出的。', stat1Value: '45', stat1Label: '精英成员', stat2Value: '24/7', stat2Label: '活跃社区', stat3Value: '100%', stat3Label: '经过验证的访问' },
     apply: { title: '立即申请', subtitle: '加入45名精英成员的独家社区。只接受最好的成员。', submitted: '申请已提交！', submittedDesc: '感谢您的申请。我们会审查并尽快与您联系。', redirecting: '正在跳转到首页...', fullName: '全名', email: '电子邮件地址', twitterHandle: 'Twitter用户名', discordUsername: 'Discord用户名', experience: 'Crypto/NFT经验', whyJoin: '为什么要加入Power Grinders？', contribution: '您能为社区贡献什么？', submit: '提交申请', submitting: '提交中...', required: '* 所有字段都是必填的。我们会仔细审查所有申请。', namePlaceholder: '输入您的全名', emailPlaceholder: 'your.email@example.com', twitterPlaceholder: '@yourhandle', discordPlaceholder: 'username#0000', experiencePlaceholder: '告诉我们您在加密货币和NFT方面的经验...', whyPlaceholder: '是什么让您适合这个社区？', contributionPlaceholder: '您将如何为Power Grinders增值？', totalSpots: '总名额', reviewTime: '审查时间', eliteCommunity: '精英社区' },
     gallery: { title: 'NFT画廊', fullCollection: '完整收藏', nftsCount: '个NFT', nftSingular: 'NFT', nftPlural: 'NFT', of: '的', total: '总共', searchPlaceholder: '按名称、描述或#ID搜索...', loading: '加载NFT中...', noResults: '未找到结果', noResultsDesc: '没有匹配的NFT', clearSearch: '清除搜索', gridLarge: '大网格', gridMedium: '中网格', gridCompact: '紧凑网格' },
-    nft: { backToGallery: '返回画廊', connectedWallets: '已连接钱包', noWallets: '无已连接钱包', viewOnBlockchain: '在区块链上查看', share: '分享', imageNotAvailable: '图片不可用', noDescription: '无可用描述' },
+    nft: { backToGallery: '返回画廊', connectedWallets: '已连接钱包', noWallets: '无已连接钱包', viewOnBlockchain: '在区块链上查看', share: '分享', imageNotAvailable: '图片不可用', noDescription: '无可用描述', owner: '拥有者', mintAddress: '铸币地址', viewOnSolscan: '在Solscan上查看', nftNumber: '#{number} / {total}', statusDiamondHanded: '钻石之手', statusListed: '挂牌中', statusStaked: '质押中', statusHodled: '持有中', badgeUnique: '1/1 独特', badgeVerified: '✓ 已验证', badgeOwned: '👑 你拥有' },
     profile: { title: '我的资料', personalInfo: '个人信息', username: '用户名', email: '电子邮件', memberSince: '会员自', connectedAccounts: '已连接账户', discordConnected: 'Discord已连接', twitterConnected: 'Twitter已连接', telegramConnected: 'Telegram已连接', points: '积分', totalPoints: '总积分', pointsComingSoon: '积分系统即将推出', recent: '最近', noUsername: '无用户名' },
     common: { loading: '加载中...', error: '错误', success: '成功', close: '关闭', save: '保存', cancel: '取消' },
   },
@@ -603,7 +636,7 @@ export const translations: Record<Language, TranslationKeys> = {
     team: { badge: 'हमारे मूल्य', title1: 'अलग तरह से', title2: 'निर्मित', subtitle: 'हम सिर्फ एक और NFT परियोजना नहीं हैं। हम एलीट व्यक्तियों का एक आंदोलन बना रहे हैं जो Solana इकोसिस्टम में गुणवत्ता, विशिष्टता और वास्तविक मूल्य निर्माण में विश्वास करते हैं।', missionTitle: 'हमारा मिशन', missionDesc: 'Solana इकोसिस्टम में सबसे मूल्यवान और विशेष समुदाय बनाना, जहां हर सदस्य योगदान करता है, सीखता है और एक साथ बढ़ता है।', value1Title: 'विश्वास और सुरक्षा', value1Desc: 'प्रत्येक सदस्य की सावधानीपूर्वक जांच की जाती है। हम विकास मेट्रिक्स से अधिक गुणवत्ता और प्रामाणिकता को प्राथमिकता देते हैं।', value2Title: 'सटीकता और फोकस', value2Desc: 'हम शोर को काटकर कार्रवाई योग्य अंतर्दृष्टि और वास्तविक अवसर प्रदान करते हैं।', value3Title: 'नवाचार', value3Desc: 'हमेशा वक्र से आगे, मुख्यधारा बनने से पहले रुझानों की पहचान करना।', value4Title: 'समुदाय पहले', value4Desc: 'हमारे सदस्य हमारी प्राथमिकता हैं। हर निर्णय सामूहिक लाभ के लिए किया जाता है।', stat1Value: '45', stat1Label: 'एलीट सदस्य', stat2Value: '24/7', stat2Label: 'सक्रिय समुदाय', stat3Value: '100%', stat3Label: 'सत्यापित पहुंच' },
     apply: { title: 'अभी आवेदन करें', subtitle: '45 एलीट सदस्यों के विशेष समुदाय में शामिल हों। केवल सर्वश्रेष्ठ को स्वीकार किया जाता है।', submitted: 'आवेदन जमा किया गया!', submittedDesc: 'आपके आवेदन के लिए धन्यवाद। हम इसकी समीक्षा करेंगे और जल्द ही आपसे संपर्क करेंगे।', redirecting: 'होम पर रीडायरेक्ट किया जा रहा है...', fullName: 'पूरा नाम', email: 'ईमेल पता', twitterHandle: 'Twitter हैंडल', discordUsername: 'Discord उपयोगकर्ता नाम', experience: 'Crypto/NFT अनुभव', whyJoin: 'आप Power Grinders में क्यों शामिल होना चाहते हैं?', contribution: 'आप समुदाय में क्या योगदान कर सकते हैं?', submit: 'आवेदन जमा करें', submitting: 'जमा किया जा रहा है...', required: '* सभी फ़ील्ड आवश्यक हैं। हम सभी आवेदनों की सावधानीपूर्वक समीक्षा करते हैं।', namePlaceholder: 'अपना पूरा नाम दर्ज करें', emailPlaceholder: 'your.email@example.com', twitterPlaceholder: '@yourhandle', discordPlaceholder: 'username#0000', experiencePlaceholder: 'crypto और NFTs में अपने अनुभव के बारे में बताएं...', whyPlaceholder: 'क्या आपको इस समुदाय के लिए उपयुक्त बनाता है?', contributionPlaceholder: 'आप Power Grinders में मूल्य कैसे जोड़ेंगे?', totalSpots: 'कुल स्थान', reviewTime: 'समीक्षा समय', eliteCommunity: 'एलीट समुदाय' },
     gallery: { title: 'NFT गैलरी', fullCollection: 'पूर्ण संग्रह', nftsCount: 'NFTs', nftSingular: 'NFT', nftPlural: 'NFTs', of: 'में से', total: 'कुल', searchPlaceholder: 'नाम, विवरण या #ID द्वारा खोजें...', loading: 'NFTs लोड हो रहे हैं...', noResults: 'कोई परिणाम नहीं मिला', noResultsDesc: 'कोई NFT मेल नहीं खाता', clearSearch: 'खोज साफ़ करें', gridLarge: 'बड़ी ग्रिड', gridMedium: 'मध्यम ग्रिड', gridCompact: 'कॉम्पैक्ट ग्रिड' },
-    nft: { backToGallery: 'गैलरी पर वापस जाएं', connectedWallets: 'कनेक्टेड वॉलेट', noWallets: 'कोई कनेक्टेड वॉलेट नहीं', viewOnBlockchain: 'ब्लॉकचेन पर देखें', share: 'शेयर करें', imageNotAvailable: 'छवि उपलब्ध नहीं', noDescription: 'कोई विवरण उपलब्ध नहीं' },
+    nft: { backToGallery: 'गैलरी पर वापस जाएं', connectedWallets: 'कनेक्टेड वॉलेट', noWallets: 'कोई कनेक्टेड वॉलेट नहीं', viewOnBlockchain: 'ब्लॉकचेन पर देखें', share: 'शेयर करें', imageNotAvailable: 'छवि उपलब्ध नहीं', noDescription: 'कोई विवरण उपलब्ध नहीं', owner: 'मालिक', mintAddress: 'मिंट पता', viewOnSolscan: 'Solscan पर देखें', nftNumber: '#{number} का {total}', statusDiamondHanded: 'हीरे के हाथ', statusListed: 'सूचीबद्ध', statusStaked: 'स्टेक किया गया', statusHodled: 'धारण किया गया', badgeUnique: '1/1 अद्वितीय', badgeVerified: '✓ सत्यापित', badgeOwned: '👑 आपका है' },
     profile: { title: 'मेरी प्रोफ़ाइल', personalInfo: 'व्यक्तिगत जानकारी', username: 'उपयोगकर्ता नाम', email: 'ईमेल', memberSince: 'सदस्य कब से', connectedAccounts: 'कनेक्टेड खाते', discordConnected: 'Discord कनेक्टेड', twitterConnected: 'Twitter कनेक्टेड', telegramConnected: 'Telegram कनेक्टेड', points: 'अंक', totalPoints: 'कुल अंक', pointsComingSoon: 'अंक प्रणाली जल्द आ रही है', recent: 'हाल का', noUsername: 'कोई उपयोगकर्ता नाम नहीं' },
     common: { loading: 'लोड हो रहा है...', error: 'त्रुटि', success: 'सफलता', close: 'बंद करें', save: 'सहेजें', cancel: 'रद्द करें' },
   },
@@ -615,7 +648,7 @@ export const translations: Record<Language, TranslationKeys> = {
     team: { badge: '우리의 가치', title1: '다르게', title2: '구축됨', subtitle: '우리는 단순한 NFT 프로젝트가 아닙니다. 우리는 Solana 생태계에서 품질, 독점성 및 진정한 가치 창출을 믿는 엘리트 개인들의 운동을 구축하고 있습니다.', missionTitle: '우리의 미션', missionDesc: 'Solana 생태계에서 가장 가치 있고 독점적인 커뮤니티를 만들어 모든 회원이 기여하고 배우며 함께 성장합니다.', value1Title: '신뢰와 보안', value1Desc: '모든 회원은 신중하게 심사됩니다. 우리는 성장 지표보다 품질과 진정성을 우선시합니다.', value2Title: '정밀성과 집중', value2Desc: '우리는 소음을 제거하고 실행 가능한 통찰력과 실제 기회를 제공합니다.', value3Title: '혁신', value3Desc: '항상 곡선의 앞서서 주류가 되기 전에 트렌드를 식별합니다.', value4Title: '커뮤니티 우선', value4Desc: '우리 회원들이 우리의 우선순위입니다. 모든 결정은 집단의 이익을 위해 내려집니다.', stat1Value: '45', stat1Label: '엘리트 회원', stat2Value: '24/7', stat2Label: '활성 커뮤니티', stat3Value: '100%', stat3Label: '검증된 액세스' },
     apply: { title: '지금 신청하기', subtitle: '45명의 엘리트 회원으로 구성된 독점 커뮤니티에 참여하세요. 최고만 받아들입니다.', submitted: '신청서가 제출되었습니다!', submittedDesc: '신청해 주셔서 감사합니다. 검토 후 곧 연락드리겠습니다.', redirecting: '홈으로 리디렉션 중...', fullName: '전체 이름', email: '이메일 주소', twitterHandle: 'Twitter 핸들', discordUsername: 'Discord 사용자 이름', experience: 'Crypto/NFT 경험', whyJoin: 'Power Grinders에 가입하고 싶은 이유는 무엇입니까?', contribution: '커뮤니티에 무엇을 기여할 수 있습니까?', submit: '신청서 제출', submitting: '제출 중...', required: '* 모든 필드는 필수입니다. 모든 신청서를 신중하게 검토합니다.', namePlaceholder: '전체 이름 입력', emailPlaceholder: 'your.email@example.com', twitterPlaceholder: '@yourhandle', discordPlaceholder: 'username#0000', experiencePlaceholder: 'crypto 및 NFT 경험에 대해 알려주세요...', whyPlaceholder: '이 커뮤니티에 적합한 이유는 무엇입니까?', contributionPlaceholder: 'Power Grinders에 어떻게 가치를 더할 것인가요?', totalSpots: '총 자리', reviewTime: '검토 시간', eliteCommunity: '엘리트 커뮤니티' },
     gallery: { title: 'NFT 갤러리', fullCollection: '전체 컬렉션', nftsCount: '개 NFT', nftSingular: 'NFT', nftPlural: 'NFT', of: '중', total: '전체', searchPlaceholder: '이름, 설명 또는 #ID로 검색...', loading: 'NFT 로딩 중...', noResults: '결과를 찾을 수 없습니다', noResultsDesc: '일치하는 NFT가 없습니다', clearSearch: '검색 지우기', gridLarge: '큰 그리드', gridMedium: '중간 그리드', gridCompact: '컴팩트 그리드' },
-    nft: { backToGallery: '갤러리로 돌아가기', connectedWallets: '연결된 지갑', noWallets: '연결된 지갑 없음', viewOnBlockchain: '블록체인에서 보기', share: '공유', imageNotAvailable: '이미지를 사용할 수 없습니다', noDescription: '설명 없음' },
+    nft: { backToGallery: '갤러리로 돌아가기', connectedWallets: '연결된 지갑', noWallets: '연결된 지갑 없음', viewOnBlockchain: '블록체인에서 보기', share: '공유', imageNotAvailable: '이미지를 사용할 수 없습니다', noDescription: '설명 없음', owner: '소유자', mintAddress: '민트 주소', viewOnSolscan: 'Solscan에서 보기', nftNumber: '#{number} / {total}', statusDiamondHanded: '다이아몬드 핸드', statusListed: '판매 중', statusStaked: '스테이킹됨', statusHodled: '보유 중', badgeUnique: '1/1 유니크', badgeVerified: '✓ 검증됨', badgeOwned: '👑 당신 소유' },
     profile: { title: '내 프로필', personalInfo: '개인 정보', username: '사용자 이름', email: '이메일', memberSince: '가입일', connectedAccounts: '연결된 계정', discordConnected: 'Discord 연결됨', twitterConnected: 'Twitter 연결됨', telegramConnected: 'Telegram 연결됨', points: '포인트', totalPoints: '총 포인트', pointsComingSoon: '포인트 시스템 출시 예정', recent: '최근', noUsername: '사용자 이름 없음' },
     common: { loading: '로딩 중...', error: '오류', success: '성공', close: '닫기', save: '저장', cancel: '취소' },
   },
@@ -782,6 +815,17 @@ export const translations: Record<Language, TranslationKeys> = {
       share: 'Condividi',
       imageNotAvailable: 'Immagine non disponibile',
       noDescription: 'Nessuna descrizione disponibile',
+      owner: 'Proprietario',
+      mintAddress: 'Indirizzo Mint',
+      viewOnSolscan: 'Visualizza su Solscan',
+      nftNumber: '#{number} di {total}',
+      statusDiamondHanded: 'MANI DI DIAMANTE',
+      statusListed: 'IN VENDITA',
+      statusStaked: 'IN STAKING',
+      statusHodled: 'HODLATO',
+      badgeUnique: '1/1 UNICO',
+      badgeVerified: '✓ VERIFICATO',
+      badgeOwned: '👑 TUO',
     },
     profile: {
       title: 'Il Mio Profilo',
@@ -971,6 +1015,17 @@ export const translations: Record<Language, TranslationKeys> = {
       share: 'Paylaş',
       imageNotAvailable: 'Görsel mevcut değil',
       noDescription: 'Açıklama mevcut değil',
+      owner: 'Sahip',
+      mintAddress: 'Mint Adresi',
+      viewOnSolscan: 'Solscan\'de Görüntüle',
+      nftNumber: '#{number} / {total}',
+      statusDiamondHanded: 'ELMAS ELLER',
+      statusListed: 'LİSTELENDİ',
+      statusStaked: 'STAKE EDİLDİ',
+      statusHodled: 'HODL',
+      badgeUnique: '1/1 BENZERSİZ',
+      badgeVerified: '✓ DOĞRULANMİŞ',
+      badgeOwned: '👑 SENİN',
     },
     profile: {
       title: 'Profilim',
@@ -1160,6 +1215,17 @@ export const translations: Record<Language, TranslationKeys> = {
       share: 'Compartilhar',
       imageNotAvailable: 'Imagem não disponível',
       noDescription: 'Nenhuma descrição disponível',
+      owner: 'Proprietário',
+      mintAddress: 'Endereço Mint',
+      viewOnSolscan: 'Ver no Solscan',
+      nftNumber: '#{number} de {total}',
+      statusDiamondHanded: 'MÃOS DE DIAMANTE',
+      statusListed: 'À VENDA',
+      statusStaked: 'EM STAKING',
+      statusHodled: 'HODLADO',
+      badgeUnique: '1/1 ÚNICO',
+      badgeVerified: '✓ VERIFICADO',
+      badgeOwned: '👑 SEU',
     },
     profile: {
       title: 'Meu Perfil',

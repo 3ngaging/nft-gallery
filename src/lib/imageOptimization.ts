@@ -15,7 +15,7 @@ export const BLUR_DATA_URL =
   'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iIzAwMDAwMCIvPjwvc3ZnPg==';
 
 // Configuración de prioridad de carga de imágenes
-export const getImagePriority = (index: number, total: number): boolean => {
+export const getImagePriority = (index: number): boolean => {
   // Solo las primeras 4 imágenes tienen prioridad
   return index < 4;
 };

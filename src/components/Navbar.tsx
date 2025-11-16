@@ -2,14 +2,16 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
 import { useState } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
 import LanguageSelector from './LanguageSelector';
+import PrivyLoginButton, { usePrivyAuth } from './auth/PrivyLoginButton';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useLanguage();
+  const { authenticated } = usePrivyAuth();
 
   return (
     <nav className="fixed w-full bg-black/90 backdrop-blur-md z-50 border-b border-white/10 shadow-lg">
@@ -56,16 +58,22 @@ export default function Navbar() {
               {t.nav.gallery}
             </Link>
 
+            {/* Profile Link - Only show when authenticated */}
+            {authenticated && (
+              <Link
+                href="/profile"
+                className="text-primary-light/80 hover:text-accent transition font-medium text-xs uppercase tracking-wider flex items-center gap-1.5"
+              >
+                <User size={14} />
+                <span>Profile</span>
+              </Link>
+            )}
+
             {/* Language Selector */}
             <LanguageSelector />
 
-            {/* Auth/Apply Button */}
-            <Link
-              href="/apply"
-              className="border border-white/10 bg-[#F2ECC8] hover:bg-[#aca686] text-black px-4 py-2 font-semibold transition shadow-[#a59f7e] hover:shadow-[#dfd7ac] text-sm"
-            >
-              {t.home.applyNow}
-            </Link>
+            {/* Privy Login Button */}
+            <PrivyLoginButton />
           </div>
 
           {/* Mobile menu button */}
@@ -100,13 +108,22 @@ export default function Navbar() {
               {t.nav.gallery}
             </Link>
 
-            <Link
-              href="/apply"
-              onClick={() => setIsOpen(false)}
-              className="block w-full text-center px-6 py-2.5 mt-2 bg-accent hover:bg-accent/90 text-primary-dark font-bold text-xs uppercase tracking-wider transition shadow-lg"
-            >
-              {t.home.applyNow}
-            </Link>
+            {/* Mobile Profile Link - Only show when authenticated */}
+            {authenticated && (
+              <Link
+                href="/profile"
+                className="block text-primary-light/80 hover:text-accent transition py-2 text-xs uppercase tracking-wider flex items-center gap-2"
+                onClick={() => setIsOpen(false)}
+              >
+                <User size={14} />
+                <span>Profile</span>
+              </Link>
+            )}
+
+            {/* Mobile Privy Login Button */}
+            <div className="mt-4">
+              <PrivyLoginButton />
+            </div>
           </div>
         </div>
       )}

@@ -1,7 +1,8 @@
-import { getNFTByTokenId, getNFTWallets } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import NFTDetailClient from '@/components/NFTDetailClient';
+import { matricaNFTClient } from '@/lib/matrica-nft-client';
+import { isValidMintAddress, getNFTNumber, getTotalSupply } from '@/lib/nftHashList';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -9,65 +10,91 @@ type Props = {
 
 // Generate metadata for better SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const tokenId = parseInt(id);
+  const { id: mintAddress } = await params;
 
-  if (isNaN(tokenId)) {
+  // Validate mint address
+  if (!isValidMintAddress(mintAddress)) {
     return {
       title: 'NFT Not Found - Power Grinders',
       description: 'The requested NFT could not be found.'
     };
   }
 
-  const nft = await getNFTByTokenId(tokenId);
+  try {
+    const nft = await matricaNFTClient.getNFT(mintAddress);
+    const nftNumber = getNFTNumber(mintAddress);
+    const totalSupply = getTotalSupply();
 
-  if (!nft) {
+    return {
+      title: `${nft.name} #${nftNumber} - Power Grinders NFT Collection`,
+      description: `View ${nft.name}, NFT #${nftNumber} of ${totalSupply} from the exclusive Power Grinders NFT collection.`,
+      openGraph: {
+        title: `${nft.name} #${nftNumber} - Power Grinders`,
+        description: `NFT #${nftNumber} of ${totalSupply} - ${nft.name}`,
+        images: [
+          {
+            url: nft.url, // Matrica CDN optimized image
+            width: 1000,
+            height: 1000,
+            alt: nft.name,
+          },
+        ],
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${nft.name} #${nftNumber} - Power Grinders`,
+        description: `NFT #${nftNumber} of ${totalSupply}`,
+        images: [nft.url],
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching NFT metadata:', error);
     return {
       title: 'NFT Not Found - Power Grinders',
       description: 'The requested NFT could not be found.'
     };
   }
-
-  return {
-    title: `${nft.name} - Power Grinders NFT Collection`,
-    description: nft.description || `View ${nft.name} from the exclusive Power Grinders NFT collection. Part of 45 unique characters surviving the wasteland.`,
-    openGraph: {
-      title: `${nft.name} - Power Grinders`,
-      description: nft.description || `View ${nft.name} from the Power Grinders NFT collection`,
-      images: [
-        {
-          url: nft.image_url,
-          width: 1000,
-          height: 1000,
-          alt: nft.name,
-        },
-      ],
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${nft.name} - Power Grinders`,
-      description: nft.description || `View ${nft.name} from the Power Grinders NFT collection`,
-      images: [nft.image_url],
-    },
-  };
 }
 
 export default async function NFTDetailPage({ params }: Props) {
-  const { id } = await params;
-  const tokenId = parseInt(id);
+  const { id: mintAddress } = await params;
 
-  if (isNaN(tokenId)) {
+  // Validate mint address exists in our collection
+  if (!isValidMintAddress(mintAddress)) {
     notFound();
   }
 
-  const nft = await getNFTByTokenId(tokenId);
+  try {
+    // Fetch NFT data from Matrica API
+    const nftData = await matricaNFTClient.getNFT(mintAddress);
+    const nftNumber = getNFTNumber(mintAddress);
 
-  if (!nft) {
+    if (!nftData || !nftNumber) {
+      notFound();
+    }
+
+    // Parse to our format with number
+    const nft = {
+      mintAddress: nftData.id,
+      number: nftNumber,
+      name: nftData.name,
+      image: nftData.image,
+      cdnImage: nftData.url,
+      owner: nftData.owner.id,
+      status: nftData.status,
+      collection: {
+        id: nftData.collection.id,
+        name: nftData.collection.name,
+        communityId: nftData.collection.community.id,
+        communityName: nftData.collection.community.name,
+      },
+      isMutable: nftData.isMutable,
+    };
+
+    return <NFTDetailClient nft={nft} />;
+  } catch (error) {
+    console.error('Error fetching NFT:', error);
     notFound();
   }
-
-  const wallets = await getNFTWallets(nft.id);
-
-  return <NFTDetailClient nft={nft} wallets={wallets} />;
 }

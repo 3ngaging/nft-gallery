@@ -1,38 +1,14 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { getTotalSupply } from '@/lib/nftHashList';
+import { useMemo } from 'react';
 
+/**
+ * Hook to get the total NFT count from hash list
+ * Now returns the dynamic count from _hash.json
+ */
 export function useNFTCount() {
-  const [count, setCount] = useState<number>(45); // Default fallback
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function fetchCount() {
-      try {
-        const { count: nftCount, error } = await supabase
-          .from('nfts')
-          .select('*', { count: 'exact', head: true });
-
-        if (!cancelled && !error && nftCount !== null) {
-          setCount(nftCount);
-        }
-      } catch (err) {
-        console.error('Error fetching NFT count:', err);
-        // Keep default fallback of 45
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
-      }
-    }
-
-    fetchCount();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  // Get count directly from hash list - no async needed
+  const count = useMemo(() => getTotalSupply(), []);
+  const loading = false; // No loading state needed since it's synchronous
 
   return { count, loading };
 }

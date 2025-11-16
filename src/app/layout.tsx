@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import GridBackground from '@/components/GridBackground';
 import { LanguageProvider } from '@/lib/LanguageContext';
+import PrivyProviderWrapper from '@/components/providers/PrivyProviderWrapper';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -47,12 +48,14 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} bg-black text-white`}>
         <GridBackground />
-        <LanguageProvider>
-          <Navbar />
-          <main className="min-h-screen pt-16">
-            {children}
-          </main>
-        </LanguageProvider>
+        <PrivyProviderWrapper>
+          <LanguageProvider>
+            <Navbar />
+            <main className="min-h-screen pt-16">
+              {children}
+            </main>
+          </LanguageProvider>
+        </PrivyProviderWrapper>
       </body>
     </html>
   );

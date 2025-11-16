@@ -2,6 +2,8 @@
  * Constantes globales de la aplicación
  */
 
+import { getTotalSupply } from './nftHashList';
+
 // Colores de marca
 export const BRAND_COLORS = {
   PRIMARY_GREEN: '#F2ECC8',
@@ -12,9 +14,14 @@ export const BRAND_COLORS = {
 } as const;
 
 // Configuración de la colección NFT
+// TOTAL_SUPPLY es dinámico basado en el hash list
 export const NFT_COLLECTION = {
-  TOTAL_SUPPLY: 45,
-  DEFAULT_FALLBACK_COUNT: 45,
+  get TOTAL_SUPPLY() {
+    return getTotalSupply();
+  },
+  get DEFAULT_FALLBACK_COUNT() {
+    return getTotalSupply();
+  },
   NAME: 'Power Grinders',
 } as const;
 

@@ -6,8 +6,8 @@ import { Search, Grid3x3, LayoutGrid, List } from 'lucide-react';
 import NFTCard from '@/components/NFTCard';
 import StickerSystem from '@/components/StickerSystem';
 import LoadingScreen from '@/components/LoadingScreen';
-import { supabase, type NFT } from '@/lib/supabase';
 import { useLanguage } from '@/lib/LanguageContext';
+import type { NFTWithOwner } from '@/lib/matrica-nft-client';
 
 // Grid classes constant - moved outside component for better performance
 const GRID_CLASSES = {
@@ -18,27 +18,40 @@ const GRID_CLASSES = {
 
 export default function GalleryPage() {
   const { t } = useLanguage();
-  const [nfts, setNfts] = useState<NFT[]>([]);
+  const [nfts, setNfts] = useState<NFTWithOwner[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [gridSize, setGridSize] = useState<3 | 4 | 5>(4);
+  const [error, setError] = useState<string | null>(null);
 
-  // Load NFTs on mount - using useEffect with cleanup
+  // Load NFTs from blockchain via API
   useEffect(() => {
     let cancelled = false;
 
     async function fetchNFTs() {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('nfts')
-        .select('*')
-        .order('token_id', { ascending: true });
+      try {
+        setLoading(true);
+        setError(null);
 
-      if (!cancelled && !error && data) {
-        setNfts(data);
-      }
-      if (!cancelled) {
-        setLoading(false);
+        const response = await fetch('/api/nfts');
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to fetch NFTs');
+        }
+
+        if (!cancelled && data.success) {
+          setNfts(data.nfts);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : 'Unknown error');
+          console.error('Error fetching NFTs:', err);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     }
 
@@ -57,8 +70,9 @@ export default function GalleryPage() {
     const search = searchTerm.toLowerCase();
     return nfts.filter(nft =>
       nft.name.toLowerCase().includes(search) ||
-      nft.description?.toLowerCase().includes(search) ||
-      nft.token_id.toString().includes(search)
+      nft.collection.name.toLowerCase().includes(search) ||
+      nft.mintAddress.toLowerCase().includes(search) ||
+      nft.owner.toLowerCase().includes(search)
     );
   }, [searchTerm, nfts]);
 
@@ -148,8 +162,23 @@ export default function GalleryPage() {
           </div>
         </motion.div>
 
+        {/* Error State */}
+        {error && (
+          <div className="text-center py-20">
+            <div className="text-5xl mb-4">⚠️</div>
+            <h3 className="text-2xl font-bold mb-2 text-white">Error Loading NFTs</h3>
+            <p className="text-gray-400 mb-6">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-accent hover:bg-accent/90 text-primary-dark px-6 py-3 font-semibold transition shadow-[0_3px_0_0_#aca686] hover:shadow-[0_1px_0_0_#aca686] hover:translate-y-[2px]"
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
         {/* Loading State */}
-        {loading && (
+        {loading && !error && (
           <div className="text-center py-20">
             <div className="inline-block animate-spin h-10 w-10 border-t-2 border-b-2 border-[#F2ECC8]"></div>
             <p className="text-gray-400 mt-4">{t.gallery.loading}</p>
@@ -177,7 +206,7 @@ export default function GalleryPage() {
         {!loading && filteredNfts.length > 0 && (
           <div className={`grid ${GRID_CLASSES[gridSize]} gap-6`}>
             {filteredNfts.map((nft) => (
-              <NFTCard key={nft.id} nft={nft} />
+              <NFTCard key={nft.mintAddress} nft={nft} />
             ))}
           </div>
         )}

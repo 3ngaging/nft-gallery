@@ -28,7 +28,9 @@
       "Bash(find:*)",
       "Bash(npm uninstall:*)",
       "Bash(del srclibdynamic.tsx 2)",
-      "Bash(del \"m:\\01_WORKSPACE\\CODING\\nft-gallery\\src\\lib\\dynamic.tsx\" 2)"
+      "Bash(del \"m:\\01_WORKSPACE\\CODING\\nft-gallery\\src\\lib\\dynamic.tsx\" 2)",
+      "Bash(del srchooksuseAuth.ts srccomponentsauthLoginButton.tsx 2)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
