@@ -136,7 +136,7 @@ const WalletActions = () => {
       const signature = await connection.sendRawTransaction(signedTransaction);
 
       // Confirm transaction with updated API
-      const confirmation = await connection.confirmTransaction({
+      await connection.confirmTransaction({
         signature,
         blockhash: latestBlockhash.blockhash,
         lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
@@ -195,11 +195,16 @@ const WalletActions = () => {
             ) : (
               <>
                 <option value="">Select a wallet</option>
-                {wallets.map((wallet) => (
-                  <option key={wallet.address} value={wallet.address} className="bg-gray-900">
-                    {wallet.address.slice(0, 8)}...{wallet.address.slice(-6)} [{(wallet as any).walletClientType || 'solana'}]
-                  </option>
-                ))}
+                {wallets.map((wallet) => {
+                  const walletType = 'walletClientType' in wallet
+                    ? (wallet as { walletClientType?: string }).walletClientType
+                    : 'solana';
+                  return (
+                    <option key={wallet.address} value={wallet.address} className="bg-gray-900">
+                      {wallet.address.slice(0, 8)}...{wallet.address.slice(-6)} [{walletType || 'solana'}]
+                    </option>
+                  );
+                })}
               </>
             )}
           </select>
