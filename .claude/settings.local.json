@@ -6,7 +6,10 @@
       "Bash(Start-Sleep -Seconds 2)",
       "Bash(Remove-Item -Path \".next\" -Recurse -Force -ErrorAction SilentlyContinue)",
       "Bash(chmod:*)",
-      "Bash(kill:*)"
+      "Bash(kill:*)",
+      "Bash(if [ $? -ne 0 ])",
+      "Bash(then echo '✓ All ports 3000-3009 are free')",
+      "Bash(fi)"
     ],
     "deny": [],
     "ask": []
