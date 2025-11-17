@@ -36,44 +36,35 @@ export async function GET() {
       );
     }
 
-    // Fetch NFT counts for each user
-    const leaderboard = await Promise.all(
-      (profiles || []).map(async (profile, index) => {
-        // Get NFT count by fetching from the by-user API
-        let nfts_count = 0;
-        try {
-          const nftResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/nfts/by-user?privyUserId=${encodeURIComponent(profile.privy_user_id)}`,
-            { cache: 'no-store' }
-          );
+    // Fetch NFT counts for each user directly from database
+    const privyUserIds = (profiles || []).map(p => p.privy_user_id);
 
-          // Check if response is ok before parsing
-          if (nftResponse.ok) {
-            const contentType = nftResponse.headers.get('content-type');
-            if (contentType && contentType.includes('application/json')) {
-              const nftData = await nftResponse.json();
-              if (nftData.success) {
-                nfts_count = nftData.count || 0;
-              }
-            }
-          }
-        } catch (error) {
-          console.error(`Error fetching NFT count for user ${profile.privy_user_id}:`, error);
-        }
+    // Get wallet counts in a single query (more efficient than N API calls)
+    const { data: walletCounts } = await supabase
+      .from('user_wallets')
+      .select('privy_user_id')
+      .in('privy_user_id', privyUserIds);
 
-        return {
-          id: profile.id,
-          privy_user_id: profile.privy_user_id,
-          display_name: profile.display_name,
-          profile_picture: profile.profile_picture,
-          twitter_handle: profile.twitter_handle,
-          bio: profile.bio,
-          rank: index + 1,
-          points: profile.total_points || 0,
-          nfts_count,
-        };
-      })
-    );
+    // Count wallets per user
+    const walletCountMap = new Map<string, number>();
+    (walletCounts || []).forEach(wallet => {
+      const count = walletCountMap.get(wallet.privy_user_id) || 0;
+      walletCountMap.set(wallet.privy_user_id, count + 1);
+    });
+
+    const leaderboard = (profiles || []).map((profile, index) => {
+      return {
+        id: profile.id,
+        privy_user_id: profile.privy_user_id,
+        display_name: profile.display_name,
+        profile_picture: profile.profile_picture,
+        twitter_handle: profile.twitter_handle,
+        bio: profile.bio,
+        rank: index + 1,
+        points: profile.total_points || 0,
+        nfts_count: walletCountMap.get(profile.privy_user_id) || 0,
+      };
+    });
 
     return addSecurityHeaders(
       NextResponse.json({

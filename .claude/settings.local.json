@@ -31,7 +31,10 @@
       "Bash(del \"m:\\01_WORKSPACE\\CODING\\nft-gallery\\src\\lib\\dynamic.tsx\" 2)",
       "Bash(del srchooksuseAuth.ts srccomponentsauthLoginButton.tsx 2)",
       "Bash(cat:*)",
-      "Bash(npm outdated:*)"
+      "Bash(npm outdated:*)",
+      "Bash(tee:*)",
+      "Bash(echo:*)",
+      "Bash(npm audit:*)"
     ],
     "deny": [],
     "ask": []
