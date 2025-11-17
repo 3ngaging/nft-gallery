@@ -16,11 +16,13 @@ export function useUserProfile() {
       return;
     }
 
+    const userId = user.id; // Capture user ID to avoid null reference
+
     async function fetchDisplayName() {
       try {
         setLoading(true);
         const response = await fetch(
-          `/api/profile/display-name?privyUserId=${encodeURIComponent(user.id)}`
+          `/api/profile/display-name?privyUserId=${encodeURIComponent(userId)}`
         );
         const data = await response.json();
 
