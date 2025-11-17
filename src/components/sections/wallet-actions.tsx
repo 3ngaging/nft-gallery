@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { usePrivy, type WalletWithMetadata } from '@privy-io/react-auth';
 import {
   useSignMessage as useSignMessageSolana,
   useSignTransaction as useSignTransactionSolana,
+  useWallets,
 } from '@privy-io/react-auth/solana';
 import {
   Connection,
@@ -15,41 +15,22 @@ import {
 import Section from '../reusables/section';
 import { showSuccessToast, showErrorToast } from '@/components/ui/custom-toast';
 
-type WalletInfo = {
-  address: string;
-  name: string;
-  walletClientType: string;
-};
-
 const WalletActions = () => {
-  const { user } = usePrivy();
   const { signMessage: signMessageSolana } = useSignMessageSolana();
   const { signTransaction: signTransactionSolana } = useSignTransactionSolana();
-
-  const allWallets = useMemo((): WalletInfo[] => {
-    // Get Solana wallets from linked accounts
-    const solanaWallets = (user?.linkedAccounts?.filter(
-      (account): account is WalletWithMetadata => account.type === 'wallet' && account.chainType === 'solana'
-    ) || []) as WalletWithMetadata[];
-
-    return solanaWallets.map((wallet) => ({
-      address: wallet.address,
-      name: wallet.address,
-      walletClientType: wallet.walletClientType || 'privy',
-    }));
-  }, [user?.linkedAccounts]);
+  const { wallets } = useWallets();
 
   const [selectedWalletAddress, setSelectedWalletAddress] = useState<string | null>(null);
 
   // Derive selected wallet from address
   const selectedWallet = useMemo(() => {
     if (selectedWalletAddress) {
-      const wallet = allWallets.find(w => w.address === selectedWalletAddress);
+      const wallet = wallets.find(w => w.address === selectedWalletAddress);
       if (wallet) return wallet;
     }
     // Default to first wallet if no selection or selection not found
-    return allWallets.length > 0 ? allWallets[0] : null;
-  }, [allWallets, selectedWalletAddress]);
+    return wallets.length > 0 ? wallets[0] : null;
+  }, [wallets, selectedWalletAddress]);
 
   const handleSignMessage = async () => {
     if (!selectedWallet) {
@@ -58,17 +39,19 @@ const WalletActions = () => {
     }
     try {
       const message = 'Hello from Power Grinders!';
-      const signatureUint8Array = await signMessageSolana({
+      const { signature } = await signMessageSolana({
         message: new TextEncoder().encode(message),
-        address: selectedWallet.address,
-        uiOptions: {
-          title: 'Sign this message',
+        wallet: selectedWallet,
+        options: {
+          uiOptions: {
+            title: 'Sign this message',
+          },
         },
       });
 
       // Convert Uint8Array to hex string for display
-      const signature = Buffer.from(signatureUint8Array).toString('hex');
-      showSuccessToast(`Message signed: ${signature.slice(0, 16)}...`);
+      const signatureHex = Buffer.from(signature).toString('hex');
+      showSuccessToast(`Message signed: ${signatureHex.slice(0, 16)}...`);
     } catch (error) {
       console.error(error);
       showErrorToast('Failed to sign message');
@@ -84,10 +67,27 @@ const WalletActions = () => {
       const connection = new Connection('https://api.mainnet-beta.solana.com');
       const transaction = new Transaction();
 
-      const signedTransaction = await signTransactionSolana({
-        transaction: transaction,
-        connection: connection,
-        address: selectedWallet.address,
+      // Create a simple transfer instruction (self-transfer for demo)
+      const transferInstruction = SystemProgram.transfer({
+        fromPubkey: new PublicKey(selectedWallet.address),
+        toPubkey: new PublicKey(selectedWallet.address),
+        lamports: 1000,
+      });
+      transaction.add(transferInstruction);
+
+      const latestBlockhash = await connection.getLatestBlockhash();
+      transaction.recentBlockhash = latestBlockhash.blockhash;
+      transaction.feePayer = new PublicKey(selectedWallet.address);
+
+      // Serialize the transaction before signing
+      const serializedTransaction = transaction.serialize({
+        requireAllSignatures: false,
+        verifySignatures: false,
+      });
+
+      const { signedTransaction } = await signTransactionSolana({
+        transaction: serializedTransaction,
+        wallet: selectedWallet,
       });
 
       console.log('Signed transaction:', signedTransaction);
@@ -120,16 +120,27 @@ const WalletActions = () => {
       transaction.recentBlockhash = latestBlockhash.blockhash;
       transaction.feePayer = new PublicKey(selectedWallet.address);
 
+      // Serialize the transaction before signing
+      const serializedTransaction = transaction.serialize({
+        requireAllSignatures: false,
+        verifySignatures: false,
+      });
+
       // Sign the transaction first
-      const signedTx = await signTransactionSolana({
-        transaction: transaction,
-        connection: connection,
-        address: selectedWallet.address,
+      const { signedTransaction } = await signTransactionSolana({
+        transaction: serializedTransaction,
+        wallet: selectedWallet,
       });
 
       // Send the signed transaction
-      const signature = await connection.sendRawTransaction(signedTx.serialize());
-      await connection.confirmTransaction(signature);
+      const signature = await connection.sendRawTransaction(signedTransaction);
+
+      // Confirm transaction with updated API
+      const confirmation = await connection.confirmTransaction({
+        signature,
+        blockhash: latestBlockhash.blockhash,
+        lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+      });
 
       showSuccessToast(`Transaction sent! Signature: ${signature.slice(0, 16)}...`);
     } catch (error) {
@@ -179,14 +190,14 @@ const WalletActions = () => {
             }}
             className="w-full pl-3 pr-8 py-2 border border-white/20 rounded-md bg-white/10 text-white focus:outline-none focus:ring-1 focus:ring-[#F2ECC8] appearance-none"
           >
-            {allWallets.length === 0 ? (
+            {wallets.length === 0 ? (
               <option value="">No wallets available</option>
             ) : (
               <>
                 <option value="">Select a wallet</option>
-                {allWallets.map((wallet) => (
+                {wallets.map((wallet) => (
                   <option key={wallet.address} value={wallet.address} className="bg-gray-900">
-                    {wallet.address.slice(0, 8)}...{wallet.address.slice(-6)} [{wallet.walletClientType}]
+                    {wallet.address.slice(0, 8)}...{wallet.address.slice(-6)} [{(wallet as any).walletClientType || 'solana'}]
                   </option>
                 ))}
               </>
