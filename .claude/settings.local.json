@@ -9,7 +9,8 @@
       "Bash(kill:*)",
       "Bash(if [ $? -ne 0 ])",
       "Bash(then echo '✓ All ports 3000-3009 are free')",
-      "Bash(fi)"
+      "Bash(fi)",
+      "Bash(.next/.gitignore)"
     ],
     "deny": [],
     "ask": []
