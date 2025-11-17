@@ -12,12 +12,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id: privyUserId } = await params;
 
   try {
-    const profile = await getUserProfile(privyUserId);
+    let profile = await getUserProfile(privyUserId);
+
+    // Auto-create profile if needed (for metadata)
+    if (!profile) {
+      const { supabase } = await import('@/lib/supabase');
+      const { data } = await supabase
+        .from('user_profiles')
+        .upsert({
+          privy_user_id: privyUserId,
+          display_name: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }, {
+          onConflict: 'privy_user_id'
+        })
+        .select()
+        .single();
+
+      profile = data;
+    }
 
     if (!profile) {
       return {
-        title: 'User Not Found - Power Grinders',
-        description: 'This user profile could not be found.'
+        title: 'User Profile - Power Grinders',
+        description: 'View user profile on Power Grinders'
       };
     }
 
@@ -48,19 +67,53 @@ export default async function UserProfilePage({ params }: Props) {
   let profile;
   try {
     profile = await getUserProfile(privyUserId);
+
+    // Auto-create profile if it doesn't exist (same logic as API route)
+    if (!profile) {
+      console.log('[User Page] Creating new profile for user:', privyUserId);
+
+      const { supabase } = await import('@/lib/supabase');
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .upsert({
+          privy_user_id: privyUserId,
+          display_name: null,
+          bio: null,
+          profile_picture: null,
+          banner_image: null,
+          twitter_handle: null,
+          discord_username: null,
+          website_url: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }, {
+          onConflict: 'privy_user_id'
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error('[User Page] Error creating profile:', error);
+        // Continue with null profile - show "not found" message
+        profile = null;
+      } else {
+        console.log('[User Page] Profile created successfully');
+        profile = data;
+      }
+    }
   } catch (error) {
     console.error('Error fetching user profile:', error);
     notFound();
   }
 
   if (!profile) {
-    // User exists but hasn't created a profile yet
+    // Profile creation failed - show error
     return (
       <div className="min-h-screen py-20 px-4 flex items-center justify-center">
         <div className="text-center max-w-md">
           <h1 className="text-3xl font-bold mb-4">Profile Not Found</h1>
           <p className="text-gray-400 mb-6">
-            This user hasn&apos;t created a profile yet. Profiles are created automatically when users log in and visit their profile page.
+            Unable to load or create profile for this user. Please try again later.
           </p>
           <a
             href="/gallery"

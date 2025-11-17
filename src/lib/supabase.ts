@@ -109,6 +109,8 @@ export async function getNFTWallets(nftId: number): Promise<NFTWallet[]> {
 
 // User Profile Functions
 export async function getUserProfile(privyUserId: string): Promise<UserProfile | null> {
+  console.log('[getUserProfile] Fetching profile for:', privyUserId);
+
   const { data, error } = await supabase
     .from('user_profiles')
     .select('*')
@@ -118,12 +120,14 @@ export async function getUserProfile(privyUserId: string): Promise<UserProfile |
   if (error) {
     if (error.code === 'PGRST116') {
       // No profile found - this is okay
+      console.log('[getUserProfile] No profile found (PGRST116)');
       return null;
     }
-    console.error('Error fetching user profile:', error);
+    console.error('[getUserProfile] Error fetching user profile:', error);
     return null;
   }
 
+  console.log('[getUserProfile] Profile found:', data ? 'Yes' : 'No', data?.display_name);
   return data;
 }
 

@@ -12,7 +12,7 @@ import {
 
 /**
  * GET /api/profile?privyUserId=...
- * Fetch complete user profile
+ * Fetch complete user profile - Auto-creates if doesn't exist
  */
 export async function GET(request: NextRequest) {
   try {
@@ -28,7 +28,38 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const profile = await getUserProfile(privyUserId);
+    let profile = await getUserProfile(privyUserId);
+
+    // Auto-create profile if it doesn't exist
+    if (!profile) {
+      console.log('[Profile] Creating new profile for user:', privyUserId);
+
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .insert({
+          privy_user_id: privyUserId,
+          display_name: null,
+          bio: null,
+          profile_picture: null,
+          banner_image: null,
+          twitter_handle: null,
+          discord_username: null,
+          website_url: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error('[Profile] Error creating profile:', error);
+        // Return null profile instead of failing - user can still use the app
+        profile = null;
+      } else {
+        console.log('[Profile] Profile created successfully');
+        profile = data;
+      }
+    }
 
     return addSecurityHeaders(
       NextResponse.json({

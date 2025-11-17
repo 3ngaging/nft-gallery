@@ -140,7 +140,7 @@ export default function LeaderboardPage() {
                       </td>
 
                       {/* User */}
-                      <td className="px-6 py-4">
+                      <td className="flex px-6 py-4">
                         <Link
                           href={`/user/${entry.privy_user_id}`}
                           className="flex items-center gap-3 hover:text-accent transition group"
