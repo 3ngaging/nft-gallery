@@ -258,7 +258,7 @@ export default function ApplyPage() {
               disabled={isSubmitting}
               whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
               whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-              className="w-full border border-white/10 bg-[#F2ECC8] hover:bg-[#aca686] text-white px-8 py-4 text-lg font-semibold transition shadow-[#a59f7e] hover:shadow-[#dfd7ac] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+              className="w-full border border-white/10 bg-[#F2ECC8] hover:bg-[#aca686] text-black px-8 py-4 text-lg font-semibold transition shadow-[#a59f7e] hover:shadow-[#dfd7ac] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
             >
               {isSubmitting ? (
                 <>

@@ -18,6 +18,8 @@ export async function GET() {
         display_name,
         profile_picture,
         twitter_handle,
+        discord_username,
+        telegram_username,
         bio,
         total_points,
         created_at
@@ -59,6 +61,8 @@ export async function GET() {
         display_name: profile.display_name,
         profile_picture: profile.profile_picture,
         twitter_handle: profile.twitter_handle,
+        discord_username: profile.discord_username,
+        telegram_username: profile.telegram_username,
         bio: profile.bio,
         rank: index + 1,
         points: profile.total_points || 0,

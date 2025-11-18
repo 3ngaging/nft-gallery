@@ -6,6 +6,7 @@ import {
   isValidDisplayName,
   isValidTwitterHandle,
   isValidDiscordUsername,
+  isValidTelegramUsername,
   sanitizeBio,
   addSecurityHeaders,
 } from '@/lib/security';
@@ -44,6 +45,7 @@ export async function GET(request: NextRequest) {
           banner_image: null,
           twitter_handle: null,
           discord_username: null,
+          telegram_username: null,
           website_url: null,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
@@ -106,6 +108,7 @@ export async function PATCH(request: NextRequest) {
       'bio',
       'twitter_handle',
       'discord_username',
+      'telegram_username',
       'website_url',
     ];
 
@@ -172,6 +175,24 @@ export async function PATCH(request: NextRequest) {
         );
       }
       validUpdates.discord_username = username || null;
+    }
+
+    if (validUpdates.telegram_username !== undefined) {
+      const username = sanitizeString(String(validUpdates.telegram_username || ''));
+      if (username) {
+        const cleanUsername = username.startsWith('@') ? username.slice(1) : username;
+        if (!isValidTelegramUsername(cleanUsername)) {
+          return addSecurityHeaders(
+            NextResponse.json(
+              { success: false, error: 'Invalid Telegram username format (5-32 characters, must start with letter)' },
+              { status: 400 }
+            )
+          );
+        }
+        validUpdates.telegram_username = cleanUsername;
+      } else {
+        validUpdates.telegram_username = null;
+      }
     }
 
     if (validUpdates.website_url !== undefined) {

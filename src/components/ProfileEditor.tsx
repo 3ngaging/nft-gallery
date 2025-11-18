@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
-import { Edit2, Save, X, Upload, User, Image as ImageIcon, Twitter as TwitterIcon, Globe, MessageCircle } from 'lucide-react';
+import { Edit2, Save, X, Upload, User, Image as ImageIcon, Twitter as TwitterIcon, Globe, MessageCircle, Send } from 'lucide-react';
 import type { UserProfile } from '@/lib/supabase';
 
 type ProfileEditorProps = {
@@ -15,6 +15,8 @@ export default function ProfileEditor({ privyUserId, profile, onProfileUpdated }
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [uploadingProfile, setUploadingProfile] = useState(false);
+  const [uploadingBanner, setUploadingBanner] = useState(false);
 
   // Form state
   const [displayName, setDisplayName] = useState(profile?.display_name || '');
@@ -23,7 +25,81 @@ export default function ProfileEditor({ privyUserId, profile, onProfileUpdated }
   const [bannerImage, setBannerImage] = useState(profile?.banner_image || '');
   const [twitterHandle, setTwitterHandle] = useState(profile?.twitter_handle || '');
   const [discordUsername, setDiscordUsername] = useState(profile?.discord_username || '');
+  const [telegramUsername, setTelegramUsername] = useState(profile?.telegram_username || '');
   const [websiteUrl, setWebsiteUrl] = useState(profile?.website_url || '');
+
+  // File input refs
+  const profilePictureInputRef = useRef<HTMLInputElement>(null);
+  const bannerImageInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileUpload = async (file: File, imageType: 'profile' | 'banner') => {
+    try {
+      if (imageType === 'profile') {
+        setUploadingProfile(true);
+      } else {
+        setUploadingBanner(true);
+      }
+      setError(null);
+
+      // Validate file size (5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        throw new Error('File size must be less than 5MB');
+      }
+
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
+      if (!allowedTypes.includes(file.type)) {
+        throw new Error('File type must be JPG, PNG, WEBP, or GIF');
+      }
+
+      // Upload file
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('privyUserId', privyUserId);
+      formData.append('imageType', imageType);
+
+      const response = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Failed to upload image');
+      }
+
+      // Update state with new image URL
+      if (imageType === 'profile') {
+        setProfilePicture(data.url);
+      } else {
+        setBannerImage(data.url);
+      }
+    } catch (err) {
+      console.error('Error uploading image:', err);
+      setError(err instanceof Error ? err.message : 'Failed to upload image');
+    } finally {
+      if (imageType === 'profile') {
+        setUploadingProfile(false);
+      } else {
+        setUploadingBanner(false);
+      }
+    }
+  };
+
+  const handleProfilePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleFileUpload(file, 'profile');
+    }
+  };
+
+  const handleBannerImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleFileUpload(file, 'banner');
+    }
+  };
 
   const handleSave = async () => {
     try {
@@ -43,6 +119,7 @@ export default function ProfileEditor({ privyUserId, profile, onProfileUpdated }
           banner_image: bannerImage.trim() || null,
           twitter_handle: twitterHandle.trim() || null,
           discord_username: discordUsername.trim() || null,
+          telegram_username: telegramUsername.trim() || null,
           website_url: websiteUrl.trim() || null,
         }),
       });
@@ -72,6 +149,7 @@ export default function ProfileEditor({ privyUserId, profile, onProfileUpdated }
     setBannerImage(profile?.banner_image || '');
     setTwitterHandle(profile?.twitter_handle || '');
     setDiscordUsername(profile?.discord_username || '');
+    setTelegramUsername(profile?.telegram_username || '');
     setWebsiteUrl(profile?.website_url || '');
     setError(null);
     setIsEditing(false);
@@ -130,57 +208,96 @@ export default function ProfileEditor({ privyUserId, profile, onProfileUpdated }
           </p>
         </div>
 
-        {/* Profile Picture URL */}
+        {/* Profile Picture Upload */}
         <div>
           <label className="block text-sm font-semibold text-gray-300 mb-2">
             <ImageIcon size={16} className="inline mr-2" />
-            Profile Picture URL
+            Profile Picture
           </label>
-          <input
-            type="url"
-            value={profilePicture}
-            onChange={(e) => setProfilePicture(e.target.value)}
-            placeholder="https://example.com/your-avatar.jpg"
-            className="w-full bg-black/30 border border-white/10 text-white px-4 py-2 focus:outline-none focus:border-accent/50 transition"
-          />
+          <div className="flex gap-3 items-start">
+            <button
+              onClick={() => profilePictureInputRef.current?.click()}
+              disabled={uploadingProfile}
+              className="bg-accent/20 hover:bg-accent/30 text-accent px-4 py-2 text-sm font-semibold transition border border-accent/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {uploadingProfile ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-accent/30 border-t-accent rounded-full animate-spin"></div>
+                  Uploading...
+                </>
+              ) : (
+                <>
+                  <Upload size={16} />
+                  Upload Image
+                </>
+              )}
+            </button>
+            <input
+              ref={profilePictureInputRef}
+              type="file"
+              accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+              onChange={handleProfilePictureChange}
+              className="hidden"
+            />
+            {profilePicture && (
+              <div className="flex items-center gap-2">
+                <Image
+                  src={profilePicture}
+                  alt="Profile preview"
+                  width={48}
+                  height={48}
+                  className="rounded-full object-cover border border-white/10"
+                  onError={() => setProfilePicture('')}
+                />
+                <button
+                  onClick={() => setProfilePicture('')}
+                  className="text-xs text-red-400 hover:text-red-300"
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+          </div>
           <p className="text-xs text-gray-500 mt-1">
-            Direct URL to your profile picture image (500x500px recommended)
+            Upload a square image (500x500px recommended, max 5MB)
           </p>
-          {profilePicture && (
-            <div className="mt-2 flex items-center gap-2">
-              <span className="text-xs text-gray-400">Preview:</span>
-              <Image
-                src={profilePicture}
-                alt="Profile preview"
-                width={40}
-                height={40}
-                className="rounded-full object-cover border border-white/10"
-                onError={() => setProfilePicture('')}
-              />
-            </div>
-          )}
         </div>
 
-        {/* Banner Image URL */}
+        {/* Banner Image Upload */}
         <div>
           <label className="block text-sm font-semibold text-gray-300 mb-2">
             <Upload size={16} className="inline mr-2" />
-            Banner Image URL
+            Banner Image
           </label>
-          <input
-            type="url"
-            value={bannerImage}
-            onChange={(e) => setBannerImage(e.target.value)}
-            placeholder="https://example.com/your-banner.jpg"
-            className="w-full bg-black/30 border border-white/10 text-white px-4 py-2 focus:outline-none focus:border-accent/50 transition"
-          />
-          <p className="text-xs text-gray-500 mt-1">
-            Direct URL to your banner image (1500x500px recommended)
-          </p>
+          <div className="flex gap-3 items-start">
+            <button
+              onClick={() => bannerImageInputRef.current?.click()}
+              disabled={uploadingBanner}
+              className="bg-accent/20 hover:bg-accent/30 text-accent px-4 py-2 text-sm font-semibold transition border border-accent/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {uploadingBanner ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-accent/30 border-t-accent rounded-full animate-spin"></div>
+                  Uploading...
+                </>
+              ) : (
+                <>
+                  <Upload size={16} />
+                  Upload Banner
+                </>
+              )}
+            </button>
+            <input
+              ref={bannerImageInputRef}
+              type="file"
+              accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+              onChange={handleBannerImageChange}
+              className="hidden"
+            />
+          </div>
           {bannerImage && (
             <div className="mt-2">
-              <span className="text-xs text-gray-400 block mb-1">Preview:</span>
-              <div className="relative w-full h-24 border border-white/10 overflow-hidden">
+              <div className="relative w-full h-24 border border-white/10 overflow-hidden mb-2">
                 <Image
                   src={bannerImage}
                   alt="Banner preview"
@@ -189,8 +306,17 @@ export default function ProfileEditor({ privyUserId, profile, onProfileUpdated }
                   onError={() => setBannerImage('')}
                 />
               </div>
+              <button
+                onClick={() => setBannerImage('')}
+                className="text-xs text-red-400 hover:text-red-300"
+              >
+                Remove Banner
+              </button>
             </div>
           )}
+          <p className="text-xs text-gray-500 mt-1">
+            Upload a wide banner image (1500x500px recommended, max 5MB)
+          </p>
         </div>
 
         {/* Bio */}
@@ -248,6 +374,27 @@ export default function ProfileEditor({ privyUserId, profile, onProfileUpdated }
             />
           </div>
 
+          {/* Telegram Username */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-400 mb-2">
+              <Send size={14} className="inline mr-2" />
+              Telegram Username
+            </label>
+            <div className="flex items-center gap-2">
+              <span className="text-gray-500">@</span>
+              <input
+                type="text"
+                value={telegramUsername}
+                onChange={(e) => setTelegramUsername(e.target.value.replace('@', ''))}
+                placeholder="username"
+                className="flex-1 bg-black/30 border border-white/10 text-white px-4 py-2 focus:outline-none focus:border-accent/50 transition"
+              />
+            </div>
+            <p className="text-xs text-gray-500 mt-1">
+              5-32 characters, must start with a letter
+            </p>
+          </div>
+
           {/* Website URL */}
           <div>
             <label className="block text-sm font-medium text-gray-400 mb-2">
@@ -268,8 +415,8 @@ export default function ProfileEditor({ privyUserId, profile, onProfileUpdated }
         <div className="flex gap-3 pt-4">
           <button
             onClick={handleSave}
-            disabled={saving}
-            className="flex-1 bg-accent hover:bg-accent/90 text-black px-6 py-3 font-semibold transition shadow-[0_3px_0_0_#aca686] hover:shadow-[0_1px_0_0_#aca686] hover:translate-y-[2px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            disabled={saving || uploadingProfile || uploadingBanner}
+            className="flex-1 bg-accent hover:bg-accent/90 text-[#F2ECC8] px-6 py-3 font-semibold transition shadow-[0_3px_0_0_#aca686] hover:shadow-[0_1px_0_0_#aca686] hover:translate-y-[2px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {saving ? (
               <>
@@ -285,7 +432,7 @@ export default function ProfileEditor({ privyUserId, profile, onProfileUpdated }
           </button>
           <button
             onClick={handleCancel}
-            disabled={saving}
+            disabled={saving || uploadingProfile || uploadingBanner}
             className="px-6 py-3 bg-white/5 hover:bg-white/10 text-white border border-white/10 font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Cancel

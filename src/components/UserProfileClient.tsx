@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Twitter, Globe, MessageCircle, ArrowLeft, Trophy } from 'lucide-react';
+import { Twitter, Globe, MessageCircle, Send, ArrowLeft, Trophy } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { UserProfile } from '@/lib/supabase';
 import type { NFTWithOwner } from '@/lib/matrica-nft-client';
@@ -118,6 +118,17 @@ export default function UserProfileClient({ profile }: UserProfileClientProps) {
                     <MessageCircle size={16} />
                     {profile.discord_username}
                   </div>
+                )}
+                {profile.telegram_username && (
+                  <a
+                    href={`https://t.me/${profile.telegram_username}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-gray-400 hover:text-accent transition"
+                  >
+                    <Send size={16} />
+                    @{profile.telegram_username}
+                  </a>
                 )}
                 {profile.website_url && (
                   <a

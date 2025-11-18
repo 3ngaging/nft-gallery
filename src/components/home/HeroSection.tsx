@@ -19,7 +19,7 @@ export default function HeroSection() {
           src="/images/wallpaper.png"
           alt="Background"
           fill
-          className="object-cover opacity-20"
+          className="object-cover opacity-40"
           priority
           fetchPriority="high"
           quality={85}

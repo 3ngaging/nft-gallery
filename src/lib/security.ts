@@ -106,6 +106,19 @@ export function isValidDiscordUsername(username: string): boolean {
 }
 
 /**
+ * Validate Telegram username
+ */
+export function isValidTelegramUsername(username: string): boolean {
+  if (!username) return false;
+
+  const cleaned = username.replace('@', '').trim();
+
+  // 5-32 characters, alphanumeric and underscores only, must not start with number
+  const telegramRegex = /^[a-zA-Z][a-zA-Z0-9_]{4,31}$/;
+  return telegramRegex.test(cleaned);
+}
+
+/**
  * Sanitize and validate bio text
  */
 export function sanitizeBio(bio: string | null | undefined): string | null {

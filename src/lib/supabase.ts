@@ -40,6 +40,7 @@ export type UserProfile = {
   bio: string | null; // User bio/description
   twitter_handle: string | null; // Twitter handle (without @)
   discord_username: string | null; // Discord username
+  telegram_username: string | null; // Telegram username (without @)
   website_url: string | null; // Personal website URL
   total_points?: number; // Total community points earned (optional for backwards compatibility)
   created_at: string;

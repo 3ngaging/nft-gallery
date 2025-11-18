@@ -83,6 +83,7 @@ export default async function UserProfilePage({ params }: Props) {
           banner_image: null,
           twitter_handle: null,
           discord_username: null,
+          telegram_username: null,
           website_url: null,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),

@@ -8,7 +8,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Wallet, Trophy, Activity, Plus, User as UserIcon, Twitter as TwitterIcon, MessageCircle, Globe } from 'lucide-react';
+import { Wallet, Trophy, Activity, Plus, User as UserIcon, Twitter as TwitterIcon, MessageCircle, Globe, Send } from 'lucide-react';
 import { usePrivy } from '@privy-io/react-auth';
 import type { NFTWithOwner } from '@/lib/matrica-nft-client';
 import type { UserProfile } from '@/lib/supabase';
@@ -33,7 +33,7 @@ export default function ProfilePage() {
   // Redirect if not authenticated
   useEffect(() => {
     if (ready && !authenticated) {
-      router.push('/?error=not_authenticated');
+      router.replace('/?error=not_authenticated');
     }
   }, [ready, authenticated, router]);
 
@@ -219,6 +219,17 @@ export default function ProfilePage() {
                       {userProfile.discord_username}
                     </div>
                   )}
+                  {userProfile?.telegram_username && (
+                    <a
+                      href={`https://t.me/${userProfile.telegram_username}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-[#0088cc]/20 hover:bg-[#0088cc]/30 text-[#0088cc] px-3 py-1.5 text-xs font-semibold transition border border-[#0088cc]/30"
+                    >
+                      <Send size={14} />
+                      @{userProfile.telegram_username}
+                    </a>
+                  )}
                   {userProfile?.website_url && (
                     <a
                       href={userProfile.website_url}
@@ -265,7 +276,7 @@ export default function ProfilePage() {
             </h2>
             <button
               onClick={linkWallet}
-              className="bg-accent hover:bg-accent/90 text-black px-4 py-2 font-semibold transition shadow-[0_3px_0_0_#aca686] hover:shadow-[0_1px_0_0_#aca686] hover:translate-y-[2px] flex items-center gap-2"
+              className="cursor-pointer bg-accent hover:bg-accent/90 text-[#F2ECC8] px-4 py-2 font-semibold transition shadow-[0_3px_0_0_#aca686] hover:shadow-[0_1px_0_0_#aca686] hover:translate-y-[2px] flex items-center gap-2"
             >
               <Plus size={16} />
               Add Wallet
@@ -308,7 +319,7 @@ export default function ProfilePage() {
                     </div>
                     <button
                       onClick={() => navigator.clipboard.writeText(wallet.address)}
-                      className="text-accent hover:text-accent/80 text-xs px-3 py-1 border border-accent/30 hover:bg-accent/10 transition"
+                      className="cursor-pointer text-accent hover:text-accent/80 text-xs px-3 py-1 border border-accent/30 hover:bg-accent/10 transition"
                     >
                       Copy
                     </button>
@@ -382,7 +393,7 @@ export default function ProfilePage() {
           ) : userNFTs.length === 0 ? (
             <div className="text-center py-12">
               <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
-                <Trophy size={40} className="text-gray-600" />
+                <Trophy size={40} className="text-[#F2ECC8]" />
               </div>
               <p className="text-gray-400 mb-2">No NFTs found</p>
               <p className="text-sm text-gray-600">

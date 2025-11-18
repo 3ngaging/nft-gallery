@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Trophy, Crown, Medal, User, Twitter } from 'lucide-react';
+import { Trophy, Crown, Medal, User, Twitter, MessageCircle, Send } from 'lucide-react';
 
 type LeaderboardEntry = {
   id: number;
@@ -11,6 +11,8 @@ type LeaderboardEntry = {
   display_name: string | null;
   profile_picture: string | null;
   twitter_handle: string | null;
+  discord_username: string | null;
+  telegram_username: string | null;
   bio: string | null;
   rank: number;
   points: number;
@@ -80,7 +82,7 @@ export default function LeaderboardPage() {
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-3 mb-4">
-            <Trophy className="text-accent" size={48} />
+            <Trophy className="text-accent text-yellow-400" size={48} />
           </div>
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-accent to-yellow-400 bg-clip-text text-transparent">
             Leaderboard
@@ -188,9 +190,31 @@ export default function LeaderboardPage() {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="w-8 h-8 rounded-full bg-[#1DA1F2]/20 hover:bg-[#1DA1F2]/30 flex items-center justify-center transition border border-[#1DA1F2]/30"
-                              title={`@${entry.twitter_handle}`}
+                              title={`Twitter: @${entry.twitter_handle}`}
                             >
                               <Twitter size={14} className="text-[#1DA1F2]" />
+                            </a>
+                          )}
+                          {entry.discord_username && (
+                            <a
+                              href={`https://discord.com/users/${entry.discord_username}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="w-8 h-8 rounded-full bg-[#5865F2]/20 hover:bg-[#5865F2]/30 flex items-center justify-center transition border border-[#5865F2]/30"
+                              title={`Discord: ${entry.discord_username}`}
+                            >
+                              <MessageCircle size={14} className="text-[#5865F2]" />
+                            </a>
+                          )}
+                          {entry.telegram_username && (
+                            <a
+                              href={`https://t.me/${entry.telegram_username}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="w-8 h-8 rounded-full bg-[#0088cc]/20 hover:bg-[#0088cc]/30 flex items-center justify-center transition border border-[#0088cc]/30"
+                              title={`Telegram: @${entry.telegram_username}`}
+                            >
+                              <Send size={14} className="text-[#0088cc]" />
                             </a>
                           )}
                         </div>
