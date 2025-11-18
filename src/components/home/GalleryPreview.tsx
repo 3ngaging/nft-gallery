@@ -54,9 +54,9 @@ export default function GalleryPreview() {
                 alt={`NFT ${num}`}
                 fill
                 className="object-cover group-hover:scale-110 transition-transform duration-300"
-                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 176px"
                 loading="lazy"
-                quality={90}
+                quality={70}
               />
               {/* Overlay gradient on hover */}
               <div className="absolute inset-0 bg-gradient-to-t from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

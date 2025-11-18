@@ -48,8 +48,8 @@ function NFTCard({ nft }: NFTCardProps) {
               className={`object-cover transition-all duration-300 group-hover:scale-[1.02] ${
                 imageLoaded ? 'opacity-100' : 'opacity-0'
               }`}
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-              quality={80}
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 256px"
+              quality={70}
               loading="lazy"
               placeholder="blur"
               blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iIzAwMDAwMCIvPjwvc3ZnPg=="
