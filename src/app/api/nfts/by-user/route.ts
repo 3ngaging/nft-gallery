@@ -27,8 +27,11 @@ export async function GET(request: NextRequest) {
       .select('wallet_address')
       .eq('privy_user_id', privyUserId);
 
+    console.log('[NFT by-user] Fetching NFTs for user:', privyUserId);
+    console.log('[NFT by-user] Wallets found in database:', walletData?.length || 0);
+
     if (walletError) {
-      console.error('Error fetching user wallets:', walletError);
+      console.error('[NFT by-user] Error fetching user wallets:', walletError);
       return addSecurityHeaders(
         NextResponse.json(
           { success: false, error: 'Failed to fetch user wallets' },
@@ -39,17 +42,24 @@ export async function GET(request: NextRequest) {
 
     // If no wallets found, return empty array
     if (!walletData || walletData.length === 0) {
+      console.log('[NFT by-user] No wallets found for user, returning empty array');
       return addSecurityHeaders(
         NextResponse.json({
           success: true,
           nfts: [],
           count: 0,
+          debug: {
+            message: 'No wallets connected for this user',
+            privyUserId,
+            walletsInDatabase: 0,
+          }
         })
       );
     }
 
     // Extract wallet addresses
     const walletAddresses = walletData.map((w) => w.wallet_address);
+    console.log('[NFT by-user] Wallet addresses:', walletAddresses);
 
     // Fetch NFTs from the collection for these wallets
     // This is a placeholder - in production, you'll query your NFT data source
@@ -59,6 +69,7 @@ export async function GET(request: NextRequest) {
     // Loop through each wallet and fetch NFTs
     for (const walletAddress of walletAddresses) {
       try {
+        console.log('[NFT by-user] Fetching NFTs for wallet:', walletAddress);
         // Call the existing NFT API endpoint
         const nftResponse = await fetch(
           `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/nfts?wallet=${walletAddress}`,
@@ -66,13 +77,17 @@ export async function GET(request: NextRequest) {
         );
         const nftData = await nftResponse.json();
 
+        console.log('[NFT by-user] NFTs received for wallet:', walletAddress, 'count:', nftData?.nfts?.length || 0);
+
         if (nftData.success && nftData.nfts) {
           allNFTs.push(...nftData.nfts);
         }
       } catch (error) {
-        console.error(`Error fetching NFTs for wallet ${walletAddress}:`, error);
+        console.error(`[NFT by-user] Error fetching NFTs for wallet ${walletAddress}:`, error);
       }
     }
+
+    console.log('[NFT by-user] Total NFTs collected:', allNFTs.length);
 
     // Remove duplicates (in case of any)
     const uniqueNFTs = Array.from(

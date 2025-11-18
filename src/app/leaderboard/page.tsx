@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Trophy, Crown, Medal, User, Twitter, MessageCircle, Send } from 'lucide-react';
+import { getUserProfileUrl } from '@/lib/user-utils';
 
 type LeaderboardEntry = {
   id: number;
@@ -144,7 +145,7 @@ export default function LeaderboardPage() {
                       {/* User */}
                       <td className="flex px-6 py-4">
                         <Link
-                          href={`/user/${entry.privy_user_id}`}
+                          href={getUserProfileUrl(entry.privy_user_id, entry.display_name)}
                           className="flex items-center gap-3 hover:text-accent transition group"
                         >
                           {/* Profile Picture */}

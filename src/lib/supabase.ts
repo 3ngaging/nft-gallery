@@ -35,6 +35,7 @@ export type UserProfile = {
   id: number;
   privy_user_id: string; // Privy's user.id (e.g., "did:privy:...")
   display_name: string | null;
+  username_slug: string | null; // SEO-friendly URL slug (e.g., "john-doe")
   profile_picture: string | null; // URL to profile picture
   banner_image: string | null; // URL to banner image
   bio: string | null; // User bio/description

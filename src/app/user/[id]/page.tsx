@@ -2,25 +2,53 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getUserProfile } from '@/lib/supabase';
 import UserProfileClient from '@/components/UserProfileClient';
+import { isPrivyId } from '@/lib/user-utils';
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
+/**
+ * Lookup user profile by either Privy ID or display name slug
+ */
+async function lookupUserProfile(identifier: string) {
+  // If it's a Privy ID, use direct lookup
+  if (isPrivyId(identifier)) {
+    return await getUserProfile(identifier);
+  }
+
+  // Otherwise, use the lookup API for display name search
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/user/lookup?identifier=${encodeURIComponent(identifier)}`,
+      { cache: 'no-store' }
+    );
+    const data = await response.json();
+
+    if (data.success && data.profile) {
+      return data.profile;
+    }
+  } catch (error) {
+    console.error('[User Profile] Lookup error:', error);
+  }
+
+  return null;
+}
+
 // Generate metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id: privyUserId } = await params;
+  const { id: identifier } = await params;
 
   try {
-    let profile = await getUserProfile(privyUserId);
+    let profile = await lookupUserProfile(identifier);
 
-    // Auto-create profile if needed (for metadata)
-    if (!profile) {
+    // Auto-create profile only if identifier is a Privy ID
+    if (!profile && isPrivyId(identifier)) {
       const { supabase } = await import('@/lib/supabase');
       const { data } = await supabase
         .from('user_profiles')
         .upsert({
-          privy_user_id: privyUserId,
+          privy_user_id: identifier,
           display_name: null,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
@@ -40,7 +68,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       };
     }
 
-    const displayName = profile.display_name || `User ${privyUserId.slice(0, 8)}`;
+    const displayName = profile.display_name || `User ${profile.privy_user_id.slice(0, 8)}`;
 
     return {
       title: `${displayName} - Power Grinders`,
@@ -62,21 +90,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function UserProfilePage({ params }: Props) {
-  const { id: privyUserId } = await params;
+  const { id: identifier } = await params;
 
   let profile;
   try {
-    profile = await getUserProfile(privyUserId);
+    profile = await lookupUserProfile(identifier);
 
-    // Auto-create profile if it doesn't exist (same logic as API route)
-    if (!profile) {
-      console.log('[User Page] Creating new profile for user:', privyUserId);
+    // Auto-create profile only if identifier is a Privy ID
+    if (!profile && isPrivyId(identifier)) {
+      console.log('[User Page] Creating new profile for user:', identifier);
 
       const { supabase } = await import('@/lib/supabase');
       const { data, error } = await supabase
         .from('user_profiles')
         .upsert({
-          privy_user_id: privyUserId,
+          privy_user_id: identifier,
           display_name: null,
           bio: null,
           profile_picture: null,
