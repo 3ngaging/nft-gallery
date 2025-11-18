@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, Trophy } from 'lucide-react';
+import { Menu, X, Trophy, User } from 'lucide-react';
 import { useState } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
 import LanguageSelector from './LanguageSelector';
@@ -90,7 +90,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden bg-primary-dark/95">
+        <div className="md:hidden bg-primary-dark/95 border-t border-white/5">
           <div className="px-4 pt-2 pb-4 space-y-2">
             <Link
               href="/"
@@ -115,8 +115,20 @@ export default function Navbar() {
               <span>Leaderboard</span>
             </Link>
 
-            {/* Mobile Privy Login Button (includes profile link when authenticated) */}
-            <div className="mt-4">
+            {/* Profile Link - Only show when authenticated */}
+            {authenticated && (
+              <Link
+                href="/profile"
+                className="flex items-center gap-2 text-primary-light/80 hover:text-accent transition py-2 text-xs uppercase tracking-wider border-t border-white/5 pt-3 mt-2"
+                onClick={() => setIsOpen(false)}
+              >
+                <User size={14} />
+                <span>{t.nav.profile}</span>
+              </Link>
+            )}
+
+            {/* Mobile Auth Buttons */}
+            <div className="mt-4 pt-3 border-t border-white/5">
               <PrivyLoginButton />
             </div>
           </div>

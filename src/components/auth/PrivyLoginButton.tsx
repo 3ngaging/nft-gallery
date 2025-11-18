@@ -39,45 +39,42 @@ export default function PrivyLoginButton() {
     const walletAddress = primaryWallet?.address || null;
 
     return (
-      <div className="flex items-center gap-3">
-        {/* User info - Solo desktop */}
-        <div className="hidden md:flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-2">
-          <User size={16} className="text-accent" />
+      <div className="flex items-center gap-2">
+        {/* Wallet Info - Desktop only, subtle display */}
+        {walletAddress && (
+          <div
+            className="hidden lg:flex items-center gap-1.5 bg-white/5 border border-white/10 px-3 py-2 text-xs text-gray-400"
+            title={`Solana wallet: ${walletAddress}`}
+          >
+            <Wallet size={12} />
+            <span className="font-mono">
+              {walletAddress.slice(0, 4)}...{walletAddress.slice(-4)}
+            </span>
+          </div>
+        )}
 
-          {/* Clickable name - links to profile */}
+        {/* User Menu - Dropdown style */}
+        <div className="flex items-center gap-2">
+          {/* Profile Button */}
           <a
             href="/profile"
             title="View your profile"
-            className="text-sm text-white font-medium hover:text-accent transition truncate max-w-[120px]"
+            className="border border-white/10 bg-white/5 hover:bg-accent/10 hover:border-accent/30 text-white px-4 py-2 font-semibold transition text-sm flex items-center gap-2"
           >
-            {displayName}
+            <User size={16} />
+            <span className="hidden sm:inline">{t.nav.profile}</span>
           </a>
 
-          {walletAddress && (
-            <>
-              <span className="text-gray-600">|</span>
-              <div
-                className="flex items-center gap-1 text-xs text-gray-400"
-                title={`Solana wallet: ${walletAddress}`}
-              >
-                <Wallet size={12} />
-                <span className="font-mono">
-                  {walletAddress.slice(0, 4)}...{walletAddress.slice(-4)}
-                </span>
-              </div>
-            </>
-          )}
+          {/* Logout button */}
+          <button
+            onClick={logout}
+            title="Disconnect wallet and logout"
+            className="border border-white/10 bg-red-600/20 hover:bg-red-600/30 text-red-400 px-4 py-2 font-semibold transition text-sm flex items-center gap-2"
+          >
+            <LogOut size={16} />
+            <span className="hidden sm:inline">{t.nav.logout}</span>
+          </button>
         </div>
-
-        {/* Logout button */}
-        <button
-          onClick={logout}
-          title="Disconnect wallet and logout"
-          className="cursor-pointer border border-white/10 bg-red-600/20 hover:bg-red-600/30 text-red-400 px-4 py-2 font-semibold transition text-sm flex items-center gap-2"
-        >
-          <LogOut size={16} />
-          <span className="hidden md:inline">{t.nav.logout}</span>
-        </button>
       </div>
     );
   }

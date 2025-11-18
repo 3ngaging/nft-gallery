@@ -204,6 +204,17 @@ export type TranslationKeys = {
     recent: string;
     noUsername: string;
   };
+  leaderboard: {
+    title: string;
+    subtitle: string;
+    loading: string;
+    comingSoon: string;
+    comingSoonDesc: string;
+    rank: string;
+    user: string;
+    nfts: string;
+    points: string;
+  };
   common: {
     loading: string;
     error: string;
@@ -406,6 +417,17 @@ export const translations: Record<Language, TranslationKeys> = {
       recent: 'Recent',
       noUsername: 'No username',
     },
+    leaderboard: {
+      title: 'Leaderboard',
+      subtitle: 'Top Power Grinders members ranked by community points and activity',
+      loading: 'Loading leaderboard...',
+      comingSoon: 'Leaderboard Coming Soon',
+      comingSoonDesc: 'Points system will be activated soon. Start engaging with the community!',
+      rank: 'Rank',
+      user: 'User',
+      nfts: 'NFTs',
+      points: 'Points',
+    },
     common: {
       loading: 'Loading...',
       error: 'Error',
@@ -606,6 +628,17 @@ export const translations: Record<Language, TranslationKeys> = {
       recent: 'Reciente',
       noUsername: 'Sin nombre',
     },
+    leaderboard: {
+      title: 'Tabla de Clasificación',
+      subtitle: 'Los mejores miembros de Power Grinders clasificados por puntos y actividad comunitaria',
+      loading: 'Cargando tabla de clasificación...',
+      comingSoon: 'Tabla de Clasificación Próximamente',
+      comingSoonDesc: '¡El sistema de puntos se activará pronto. Empieza a interactuar con la comunidad!',
+      rank: 'Posición',
+      user: 'Usuario',
+      nfts: 'NFTs',
+      points: 'Puntos',
+    },
     common: {
       loading: 'Cargando...',
       error: 'Error',
@@ -626,6 +659,7 @@ export const translations: Record<Language, TranslationKeys> = {
     gallery: { title: 'NFT画廊', fullCollection: '完整收藏', nftsCount: '个NFT', nftSingular: 'NFT', nftPlural: 'NFT', of: '的', total: '总共', searchPlaceholder: '按名称、描述或#ID搜索...', loading: '加载NFT中...', noResults: '未找到结果', noResultsDesc: '没有匹配的NFT', clearSearch: '清除搜索', gridLarge: '大网格', gridMedium: '中网格', gridCompact: '紧凑网格' },
     nft: { backToGallery: '返回画廊', connectedWallets: '已连接钱包', noWallets: '无已连接钱包', viewOnBlockchain: '在区块链上查看', share: '分享', imageNotAvailable: '图片不可用', noDescription: '无可用描述', owner: '拥有者', mintAddress: '铸币地址', viewOnSolscan: '在Solscan上查看', nftNumber: '#{number} / {total}', statusDiamondHanded: '钻石之手', statusListed: '挂牌中', statusStaked: '质押中', statusHodled: '持有中', badgeUnique: '1/1 独特', badgeVerified: '✓ 已验证', badgeOwned: '👑 你拥有' },
     profile: { title: '我的资料', personalInfo: '个人信息', username: '用户名', email: '电子邮件', memberSince: '会员自', connectedAccounts: '已连接账户', discordConnected: 'Discord已连接', twitterConnected: 'Twitter已连接', telegramConnected: 'Telegram已连接', points: '积分', totalPoints: '总积分', pointsComingSoon: '积分系统即将推出', recent: '最近', noUsername: '无用户名' },
+    leaderboard: { title: '排行榜', subtitle: 'Power Grinders顶级成员按社区积分和活动排名', loading: '加载排行榜中...', comingSoon: '排行榜即将推出', comingSoonDesc: '积分系统即将启动。开始与社区互动吧！', rank: '排名', user: '用户', nfts: 'NFTs', points: '积分' },
     common: { loading: '加载中...', error: '错误', success: '成功', close: '关闭', save: '保存', cancel: '取消' },
   },
   hi: {
@@ -638,6 +672,7 @@ export const translations: Record<Language, TranslationKeys> = {
     gallery: { title: 'NFT गैलरी', fullCollection: 'पूर्ण संग्रह', nftsCount: 'NFTs', nftSingular: 'NFT', nftPlural: 'NFTs', of: 'में से', total: 'कुल', searchPlaceholder: 'नाम, विवरण या #ID द्वारा खोजें...', loading: 'NFTs लोड हो रहे हैं...', noResults: 'कोई परिणाम नहीं मिला', noResultsDesc: 'कोई NFT मेल नहीं खाता', clearSearch: 'खोज साफ़ करें', gridLarge: 'बड़ी ग्रिड', gridMedium: 'मध्यम ग्रिड', gridCompact: 'कॉम्पैक्ट ग्रिड' },
     nft: { backToGallery: 'गैलरी पर वापस जाएं', connectedWallets: 'कनेक्टेड वॉलेट', noWallets: 'कोई कनेक्टेड वॉलेट नहीं', viewOnBlockchain: 'ब्लॉकचेन पर देखें', share: 'शेयर करें', imageNotAvailable: 'छवि उपलब्ध नहीं', noDescription: 'कोई विवरण उपलब्ध नहीं', owner: 'मालिक', mintAddress: 'मिंट पता', viewOnSolscan: 'Solscan पर देखें', nftNumber: '#{number} का {total}', statusDiamondHanded: 'हीरे के हाथ', statusListed: 'सूचीबद्ध', statusStaked: 'स्टेक किया गया', statusHodled: 'धारण किया गया', badgeUnique: '1/1 अद्वितीय', badgeVerified: '✓ सत्यापित', badgeOwned: '👑 आपका है' },
     profile: { title: 'मेरी प्रोफ़ाइल', personalInfo: 'व्यक्तिगत जानकारी', username: 'उपयोगकर्ता नाम', email: 'ईमेल', memberSince: 'सदस्य कब से', connectedAccounts: 'कनेक्टेड खाते', discordConnected: 'Discord कनेक्टेड', twitterConnected: 'Twitter कनेक्टेड', telegramConnected: 'Telegram कनेक्टेड', points: 'अंक', totalPoints: 'कुल अंक', pointsComingSoon: 'अंक प्रणाली जल्द आ रही है', recent: 'हाल का', noUsername: 'कोई उपयोगकर्ता नाम नहीं' },
+    leaderboard: { title: 'लीडरबोर्ड', subtitle: 'समुदाय अंक और गतिविधि के आधार पर शीर्ष Power Grinders सदस्य', loading: 'लीडरबोर्ड लोड हो रहा है...', comingSoon: 'लीडरबोर्ड जल्द आ रहा है', comingSoonDesc: 'अंक प्रणाली जल्द ही सक्रिय की जाएगी। समुदाय के साथ जुड़ना शुरू करें!', rank: 'रैंक', user: 'उपयोगकर्ता', nfts: 'NFTs', points: 'अंक' },
     common: { loading: 'लोड हो रहा है...', error: 'त्रुटि', success: 'सफलता', close: 'बंद करें', save: 'सहेजें', cancel: 'रद्द करें' },
   },
   ko: {
@@ -650,6 +685,7 @@ export const translations: Record<Language, TranslationKeys> = {
     gallery: { title: 'NFT 갤러리', fullCollection: '전체 컬렉션', nftsCount: '개 NFT', nftSingular: 'NFT', nftPlural: 'NFT', of: '중', total: '전체', searchPlaceholder: '이름, 설명 또는 #ID로 검색...', loading: 'NFT 로딩 중...', noResults: '결과를 찾을 수 없습니다', noResultsDesc: '일치하는 NFT가 없습니다', clearSearch: '검색 지우기', gridLarge: '큰 그리드', gridMedium: '중간 그리드', gridCompact: '컴팩트 그리드' },
     nft: { backToGallery: '갤러리로 돌아가기', connectedWallets: '연결된 지갑', noWallets: '연결된 지갑 없음', viewOnBlockchain: '블록체인에서 보기', share: '공유', imageNotAvailable: '이미지를 사용할 수 없습니다', noDescription: '설명 없음', owner: '소유자', mintAddress: '민트 주소', viewOnSolscan: 'Solscan에서 보기', nftNumber: '#{number} / {total}', statusDiamondHanded: '다이아몬드 핸드', statusListed: '판매 중', statusStaked: '스테이킹됨', statusHodled: '보유 중', badgeUnique: '1/1 유니크', badgeVerified: '✓ 검증됨', badgeOwned: '👑 당신 소유' },
     profile: { title: '내 프로필', personalInfo: '개인 정보', username: '사용자 이름', email: '이메일', memberSince: '가입일', connectedAccounts: '연결된 계정', discordConnected: 'Discord 연결됨', twitterConnected: 'Twitter 연결됨', telegramConnected: 'Telegram 연결됨', points: '포인트', totalPoints: '총 포인트', pointsComingSoon: '포인트 시스템 출시 예정', recent: '최근', noUsername: '사용자 이름 없음' },
+    leaderboard: { title: '리더보드', subtitle: '커뮤니티 포인트와 활동으로 순위가 매겨진 상위 Power Grinders 멤버', loading: '리더보드 로딩 중...', comingSoon: '리더보드 출시 예정', comingSoonDesc: '포인트 시스템이 곧 활성화됩니다. 커뮤니티와 함께 참여를 시작하세요!', rank: '순위', user: '사용자', nfts: 'NFTs', points: '포인트' },
     common: { loading: '로딩 중...', error: '오류', success: '성공', close: '닫기', save: '저장', cancel: '취소' },
   },
   it: {
@@ -842,6 +878,17 @@ export const translations: Record<Language, TranslationKeys> = {
       pointsComingSoon: 'Sistema punti in arrivo',
       recent: 'Recente',
       noUsername: 'Nessun nome utente',
+    },
+    leaderboard: {
+      title: 'Classifica',
+      subtitle: 'I migliori membri di Power Grinders classificati per punti e attività della comunità',
+      loading: 'Caricamento classifica...',
+      comingSoon: 'Classifica in Arrivo',
+      comingSoonDesc: 'Il sistema punti sarà attivato presto. Inizia a interagire con la comunità!',
+      rank: 'Posizione',
+      user: 'Utente',
+      nfts: 'NFTs',
+      points: 'Punti',
     },
     common: {
       loading: 'Caricamento...',
@@ -1043,6 +1090,17 @@ export const translations: Record<Language, TranslationKeys> = {
       recent: 'Son',
       noUsername: 'Kullanıcı adı yok',
     },
+    leaderboard: {
+      title: 'Lider Tablosu',
+      subtitle: 'Topluluk puanları ve aktiviteye göre sıralanan en iyi Power Grinders üyeleri',
+      loading: 'Lider tablosu yükleniyor...',
+      comingSoon: 'Lider Tablosu Yakında',
+      comingSoonDesc: 'Puan sistemi yakında aktif olacak. Toplulukla etkileşime geçmeye başla!',
+      rank: 'Sıra',
+      user: 'Kullanıcı',
+      nfts: 'NFT\'ler',
+      points: 'Puanlar',
+    },
     common: {
       loading: 'Yükleniyor...',
       error: 'Hata',
@@ -1242,6 +1300,17 @@ export const translations: Record<Language, TranslationKeys> = {
       pointsComingSoon: 'Sistema de pontos em breve',
       recent: 'Recente',
       noUsername: 'Sem nome de usuário',
+    },
+    leaderboard: {
+      title: 'Tabela de Classificação',
+      subtitle: 'Principais membros do Power Grinders classificados por pontos e atividade na comunidade',
+      loading: 'Carregando tabela de classificação...',
+      comingSoon: 'Tabela de Classificação Em Breve',
+      comingSoonDesc: 'O sistema de pontos será ativado em breve. Comece a interagir com a comunidade!',
+      rank: 'Posição',
+      user: 'Usuário',
+      nfts: 'NFTs',
+      points: 'Pontos',
     },
     common: {
       loading: 'Carregando...',

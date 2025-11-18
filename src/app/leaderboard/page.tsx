@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Trophy, Crown, Medal, User, Twitter, MessageCircle, Send } from 'lucide-react';
 import { getUserProfileUrl } from '@/lib/user-utils';
+import { useLanguage } from '@/lib/LanguageContext';
 
 type LeaderboardEntry = {
   id: number;
@@ -21,6 +22,7 @@ type LeaderboardEntry = {
 };
 
 export default function LeaderboardPage() {
+  const { t } = useLanguage();
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -86,10 +88,10 @@ export default function LeaderboardPage() {
             <Trophy className="text-accent text-yellow-400" size={48} />
           </div>
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-accent to-yellow-400 bg-clip-text text-transparent">
-            Leaderboard
+            {t.leaderboard.title}
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Top Power Grinders members ranked by community points and activity
+            {t.leaderboard.subtitle}
           </p>
         </div>
 
@@ -98,16 +100,16 @@ export default function LeaderboardPage() {
           {loading ? (
             <div className="text-center py-20">
               <div className="w-16 h-16 border-4 border-accent/30 border-t-accent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-gray-400">Loading leaderboard...</p>
+              <p className="text-gray-400">{t.leaderboard.loading}</p>
             </div>
           ) : leaderboard.length === 0 ? (
             <div className="text-center py-20">
               <Trophy size={64} className="text-gray-600 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-gray-400 mb-2">
-                Leaderboard Coming Soon
+                {t.leaderboard.comingSoon}
               </h3>
               <p className="text-gray-600">
-                Points system will be activated soon. Start building your collection!
+                {t.leaderboard.comingSoonDesc}
               </p>
             </div>
           ) : (
@@ -116,16 +118,16 @@ export default function LeaderboardPage() {
                 <thead className="bg-white/5 border-b border-white/10">
                   <tr>
                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                      Rank
+                      {t.leaderboard.rank}
                     </th>
                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                      User
+                      {t.leaderboard.user}
                     </th>
                     <th className="px-6 py-4 text-center text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                      NFTs
+                      {t.leaderboard.nfts}
                     </th>
                     <th className="px-6 py-4 text-right text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                      Points
+                      {t.leaderboard.points}
                     </th>
                   </tr>
                 </thead>
