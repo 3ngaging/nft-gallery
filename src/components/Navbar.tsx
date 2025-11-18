@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, User, Trophy } from 'lucide-react';
+import { Menu, X, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
 import LanguageSelector from './LanguageSelector';
@@ -47,39 +47,31 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-5">
             <Link
               href="/"
+              title="Go to home page"
               className="text-primary-light/80 hover:text-accent transition font-medium text-xs uppercase tracking-wider"
             >
               {t.nav.home}
             </Link>
             <Link
               href="/gallery"
+              title="View NFT collection"
               className="text-primary-light/80 hover:text-accent transition font-medium text-xs uppercase tracking-wider"
             >
               {t.nav.gallery}
             </Link>
             <Link
               href="/leaderboard"
+              title="View community leaderboard"
               className="text-primary-light/80 hover:text-accent transition font-medium text-xs uppercase tracking-wider flex items-center gap-1.5"
             >
               <Trophy size={14} />
               <span>Leaderboard</span>
             </Link>
 
-            {/* Profile Link - Only show when authenticated */}
-            {authenticated && (
-              <Link
-                href="/profile"
-                className="text-primary-light/80 hover:text-accent transition font-medium text-xs uppercase tracking-wider flex items-center gap-1.5"
-              >
-                <User size={14} />
-                <span>Profile</span>
-              </Link>
-            )}
-
             {/* Language Selector */}
             <LanguageSelector />
 
-            {/* Privy Login Button */}
+            {/* Privy Login Button (now includes profile link when authenticated) */}
             <PrivyLoginButton />
           </div>
 
@@ -123,19 +115,7 @@ export default function Navbar() {
               <span>Leaderboard</span>
             </Link>
 
-            {/* Mobile Profile Link - Only show when authenticated */}
-            {authenticated && (
-              <Link
-                href="/profile"
-                className="flex items-center gap-2 text-primary-light/80 hover:text-accent transition py-2 text-xs uppercase tracking-wider"
-                onClick={() => setIsOpen(false)}
-              >
-                <User size={14} />
-                <span>Profile</span>
-              </Link>
-            )}
-
-            {/* Mobile Privy Login Button */}
+            {/* Mobile Privy Login Button (includes profile link when authenticated) */}
             <div className="mt-4">
               <PrivyLoginButton />
             </div>

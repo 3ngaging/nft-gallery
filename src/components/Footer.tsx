@@ -51,33 +51,42 @@ export default function Footer() {
           {/* Social */}
           <div>
             <h3 className="text-primary-light font-semibold mb-3 text-xs uppercase tracking-wider">{t.home.community}</h3>
-            <div className="flex gap-3">
+            <div className="flex flex-col gap-3">
               <a
                 href="https://x.com/Power_Grinders"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Twitter"
-                className="text-primary-light/70 hover:text-accent transition p-2.5 bg-primary-medium/20 hover:bg-accent/20 text-[#F2ECC8]"
+                title="Follow us on Twitter/X"
+                className="group flex items-center gap-2 text-primary-light/70 hover:text-accent transition"
               >
-                <Twitter size={16} />
+                <div className="p-2.5 bg-primary-medium/20 group-hover:bg-accent/20 text-[#F2ECC8] transition">
+                  <Twitter size={16} />
+                </div>
+                <span className="text-xs font-medium">Twitter/X</span>
               </a>
               <a
                 href="https://discord.gg/powergrinders"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Discord"
-                className="text-primary-light/70 hover:text-accent transition p-2.5 bg-primary-medium/20 hover:bg-accent/20 text-[#F2ECC8]"
+                title="Join our Discord community"
+                className="group flex items-center gap-2 text-primary-light/70 hover:text-accent transition"
               >
-                <MessageCircle size={16} />
+                <div className="p-2.5 bg-primary-medium/20 group-hover:bg-accent/20 text-[#F2ECC8] transition">
+                  <MessageCircle size={16} />
+                </div>
+                <span className="text-xs font-medium">Discord</span>
               </a>
               <a
                 href="https://exchange.art/series/QYs1k18OaatqtIHbXFBc/nfts"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Exchange Art"
-                className="text-primary-light/70 hover:text-accent transition p-2.5 bg-primary-medium/20 hover:bg-accent/20 text-[#F2ECC8]"
+                title="View collection on Exchange Art"
+                className="group flex items-center gap-2 text-primary-light/70 hover:text-accent transition"
               >
-                <ExternalLink size={16} />
+                <div className="p-2.5 bg-primary-medium/20 group-hover:bg-accent/20 text-[#F2ECC8] transition">
+                  <ExternalLink size={16} />
+                </div>
+                <span className="text-xs font-medium">Exchange Art</span>
               </a>
             </div>
           </div>

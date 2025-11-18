@@ -43,23 +43,37 @@ export default function PrivyLoginButton() {
         {/* User info - Solo desktop */}
         <div className="hidden md:flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-2">
           <User size={16} className="text-accent" />
-          <span className="text-sm text-white font-medium truncate max-w-[120px]">
+
+          {/* Clickable name - links to profile */}
+          <a
+            href="/profile"
+            title="View your profile"
+            className="text-sm text-white font-medium hover:text-accent transition truncate max-w-[120px]"
+          >
             {displayName}
-          </span>
+          </a>
+
           {walletAddress && (
-            <div className="flex items-center gap-1 ml-2 text-xs text-gray-400">
-              <Wallet size={12} />
-              <span className="font-mono">
-                {walletAddress.slice(0, 4)}...{walletAddress.slice(-4)}
-              </span>
-            </div>
+            <>
+              <span className="text-gray-600">|</span>
+              <div
+                className="flex items-center gap-1 text-xs text-gray-400"
+                title={`Solana wallet: ${walletAddress}`}
+              >
+                <Wallet size={12} />
+                <span className="font-mono">
+                  {walletAddress.slice(0, 4)}...{walletAddress.slice(-4)}
+                </span>
+              </div>
+            </>
           )}
         </div>
 
         {/* Logout button */}
         <button
           onClick={logout}
-          className="border border-white/10 bg-red-600/20 hover:bg-red-600/30 text-red-400 px-4 py-2 font-semibold transition text-sm flex items-center gap-2"
+          title="Disconnect wallet and logout"
+          className="cursor-pointer border border-white/10 bg-red-600/20 hover:bg-red-600/30 text-red-400 px-4 py-2 font-semibold transition text-sm flex items-center gap-2"
         >
           <LogOut size={16} />
           <span className="hidden md:inline">{t.nav.logout}</span>
@@ -72,6 +86,7 @@ export default function PrivyLoginButton() {
   return (
     <button
       onClick={login}
+      title="Connect with Twitter, Discord, Gmail or Solana wallet"
       className="border border-white/10 bg-[#F2ECC8] hover:bg-[#aca686] text-black px-4 py-2 font-semibold transition shadow-[#a59f7e] hover:shadow-[#dfd7ac] text-sm flex items-center gap-2"
     >
       <LogIn size={16} />
