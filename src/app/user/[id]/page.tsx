@@ -10,29 +10,76 @@ type Props = {
 
 /**
  * Lookup user profile by either Privy ID or display name slug
+ * Uses direct Supabase queries instead of HTTP fetch for better performance
  */
 async function lookupUserProfile(identifier: string) {
+  const { supabase } = await import('@/lib/supabase');
+
   // If it's a Privy ID, use direct lookup
   if (isPrivyId(identifier)) {
     return await getUserProfile(identifier);
   }
 
-  // Otherwise, use the lookup API for display name search
+  // Otherwise, search by display name using multiple strategies
+  const sanitized = identifier.trim().toLowerCase();
+
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/user/lookup?identifier=${encodeURIComponent(identifier)}`,
-      { cache: 'no-store' }
-    );
-    const data = await response.json();
+    // Strategy 1: Search by username_slug (if exists)
+    const { data: slugData } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .eq('username_slug', sanitized)
+      .maybeSingle();
 
-    if (data.success && data.profile) {
-      return data.profile;
+    if (slugData) {
+      console.log('[User Lookup] Found by username_slug:', sanitized);
+      return slugData;
     }
-  } catch (error) {
-    console.error('[User Profile] Lookup error:', error);
-  }
 
-  return null;
+    // Strategy 2: Search by display name (case-insensitive exact match)
+    const { data: exactData } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .ilike('display_name', sanitized)
+      .maybeSingle();
+
+    if (exactData) {
+      console.log('[User Lookup] Found by display name (exact):', sanitized);
+      return exactData;
+    }
+
+    // Strategy 3: Convert slug to display name (e.g., "john-doe" -> "john doe")
+    const potentialName = identifier.replace(/-/g, ' ');
+    const { data: convertedData } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .ilike('display_name', potentialName)
+      .maybeSingle();
+
+    if (convertedData) {
+      console.log('[User Lookup] Found by slug conversion:', identifier);
+      return convertedData;
+    }
+
+    // Strategy 4: Partial match (last resort)
+    const { data: partialData } = await supabase
+      .from('user_profiles')
+      .select('*')
+      .ilike('display_name', `%${sanitized}%`)
+      .limit(1)
+      .maybeSingle();
+
+    if (partialData) {
+      console.log('[User Lookup] Found by partial match:', sanitized);
+      return partialData;
+    }
+
+    console.log('[User Lookup] No profile found for:', identifier);
+    return null;
+  } catch (error) {
+    console.error('[User Lookup] Error:', error);
+    return null;
+  }
 }
 
 // Generate metadata for SEO

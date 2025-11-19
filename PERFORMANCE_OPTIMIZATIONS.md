@@ -68,16 +68,9 @@ experimental: {
 }
 ```
 
-#### Lucide Icons Modularization
-```ts
-modularizeImports: {
-  'lucide-react': {
-    transform: 'lucide-react/dist/esm/icons/{{member}}'
-  }
-}
-```
+**Note**: `modularizeImports` for lucide-react was removed as Next.js 15 automatically tree-shakes lucide-react imports.
 
-**Impact**: Load only the 15 icons we use instead of entire library (~300 icons)
+**Impact**: Automatic tree-shaking loads only the ~15 icons we use instead of entire library (~300 icons)
 
 ---
 
