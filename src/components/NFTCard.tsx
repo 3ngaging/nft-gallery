@@ -8,9 +8,10 @@ import type { NFTWithOwner } from '@/lib/matrica-nft-client';
 
 type NFTCardProps = {
   nft: NFTWithOwner;
+  index: number;
 };
 
-function NFTCard({ nft }: NFTCardProps) {
+function NFTCard({ nft, index }: NFTCardProps) {
   const { t } = useLanguage();
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -60,7 +61,7 @@ function NFTCard({ nft }: NFTCardProps) {
           )}
 
           <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm px-2.5 py-1 text-xs font-bold text-accent shadow-lg">
-            {nft.collection.name}
+            #{index}
           </div>
         </div>
 

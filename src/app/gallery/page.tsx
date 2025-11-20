@@ -205,8 +205,8 @@ export default function GalleryPage() {
         {/* Grid de NFTs */}
         {!loading && filteredNfts.length > 0 && (
           <div className={`grid ${GRID_CLASSES[gridSize]} gap-6`}>
-            {filteredNfts.map((nft) => (
-              <NFTCard key={nft.mintAddress} nft={nft} />
+            {filteredNfts.map((nft, index) => (
+              <NFTCard key={nft.mintAddress} nft={nft} index={index + 1} />
             ))}
           </div>
         )}
