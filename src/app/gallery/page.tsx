@@ -1,13 +1,23 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import { Search, Grid3x3, LayoutGrid, List } from 'lucide-react';
-import NFTCard from '@/components/NFTCard';
-import StickerSystem from '@/components/StickerSystem';
-import LoadingScreen from '@/components/LoadingScreen';
 import { useLanguage } from '@/lib/LanguageContext';
 import type { NFTWithOwner } from '@/lib/matrica-nft-client';
+
+// Lazy load heavy components - based on Stack Overflow article
+// https://stackoverflow.com/questions/75499166/vendors-bundles-in-react-js
+const NFTCard = lazy(() => import('@/components/NFTCard'));
+const StickerSystem = lazy(() => import('@/components/StickerSystem'));
+const LoadingScreen = lazy(() => import('@/components/LoadingScreen'));
+
+// Lazy load framer-motion (only used for animations)
+const motion = dynamic(
+  () => import('framer-motion').then((mod) => ({ default: mod.motion.div })),
+  { ssr: false }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+) as any;
 
 // Grid classes constant - moved outside component for better performance
 const GRID_CLASSES = {
@@ -78,12 +88,18 @@ export default function GalleryPage() {
 
   // Show full-screen loading only on initial load
   if (loading && nfts.length === 0) {
-    return <LoadingScreen />;
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-black" />}>
+        <LoadingScreen />
+      </Suspense>
+    );
   }
 
   return (
     <div className="min-h-screen py-20 px-4 bg-black relative">
-      <StickerSystem />
+      <Suspense fallback={null}>
+        <StickerSystem />
+      </Suspense>
 
       {/* Background glow effects */}
       <div className="absolute top-20 right-0 w-96 h-96 bg-accent/10 rounded-full blur-[120px] -z-10"></div>
@@ -204,11 +220,17 @@ export default function GalleryPage() {
 
         {/* Grid de NFTs */}
         {!loading && filteredNfts.length > 0 && (
-          <div className={`grid ${GRID_CLASSES[gridSize]} gap-6`}>
-            {filteredNfts.map((nft, index) => (
-              <NFTCard key={nft.mintAddress} nft={nft} index={index + 1} />
-            ))}
-          </div>
+          <Suspense fallback={
+            <div className="text-center py-10">
+              <div className="inline-block animate-spin h-8 w-8 border-t-2 border-b-2 border-[#F2ECC8]"></div>
+            </div>
+          }>
+            <div className={`grid ${GRID_CLASSES[gridSize]} gap-6`}>
+              {filteredNfts.map((nft, index) => (
+                <NFTCard key={nft.mintAddress} nft={nft} index={index + 1} />
+              ))}
+            </div>
+          </Suspense>
         )}
       </div>
     </div>
