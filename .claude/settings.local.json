@@ -10,7 +10,8 @@
       "Bash(npm run build:*)",
       "Bash(rd /s /q .next 2)",
       "Bash(nul)",
-      "Bash(npx next lint:*)"
+      "Bash(npx next lint:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
