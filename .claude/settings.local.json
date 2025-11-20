@@ -6,7 +6,8 @@
       "Bash(killall node:*)",
       "Bash(taskkill:*)",
       "Bash(netstat:*)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []

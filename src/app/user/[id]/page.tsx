@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getUserProfile } from '@/lib/supabase';
 import UserProfileClient from '@/components/UserProfileClient';
+import UserProfileNotFound from '@/components/UserProfileNotFound';
 import { isPrivyId } from '@/lib/user-utils';
 
 type Props = {
@@ -183,23 +184,7 @@ export default async function UserProfilePage({ params }: Props) {
   }
 
   if (!profile) {
-    // Profile creation failed - show error
-    return (
-      <div className="min-h-screen py-20 px-4 flex items-center justify-center">
-        <div className="text-center max-w-md">
-          <h1 className="text-3xl font-bold mb-4">Profile Not Found</h1>
-          <p className="text-gray-400 mb-6">
-            Unable to load or create profile for this user. Please try again later.
-          </p>
-          <a
-            href="/gallery"
-            className="inline-block bg-accent hover:bg-accent/90 text-black px-6 py-3 font-semibold transition"
-          >
-            Back to Gallery
-          </a>
-        </div>
-      </div>
-    );
+    return <UserProfileNotFound />;
   }
 
   return <UserProfileClient profile={profile} />;
