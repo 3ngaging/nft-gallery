@@ -40,3 +40,42 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 nul
+
+# ========================================
+# Claude AI Assistant - DO NOT COMMIT
+# ========================================
+# All Claude-related files and folders
+.claude/
+.claude/**/*
+*.claude
+**/CLAUDE.md
+claude-*.md
+CLAUDE_*.md
+
+# Claude session files
+claude-session*.json
+claude-context*.json
+claude-history*.json
+
+# Claude temporary files
+.claude-temp/
+.claude-cache/
+
+# Claude configuration (local only)
+.claude/settings.local.json
+
+# Claude documentation that should stay local
+TRANSLATIONS_TODO.md
+SECURITY_AUDIT.md
+FINAL_IMPLEMENTATION_STATUS.md
+*_claude_*.md
+*-claude-*.md
+
+# Python scripts for Claude operations
+add_profile_translations.py
+profile_translations_output.txt
+*_translations_*.py
+*_translations_*.txt
+
+# Any file with "claude" in the name (case insensitive)
+*[Cc][Ll][Aa][Uu][Dd][Ee]*

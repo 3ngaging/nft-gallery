@@ -13,7 +13,7 @@ import { useUserProfile } from '@/hooks/useUserProfile';
 export default function PrivyLoginButton() {
   const { ready, login, logout } = usePrivy();
   const { t } = useLanguage();
-  const { authenticated, user, displayName } = useUserProfile();
+  const { authenticated, user } = useUserProfile();
 
   // Get Solana wallets (embedded wallets created by Privy)
   const solanaWallets = (user?.linkedAccounts?.filter(

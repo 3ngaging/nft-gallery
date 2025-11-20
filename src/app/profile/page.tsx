@@ -14,9 +14,11 @@ import type { NFTWithOwner } from '@/lib/matrica-nft-client';
 import type { UserProfile } from '@/lib/supabase';
 import NFTCard from '@/components/NFTCard';
 import ProfileEditor from '@/components/ProfileEditor';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function ProfilePage() {
   const { ready, authenticated, user, linkWallet } = usePrivy();
+  const { t } = useLanguage();
   const [userNFTs, setUserNFTs] = useState<NFTWithOwner[]>([]);
   const [loading, setLoading] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
@@ -127,7 +129,7 @@ export default function ProfilePage() {
       <div className="min-h-screen flex items-center justify-center bg-black">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-accent/30 border-t-accent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-400">Loading...</p>
+          <p className="text-gray-400">{t.profile.loading}</p>
         </div>
       </div>
     );
@@ -162,7 +164,7 @@ export default function ProfilePage() {
               />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-gray-600 text-sm">No banner set</div>
+                <div className="text-gray-600 text-sm">{t.profile.noBanner}</div>
               </div>
             )}
           </div>
@@ -238,14 +240,14 @@ export default function ProfilePage() {
                       className="inline-flex items-center gap-2 bg-accent/20 hover:bg-accent/30 text-accent px-3 py-1.5 text-xs font-semibold transition border border-accent/30"
                     >
                       <Globe size={14} />
-                      Website
+                      {t.profile.website}
                     </a>
                   )}
                 </div>
 
                 {/* Privy Connected Accounts */}
                 <div className="flex flex-wrap gap-2 text-xs text-gray-500">
-                  <span>Connected via:</span>
+                  <span>{t.profile.connectedVia}</span>
                   {user.twitter && <span className="text-accent">Twitter</span>}
                   {user.discord && <span className="text-accent">Discord</span>}
                   {user.google && <span className="text-accent">Google</span>}
@@ -272,14 +274,14 @@ export default function ProfilePage() {
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-white flex items-center gap-3">
               <Wallet className="text-accent" size={28} />
-              My Solana Wallets
+              {t.profile.mySolanaWallets}
             </h2>
             <button
               onClick={linkWallet}
               className="cursor-pointer bg-accent hover:bg-accent/90 text-[#F2ECC8] px-4 py-2 font-semibold transition shadow-[0_3px_0_0_#aca686] hover:shadow-[0_1px_0_0_#aca686] hover:translate-y-[2px] flex items-center gap-2"
             >
               <Plus size={16} />
-              Add Wallet
+              {t.profile.addWallet}
             </button>
           </div>
 
@@ -288,15 +290,15 @@ export default function ProfilePage() {
               <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
                 <Wallet size={32} className="text-gray-600" />
               </div>
-              <p className="text-gray-400 mb-2">No Solana wallets connected</p>
+              <p className="text-gray-400 mb-2">{t.profile.noWallets}</p>
               <p className="text-sm text-gray-600 mb-4">
-                Add a Solana wallet to see your NFTs from the collection
+                {t.profile.noWalletsDesc}
               </p>
               <button
                 onClick={linkWallet}
                 className="bg-accent hover:bg-accent/90 text-black px-6 py-3 font-semibold transition shadow-[0_3px_0_0_#aca686] hover:shadow-[0_1px_0_0_#aca686] hover:translate-y-[2px]"
               >
-                Connect Wallet
+                {t.profile.connectWallet}
               </button>
             </div>
           ) : (
@@ -314,14 +316,14 @@ export default function ProfilePage() {
                       </div>
                       <div>
                         <p className="text-white font-mono text-sm">{truncated}</p>
-                        <p className="text-gray-500 text-xs">Wallet {index + 1}</p>
+                        <p className="text-gray-500 text-xs">{t.profile.wallet} {index + 1}</p>
                       </div>
                     </div>
                     <button
                       onClick={() => navigator.clipboard.writeText(wallet.address)}
                       className="cursor-pointer text-accent hover:text-accent/80 text-xs px-3 py-1 border border-accent/30 hover:bg-accent/10 transition"
                     >
-                      Copy
+                      {t.profile.copy}
                     </button>
                   </div>
                 );
@@ -339,13 +341,13 @@ export default function ProfilePage() {
               </div>
               <div>
                 <div className="text-2xl font-bold text-accent">{userNFTs.length}</div>
-                <div className="text-xs text-gray-400 uppercase tracking-wider">NFTs Owned</div>
+                <div className="text-xs text-gray-400 uppercase tracking-wider">{t.profile.nftsOwned}</div>
               </div>
             </div>
             <p className="text-xs text-gray-500">
               {userNFTs.length === 0
-                ? "You don&apos;t own any NFTs from this collection yet"
-                : `You own ${userNFTs.length} NFT${userNFTs.length === 1 ? '' : 's'} from this collection`}
+                ? t.profile.noNftsYet
+                : `${t.profile.youOwn} ${userNFTs.length} ${userNFTs.length === 1 ? t.profile.nft : t.profile.nfts} ${t.profile.fromCollection}`}
             </p>
           </div>
 
@@ -356,10 +358,10 @@ export default function ProfilePage() {
               </div>
               <div>
                 <div className="text-2xl font-bold text-blue-400">0</div>
-                <div className="text-xs text-gray-400 uppercase tracking-wider">Total Points</div>
+                <div className="text-xs text-gray-400 uppercase tracking-wider">{t.profile.totalPoints}</div>
               </div>
             </div>
-            <p className="text-xs text-gray-500">Start earning points by being active in the community</p>
+            <p className="text-xs text-gray-500">{t.profile.startEarning}</p>
           </div>
 
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 hover:bg-accent/5 hover:border-accent/30 transition">
@@ -369,11 +371,11 @@ export default function ProfilePage() {
               </div>
               <div>
                 <div className="text-2xl font-bold text-purple-400">{solanaWallets.length}</div>
-                <div className="text-xs text-gray-400 uppercase tracking-wider">Wallets Connected</div>
+                <div className="text-xs text-gray-400 uppercase tracking-wider">{t.profile.walletsConnected}</div>
               </div>
             </div>
             <p className="text-xs text-gray-500">
-              {solanaWallets.length === 0 ? 'No wallets connected' : `${solanaWallets.length} Solana wallet${solanaWallets.length === 1 ? '' : 's'} linked`}
+              {solanaWallets.length === 0 ? t.profile.noWalletsConnected : `${solanaWallets.length} Solana ${solanaWallets.length === 1 ? t.profile.walletLinked : t.profile.walletsLinked}`}
             </p>
           </div>
         </div>
@@ -382,22 +384,22 @@ export default function ProfilePage() {
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-8">
           <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
             <Trophy className="text-accent" size={28} />
-            My NFTs from Collection
+            {t.profile.myNftsCollection}
           </h2>
 
           {loading ? (
             <div className="text-center py-12">
               <div className="w-16 h-16 border-4 border-accent/30 border-t-accent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-gray-400">Loading your NFTs...</p>
+              <p className="text-gray-400">{t.profile.loadingNfts}</p>
             </div>
           ) : userNFTs.length === 0 ? (
             <div className="text-center py-12">
               <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
                 <Trophy size={40} className="text-[#F2ECC8]" />
               </div>
-              <p className="text-gray-400 mb-2">No NFTs found</p>
+              <p className="text-gray-400 mb-2">{t.profile.noNftsFound}</p>
               <p className="text-sm text-gray-600">
-                You don&apos;t own any NFTs from the Power Grinders collection
+                {t.profile.noNftsDesc}
               </p>
             </div>
           ) : (
@@ -413,9 +415,9 @@ export default function ProfilePage() {
         <div className="mt-8 bg-white/5 backdrop-blur-sm border border-white/10 p-8">
           <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
             <Activity className="text-blue-400" size={28} />
-            Activity Feed
+            {t.profile.activityFeed}
           </h2>
-          <p className="text-gray-500 text-center py-8">Coming soon...</p>
+          <p className="text-gray-500 text-center py-8">{t.profile.comingSoon}</p>
         </div>
       </div>
     </div>

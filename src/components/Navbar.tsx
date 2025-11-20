@@ -65,7 +65,7 @@ export default function Navbar() {
               className="text-primary-light/80 hover:text-accent transition font-medium text-xs uppercase tracking-wider flex items-center gap-1.5"
             >
               <Trophy size={14} />
-              <span>Leaderboard</span>
+              <span>{t.nav.leaderboard}</span>
             </Link>
 
             {/* Language Selector */}
@@ -112,7 +112,7 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               <Trophy size={14} />
-              <span>Leaderboard</span>
+              <span>{t.nav.leaderboard}</span>
             </Link>
 
             {/* Profile Link - Only show when authenticated */}

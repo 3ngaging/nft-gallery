@@ -1,17 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(Stop-Process -Force 2)",
-      "Bash($null)",
-      "Bash(Start-Sleep -Seconds 2)",
-      "Bash(Remove-Item -Path \".next\" -Recurse -Force -ErrorAction SilentlyContinue)",
-      "Bash(chmod:*)",
-      "Bash(kill:*)",
-      "Bash(if [ $? -ne 0 ])",
-      "Bash(then echo '✓ All ports 3000-3009 are free')",
-      "Bash(fi)",
-      "Bash(.next/.gitignore)",
-      "Bash(npm run build:*)"
+      "Bash(Stop-Process -Force)",
+      "Bash(pkill:*)",
+      "Bash(killall node:*)",
+      "Bash(taskkill:*)",
+      "Bash(netstat:*)",
+      "Bash(xargs:*)"
     ],
     "deny": [],
     "ask": []

@@ -19,6 +19,7 @@ type LeaderboardEntry = {
   rank: number;
   points: number;
   nfts_count: number;
+  nft_mint_address?: string;
 };
 
 export default function LeaderboardPage() {
@@ -84,8 +85,21 @@ export default function LeaderboardPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-3 mb-4">
-            <Trophy className="text-accent text-yellow-400" size={48} />
+          <div className="inline-flex items-center gap-3 mb-4 relative">
+            {/* Fancy Trophy with Glow Effect */}
+            <div className="relative">
+              {/* Glow background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/30 via-accent/30 to-amber-500/30 blur-2xl animate-pulse"></div>
+              {/* Trophy container with gradient border */}
+              <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-yellow-400 via-accent to-amber-500 p-[3px] shadow-[0_0_30px_rgba(242,236,200,0.5)]">
+                <div className="w-full h-full rounded-full bg-black flex items-center justify-center">
+                  <Trophy className="text-accent drop-shadow-[0_0_8px_rgba(242,236,200,0.8)]" size={40} />
+                </div>
+              </div>
+              {/* Sparkle effects */}
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
+              <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-accent rounded-full animate-ping delay-75"></div>
+            </div>
           </div>
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-accent to-yellow-400 bg-clip-text text-transparent">
             {t.leaderboard.title}
@@ -225,9 +239,18 @@ export default function LeaderboardPage() {
 
                       {/* NFTs Count */}
                       <td className="px-6 py-4 whitespace-nowrap text-center">
-                        <span className="text-accent font-semibold">
-                          {entry.nfts_count}
-                        </span>
+                        {entry.nfts_count === 1 && entry.nft_mint_address ? (
+                          <Link
+                            href={`/nft/${entry.nft_mint_address}`}
+                            className="text-accent font-semibold hover:text-yellow-400 hover:underline transition"
+                          >
+                            {entry.nfts_count}
+                          </Link>
+                        ) : (
+                          <span className="text-accent font-semibold">
+                            {entry.nfts_count}
+                          </span>
+                        )}
                       </td>
 
                       {/* Points */}

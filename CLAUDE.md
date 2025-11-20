@@ -6,6 +6,130 @@
 
 ---
 
+## 🚨 REGLA CRÍTICA: INTERNACIONALIZACIÓN (i18n)
+
+### ⚠️ **PRIORIDAD MÁXIMA - NUNCA IGNORAR**
+
+**CADA VEZ que crees o modifiques código en este proyecto, DEBES seguir estas reglas:**
+
+1. **❌ PROHIBIDO**: Texto hardcodeado en componentes
+2. **✅ OBLIGATORIO**: Usar sistema de traducción i18n para TODO el texto visible
+
+### 📋 Proceso Obligatorio para Cada Cambio de Código:
+
+#### Paso 1: Identificar Todo el Texto UI
+- Revisa tu código y encuentra CADA string que el usuario verá
+- Incluye: botones, labels, placeholders, mensajes de error, títulos, descripciones
+- Excluye SOLAMENTE: nombres de marca (Twitter, Discord, etc.), URLs, nombres propios
+
+#### Paso 2: Crear Translation Keys en TypeScript
+En `src/lib/i18n.ts`, agrega las claves a la interfaz `TranslationKeys`:
+
+```typescript
+export type TranslationKeys = {
+  // ... código existente ...
+  tuSeccion: {
+    tuClave: string;
+    otraClave: string;
+  };
+};
+```
+
+#### Paso 3: Agregar Traducciones para LOS 8 IDIOMAS
+**OBLIGATORIO: Debes agregar traducciones en TODOS estos idiomas:**
+
+1. **English (en)** - Obligatorio, completo
+2. **Español (es)** - Obligatorio, completo
+3. **中文 (zh)** - Formato condensado aceptable
+4. **हिन्दी (hi)** - Formato condensado aceptable
+5. **한국어 (ko)** - Formato condensado aceptable
+6. **Italiano (it)** - Preferible completo
+7. **Türkçe (tr)** - Preferible completo
+8. **Português (pt)** - Preferible completo
+
+**Ejemplo de Formato Completo (English, Español):**
+```typescript
+en: {
+  tuSeccion: {
+    tuClave: 'Your text here',
+    otraClave: 'Another text',
+  }
+}
+```
+
+**Ejemplo de Formato Condensado (Chinese, Hindi, Korean):**
+```typescript
+zh: {
+  tuSeccion: { tuClave: '你的文本', otraClave: '另一个文本' }
+}
+```
+
+#### Paso 4: Usar en Componentes
+```typescript
+'use client';
+
+import { useLanguage } from '@/lib/LanguageContext';
+
+export default function TuComponente() {
+  const { t } = useLanguage();
+
+  return (
+    <div>
+      <h1>{t.tuSeccion.tuClave}</h1>
+      <button>{t.tuSeccion.otraClave}</button>
+    </div>
+  );
+}
+```
+
+### ✅ Checklist Antes de Completar CUALQUIER Tarea:
+
+- [ ] ¿Identifiqué TODO el texto visible al usuario?
+- [ ] ¿Agregué las claves TypeScript a `TranslationKeys`?
+- [ ] ¿Agregué traducciones en los 8 idiomas?
+- [ ] ¿Actualicé el componente para usar `useLanguage()` y `t.*`?
+- [ ] ¿Verifiqué que NO quede ningún texto hardcodeado?
+
+### 🔍 Cómo Auditar Código Existente:
+
+Si encuentras código con texto hardcodeado:
+1. Busca strings entre comillas: `"texto"` o `'texto'`
+2. Revisa JSX: `<h1>Texto</h1>` ← Debe ser `<h1>{t.seccion.clave}</h1>`
+3. Revisa placeholders: `placeholder="texto"` ← Debe ser `placeholder={t.seccion.clave}`
+4. Revisa mensajes: `throw new Error("mensaje")` ← Debe usar translation key
+
+### ❌ EJEMPLO INCORRECTO:
+```typescript
+export default function BadComponent() {
+  return (
+    <div>
+      <h1>Welcome to our site</h1>
+      <button>Click here</button>
+    </div>
+  );
+}
+```
+
+### ✅ EJEMPLO CORRECTO:
+```typescript
+'use client';
+
+import { useLanguage } from '@/lib/LanguageContext';
+
+export default function GoodComponent() {
+  const { t } = useLanguage();
+
+  return (
+    <div>
+      <h1>{t.welcome.title}</h1>
+      <button>{t.welcome.button}</button>
+    </div>
+  );
+}
+```
+
+---
+
 ## 🎯 Objetivos Principales
 
 1. **Landing Page atractiva** con imagen hero 1920x1080
@@ -14,6 +138,7 @@
 4. **Sistema de autenticación social** vía Matrix.io (Discord, Telegram, Twitter)
 5. **Sistema de puntos** trackeable mediante bots de comunidad
 6. **Tracking de wallets** conectadas a cada NFT
+7. **🌍 Soporte completo de 8 idiomas** (CRÍTICO)
 
 ---
 
@@ -164,10 +289,20 @@ CREATE TABLE point_rules (
 
 ## 🎨 Best Practices
 
+### **🌍 Internacionalización (i18n) - PRIORIDAD #1**
+- ✅ **OBLIGATORIO**: TODO texto UI debe usar sistema de traducción
+- ✅ **OBLIGATORIO**: Agregar traducciones en los 8 idiomas (en, es, zh, hi, ko, it, tr, pt)
+- ✅ **PROHIBIDO**: Texto hardcodeado en componentes
+- ✅ Usar `useLanguage()` hook en componentes cliente
+- ✅ Seguir estructura: `t.seccion.clave` para acceder a traducciones
+- ✅ Agregar TypeScript types en `TranslationKeys` antes de usar nuevas claves
+- ✅ Auditar código existente para encontrar texto hardcodeado
+- ⚠️ **REVISAR SIEMPRE**: Antes de dar por completa una tarea, verificar que no quede texto sin traducir
+
 ### **Código**
 - ✅ Usar TypeScript estricto (`strict: true`)
 - ✅ Componentes funcionales con hooks
-- ✅ `'use client'` solo cuando sea necesario (estado, eventos, hooks)
+- ✅ `'use client'` solo cuando sea necesario (estado, eventos, hooks, i18n)
 - ✅ Server Components por defecto para mejor performance
 - ✅ Nombres descriptivos en español para variables de negocio
 - ✅ Comentarios en español para lógica compleja

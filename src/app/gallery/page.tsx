@@ -37,7 +37,7 @@ export default function GalleryPage() {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.error || 'Failed to fetch NFTs');
+          throw new Error(data.error || t.galleryErrors.failedToFetch);
         }
 
         if (!cancelled && data.success) {
@@ -45,7 +45,7 @@ export default function GalleryPage() {
         }
       } catch (err) {
         if (!cancelled) {
-          setError(err instanceof Error ? err.message : 'Unknown error');
+          setError(err instanceof Error ? err.message : t.galleryErrors.unknown);
           console.error('Error fetching NFTs:', err);
         }
       } finally {
@@ -166,13 +166,13 @@ export default function GalleryPage() {
         {error && (
           <div className="text-center py-20">
             <div className="text-5xl mb-4">⚠️</div>
-            <h3 className="text-2xl font-bold mb-2 text-white">Error Loading NFTs</h3>
+            <h3 className="text-2xl font-bold mb-2 text-white">{t.galleryErrors.errorHeading}</h3>
             <p className="text-gray-400 mb-6">{error}</p>
             <button
               onClick={() => window.location.reload()}
               className="bg-accent hover:bg-accent/90 text-primary-dark px-6 py-3 font-semibold transition shadow-[0_3px_0_0_#aca686] hover:shadow-[0_1px_0_0_#aca686] hover:translate-y-[2px]"
             >
-              Retry
+              {t.galleryErrors.retryButton}
             </button>
           </div>
         )}
