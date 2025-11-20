@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Twitter, Globe, MessageCircle, Send, ArrowLeft, Trophy } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useLanguage } from '@/lib/LanguageContext';
 import type { UserProfile } from '@/lib/supabase';
 import type { NFTWithOwner } from '@/lib/matrica-nft-client';
 import NFTCard from './NFTCard';
@@ -13,6 +14,7 @@ type UserProfileClientProps = {
 };
 
 export default function UserProfileClient({ profile }: UserProfileClientProps) {
+  const { t } = useLanguage();
   const [userNFTs, setUserNFTs] = useState<NFTWithOwner[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -53,7 +55,7 @@ export default function UserProfileClient({ profile }: UserProfileClientProps) {
           className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition mb-8"
         >
           <ArrowLeft size={20} />
-          Back to Gallery
+          {t.userProfile.backToGallery}
         </Link>
 
         {/* Banner */}
@@ -138,7 +140,7 @@ export default function UserProfileClient({ profile }: UserProfileClientProps) {
                     className="flex items-center gap-2 text-sm text-gray-400 hover:text-accent transition"
                   >
                     <Globe size={16} />
-                    Website
+                    {t.userProfile.website}
                   </a>
                 )}
               </div>
@@ -156,7 +158,7 @@ export default function UserProfileClient({ profile }: UserProfileClientProps) {
                     <div className="text-3xl font-bold text-purple-400">
                       {(profile.total_points || 0).toLocaleString()}
                     </div>
-                    <div className="text-xs text-gray-400 uppercase tracking-wider">Community Points</div>
+                    <div className="text-xs text-gray-400 uppercase tracking-wider">{t.userProfile.communityPoints}</div>
                   </div>
                 </div>
               </div>
@@ -171,14 +173,14 @@ export default function UserProfileClient({ profile }: UserProfileClientProps) {
                     <div className="text-3xl font-bold text-accent">
                       {loading ? '...' : userNFTs.length}
                     </div>
-                    <div className="text-xs text-gray-400 uppercase tracking-wider">NFTs Owned</div>
+                    <div className="text-xs text-gray-400 uppercase tracking-wider">{t.userProfile.nftsOwned}</div>
                   </div>
                 </div>
               </div>
 
               {/* Member Since */}
               <div className="text-sm text-gray-500">
-                Member since {new Date(profile.created_at).toLocaleDateString()}
+                {t.userProfile.memberSince} {new Date(profile.created_at).toLocaleDateString()}
               </div>
             </div>
           </div>
@@ -187,26 +189,26 @@ export default function UserProfileClient({ profile }: UserProfileClientProps) {
           <div className="md:col-span-2">
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
               <Trophy className="text-accent" size={28} />
-              NFT Collection
+              {t.userProfile.nftCollection}
             </h2>
 
             {loading ? (
               <div className="text-center py-12">
                 <div className="w-16 h-16 border-4 border-accent/30 border-t-accent rounded-full animate-spin mx-auto mb-4"></div>
-                <p className="text-gray-400">Loading NFTs...</p>
+                <p className="text-gray-400">{t.userProfile.loadingNfts}</p>
               </div>
             ) : userNFTs.length === 0 ? (
               <div className="text-center py-12 bg-white/5 border border-white/10 rounded-lg">
                 <Trophy size={48} className="text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-400 mb-2">No NFTs found</p>
+                <p className="text-gray-400 mb-2">{t.userProfile.noNftsTitle}</p>
                 <p className="text-sm text-gray-600">
-                  This user doesn&apos;t own any NFTs from the Power Grinders collection yet
+                  {t.userProfile.noNftsDescription}
                 </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {userNFTs.map((nft) => (
-                  <NFTCard key={nft.mintAddress} nft={nft} />
+                {userNFTs.map((nft, index) => (
+                  <NFTCard key={nft.mintAddress} nft={nft} index={index + 1} />
                 ))}
               </div>
             )}

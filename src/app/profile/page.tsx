@@ -404,8 +404,8 @@ export default function ProfilePage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {userNFTs.map((nft) => (
-                <NFTCard key={nft.mintAddress} nft={nft} />
+              {userNFTs.map((nft, index) => (
+                <NFTCard key={nft.mintAddress} nft={nft} index={index + 1} />
               ))}
             </div>
           )}

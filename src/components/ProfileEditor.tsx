@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { Edit2, Save, X, Upload, User, Image as ImageIcon, Twitter as TwitterIcon, Globe, MessageCircle, Send } from 'lucide-react';
+import { useLanguage } from '@/lib/LanguageContext';
 import type { UserProfile } from '@/lib/supabase';
 
 type ProfileEditorProps = {
@@ -12,6 +13,7 @@ type ProfileEditorProps = {
 };
 
 export default function ProfileEditor({ privyUserId, profile, onProfileUpdated }: ProfileEditorProps) {
+  const { t } = useLanguage();
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -162,7 +164,7 @@ export default function ProfileEditor({ privyUserId, profile, onProfileUpdated }
         className="inline-flex items-center gap-2 bg-accent/20 hover:bg-accent/30 text-accent px-4 py-2 text-sm font-semibold transition border border-accent/30"
       >
         <Edit2 size={16} />
-        Edit Profile
+        {t.profileEditor.editButton}
       </button>
     );
   }
@@ -172,7 +174,7 @@ export default function ProfileEditor({ privyUserId, profile, onProfileUpdated }
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-bold text-white flex items-center gap-2">
           <Edit2 size={24} className="text-accent" />
-          Edit Profile
+          {t.profileEditor.heading}
         </h3>
         <button
           onClick={handleCancel}
