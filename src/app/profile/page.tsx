@@ -15,6 +15,7 @@ import type { UserProfile } from '@/lib/supabase';
 import NFTCard from '@/components/NFTCard';
 import ProfileEditor from '@/components/ProfileEditor';
 import { useLanguage } from '@/lib/LanguageContext';
+import hashList from '@/../public/_hash.json';
 
 export default function ProfilePage() {
   const { ready, authenticated, user, linkWallet } = usePrivy();
@@ -404,9 +405,15 @@ export default function ProfilePage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {userNFTs.map((nft, index) => (
-                <NFTCard key={nft.mintAddress} nft={nft} index={index + 1} />
-              ))}
+              {userNFTs.map((nft) => {
+                // Find the NFT's position in the hashList (1-indexed)
+                const hashIndex = hashList.findIndex((hash) => hash === nft.mintAddress);
+                const nftNumber = hashIndex !== -1 ? hashIndex + 1 : 0;
+
+                return (
+                  <NFTCard key={nft.mintAddress} nft={nft} index={nftNumber} />
+                );
+              })}
             </div>
           )}
         </div>

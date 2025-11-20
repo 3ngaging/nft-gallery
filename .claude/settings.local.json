@@ -9,7 +9,8 @@
       "Bash(xargs:*)",
       "Bash(npm run build:*)",
       "Bash(rd /s /q .next 2)",
-      "Bash(nul)"
+      "Bash(nul)",
+      "Bash(npx next lint:*)"
     ],
     "deny": [],
     "ask": []

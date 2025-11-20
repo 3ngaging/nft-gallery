@@ -8,6 +8,7 @@ import { useLanguage } from '@/lib/LanguageContext';
 import type { UserProfile } from '@/lib/supabase';
 import type { NFTWithOwner } from '@/lib/matrica-nft-client';
 import NFTCard from './NFTCard';
+import hashList from '@/../public/_hash.json';
 
 type UserProfileClientProps = {
   profile: UserProfile;
@@ -207,9 +208,15 @@ export default function UserProfileClient({ profile }: UserProfileClientProps) {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {userNFTs.map((nft, index) => (
-                  <NFTCard key={nft.mintAddress} nft={nft} index={index + 1} />
-                ))}
+                {userNFTs.map((nft) => {
+                  // Find the NFT's position in the hashList (1-indexed)
+                  const hashIndex = hashList.findIndex((hash) => hash === nft.mintAddress);
+                  const nftNumber = hashIndex !== -1 ? hashIndex + 1 : 0;
+
+                  return (
+                    <NFTCard key={nft.mintAddress} nft={nft} index={nftNumber} />
+                  );
+                })}
               </div>
             )}
           </div>
