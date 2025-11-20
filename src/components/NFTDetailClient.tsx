@@ -178,7 +178,7 @@ export default function NFTDetailClient({ nft }: NFTDetailClientProps) {
                           >
                             {ownerProfile.display_name || `User ${ownerProfile.privy_user_id.slice(0, 8)}`}
                           </Link>
-                          <p className="text-xs text-gray-400">Registered Member</p>
+                          <p className="text-xs text-gray-400">{t.nftDetail.registeredMember}</p>
                         </div>
                       </div>
                       <div className="flex gap-2">
@@ -186,14 +186,14 @@ export default function NFTDetailClient({ nft }: NFTDetailClientProps) {
                           href={`/user/${ownerProfile.privy_user_id}`}
                           className="inline-flex items-center gap-1 bg-[#F2ECC8]/20 hover:bg-[#F2ECC8]/30 text-[#F2ECC8] px-3 py-2 text-sm font-semibold transition border border-[#F2ECC8]/30"
                         >
-                          View Profile
+                          {t.nftDetail.viewProfile}
                           <User size={14} />
                         </Link>
                         <Link
                           href="/leaderboard"
                           className="inline-flex items-center gap-1 bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 px-3 py-2 text-sm font-semibold transition border border-purple-500/30"
                         >
-                          Leaderboard
+                          {t.nftDetail.leaderboard}
                           <ExternalLink size={14} />
                         </Link>
                       </div>
