@@ -1,23 +1,15 @@
 'use client';
 
 import { useState, useEffect, useMemo, lazy, Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import { motion } from 'framer-motion';
 import { Search, Grid3x3, LayoutGrid, List } from 'lucide-react';
 import { useLanguage } from '@/lib/LanguageContext';
 import type { NFTWithOwner } from '@/lib/matrica-nft-client';
 
-// Lazy load heavy components - based on Stack Overflow article
-// https://stackoverflow.com/questions/75499166/vendors-bundles-in-react-js
+// Lazy load heavy components for better initial load
 const NFTCard = lazy(() => import('@/components/NFTCard'));
 const StickerSystem = lazy(() => import('@/components/StickerSystem'));
 const LoadingScreen = lazy(() => import('@/components/LoadingScreen'));
-
-// Lazy load framer-motion (only used for animations)
-const motion = dynamic(
-  () => import('framer-motion').then((mod) => ({ default: mod.motion.div })),
-  { ssr: false }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-) as any;
 
 // Grid classes constant - moved outside component for better performance
 const GRID_CLASSES = {
